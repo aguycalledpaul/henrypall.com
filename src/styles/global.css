@@ -5,12 +5,12 @@
 
 :root {
   /* Colours (from Figma) */
-  --navy: #1b2a32;        /* dark blocks, footer, headings-on-light */
-  --navy-800: #22333c;
-  --ink: #1d2b33;         /* body text */
+  --navy: #11292e;        /* dark blocks, footer, headings-on-light */
+  --navy-800: #1c3940;
+  --ink: #182a2f;         /* body text */
   --muted: #7b8a92;       /* secondary text */
   --line: #d9dee0;        /* hairline borders */
-  --placeholder: #e6e8e8; /* image placeholders */
+  --placeholder: #eaeaea; /* image placeholders */
   --paper: #ffffff;
   --paper-2: #f4f5f5;
 
