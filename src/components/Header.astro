@@ -15,7 +15,7 @@ const current = Astro.url.pathname.replace(/\/$/, '');
   <div class="container header-inner">
     <a class="logo" href={base + '/'} aria-label="Henry Páll Wulff — home">
       <span class="logo__box">
-        <img class="logo__mark" src={base + '/logo-mark.png'} alt="Henry Páll Wulff" width="400" height="400" />
+        <img class="logo__sig" src={base + '/logo-mark.png'} alt="Henry Páll Wulff" width="560" height="429" />
       </span>
     </a>
 
@@ -73,13 +73,18 @@ const current = Astro.url.pathname.replace(/\/$/, '');
   .logo { display: inline-flex; flex: 0 0 auto; }
   .logo__box {
     position: relative;
-    width: 165px;
-    height: 165px;
+    width: 165px; height: 165px;
     background: var(--navy);
-    display: grid;
-    place-items: center;
+    display: grid; place-items: center;
   }
-  .logo__mark { position: relative; width: 128px; height: 128px; object-fit: contain; }
+  .logo__box::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1.5px solid #fff;
+    pointer-events: none;
+  }
+  .logo__sig { position: relative; width: 106px; height: auto; }
 
   /* Navigation */
   .nav {
@@ -141,7 +146,8 @@ const current = Astro.url.pathname.replace(/\/$/, '');
 
   @media (max-width: 980px) {
     .logo__box { width: 104px; height: 104px; }
-    .logo__mark { width: 82px; height: 82px; }
+    .logo__box::before { inset: 8px; }
+    .logo__sig { width: 68px; }
     .nav-burger { display: flex; }
     .header-actions { order: 3; }
     .nav {
