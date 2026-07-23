@@ -34,7 +34,7 @@ const columns = [
 <footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <span class="footer-logo">Henry Páll</span>
+      <img class="footer-logo" src={base + '/logo-mark.png'} alt="Henry Páll Wulff" width="400" height="400" />
       <p class="footer-legal">
         ©{year} Henry Páll Wulff | henrypall.com
       </p>
@@ -75,16 +75,10 @@ const columns = [
   }
   .footer-brand { max-width: 320px; }
   .footer-logo {
-    display: grid;
-    place-items: center;
-    width: 84px; height: 64px;
-    border: 2px solid rgba(255,255,255,0.5);
-    outline: 3px solid rgba(255,255,255,0.5);
-    outline-offset: 3px;
-    color: #fff;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-style: italic;
-    font-size: 0.78rem;
+    width: 76px; height: 76px;
+    object-fit: contain;
+    padding: 8px;
+    border: 1px solid rgba(255,255,255,0.4);
     margin-bottom: 1.5rem;
   }
   .footer-legal { font-size: 0.78rem; color: #9fb0b8; margin: 0.35rem 0; }

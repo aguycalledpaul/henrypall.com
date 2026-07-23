@@ -14,8 +14,7 @@ const current = Astro.url.pathname.replace(/\/$/, '');
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href={base + '/'} aria-label="Henry Páll Wulff — home">
-      <!-- TODO: replace with the exported signature asset from Figma -->
-      <span class="logo__mark">Henry Páll</span>
+      <img class="logo__mark" src={base + '/logo-mark.png'} alt="Henry Páll Wulff" width="400" height="400" />
     </a>
 
     <input type="checkbox" id="nav-toggle" class="nav-toggle" />
@@ -67,21 +66,13 @@ const current = Astro.url.pathname.replace(/\/$/, '');
     min-height: var(--header-h);
   }
 
-  /* Logo — bordered square holding the signature */
+  /* Logo — navy square holding the signature */
   .logo { display: inline-flex; flex: 0 0 auto; }
   .logo__mark {
-    display: grid;
-    place-items: center;
-    width: 84px; height: 64px;
-    border: 2px solid var(--navy);
-    outline: 3px solid var(--navy);
-    outline-offset: 3px;
-    color: var(--navy);
-    font-family: Georgia, 'Times New Roman', serif;
-    font-style: italic;
-    font-size: 0.78rem;
-    text-align: center;
-    line-height: 1.1;
+    width: 76px; height: 76px;
+    object-fit: contain;
+    background: var(--navy);
+    padding: 8px;
   }
 
   .nav {
