@@ -1,0 +1,115 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const year = new Date().getFullYear();
+const columns = [
+  {
+    heading: 'Explore',
+    links: [
+      { label: 'Dispatches', href: base + '/dispatches' },
+      { label: 'Field Notes', href: base + '/field-notes' },
+      { label: 'Lectures', href: base + '/lectures' },
+      { label: 'Curiously Polar', href: base + '/curiously-polar' },
+      { label: 'Books', href: base + '/books' },
+    ],
+  },
+  {
+    heading: 'Reference',
+    links: [
+      { label: 'Glossary', href: base + '/glossary' },
+      { label: 'Resources', href: base + '/resources' },
+      { label: 'About', href: base + '/about' },
+    ],
+  },
+  {
+    heading: 'Connect',
+    links: [
+      { label: 'Contact', href: base + '/contact' },
+      { label: 'Media & Press', href: base + '/media-and-press' },
+      { label: 'Newsletter', href: base + '/newsletter' },
+    ],
+  },
+];
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo">Henry Páll</span>
+      <p class="footer-legal">
+        ©{year} Henry Páll Wulff | henrypall.com
+      </p>
+      <p class="footer-legal footer-legal--links">
+        <a href={base + '/privacy-policy'}>Privacy Policy</a>
+        <a href={base + '/terms-and-conditions'}>Terms &amp; Conditions</a>
+      </p>
+    </div>
+
+    <div class="footer-cols">
+      {columns.map((col) => (
+        <div class="footer-col">
+          <h4 class="footer-heading">{col.heading}</h4>
+          <ul>
+            {col.links.map((l) => (
+              <li><a href={l.href}>{l.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--navy);
+    color: #cfd6da;
+    margin-top: 4rem;
+  }
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    justify-content: space-between;
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+  .footer-brand { max-width: 320px; }
+  .footer-logo {
+    display: grid;
+    place-items: center;
+    width: 84px; height: 64px;
+    border: 2px solid rgba(255,255,255,0.5);
+    outline: 3px solid rgba(255,255,255,0.5);
+    outline-offset: 3px;
+    color: #fff;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 0.78rem;
+    margin-bottom: 1.5rem;
+  }
+  .footer-legal { font-size: 0.78rem; color: #9fb0b8; margin: 0.35rem 0; }
+  .footer-legal--links { display: flex; gap: 1.25rem; margin-top: 0.75rem; }
+  .footer-legal--links a:hover { color: #fff; }
+
+  .footer-cols {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(120px, 1fr));
+    gap: 2.5rem;
+  }
+  .footer-heading {
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .footer-col ul { list-style: none; margin: 0; padding: 0; }
+  .footer-col li { margin-bottom: 0.6rem; }
+  .footer-col a { font-size: 0.85rem; color: #b9c4c9; }
+  .footer-col a:hover { color: #fff; }
+
+  @media (max-width: 640px) {
+    .footer-cols { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 2rem; }
+  }
+</style>
