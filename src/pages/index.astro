@@ -129,6 +129,7 @@ const lectures = [
         </div>
       ))}
     </div>
+    <span class="lectures__line"></span>
     <span class="lectures__label">Lectures</span>
     <div class="nav-arrows lectures__nav">
       <button class="arrow" data-arrow="prev" aria-label="Previous lecture">&larr;</button>
@@ -169,11 +170,13 @@ const lectures = [
   }
   .hero__date {
     position: absolute;
-    left: 1.5%; top: 20%;
+    left: calc(14.7% - 42px); top: 20.8%;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
-    letter-spacing: 0.14em;
-    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    font-size: 0.68rem;
+    font-weight: 400;
+    text-transform: uppercase;
     color: var(--muted);
   }
   .hero__card {
@@ -185,7 +188,7 @@ const lectures = [
     color: #fff;
     padding: 2.4rem 2.6rem 1.5rem;
   }
-  .hero__tag { position: absolute; top: -15px; left: 2.6rem; }
+  .hero__tag { position: absolute; top: -14px; left: 0; }
   .hero__title {
     color: #fff;
     font-size: clamp(1.35rem, 2vw, 1.85rem);
@@ -197,7 +200,7 @@ const lectures = [
   .hero__card .readmore { display: inline-block; float: right; }
   .hero__nav {
     position: absolute;
-    left: 4%; bottom: 4rem;            /* arrows bottom-aligned to image bottom */
+    left: calc(14.7% - 52px); bottom: 4rem;   /* right-aligned, just left of the image */
     display: flex; flex-direction: column; gap: 6px;
   }
 
@@ -231,23 +234,33 @@ const lectures = [
   .tile__tag { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
 
   /* ---------- ABOUT (image 498², headline overhangs, description indented) ---------- */
-  .about { position: relative; padding-top: 4rem; padding-bottom: 5rem; min-height: 560px; }
+  .about { position: relative; height: 600px; margin-top: 1.5rem; }
   .about__wm {
-    position: absolute; top: 0; right: 0; z-index: 0;
-    font-size: clamp(3rem, 6vw, 4.6rem);
-    letter-spacing: 0.04em;
+    position: absolute; top: -0.5rem; right: 0; z-index: 0;
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    letter-spacing: 0.02em; line-height: 1;
   }
+  /* image + shadow both align to the container (logo) left; shadow peeks below only */
   .about__media {
-    position: absolute; left: 0; top: 2.5rem; z-index: 1;
+    position: absolute; left: 0; top: 28px; z-index: 1;
     width: 44.4%; aspect-ratio: 1 / 1;
   }
-  .about__shadow { position: absolute; left: -30px; bottom: -30px; width: 100%; height: 100%; background: var(--navy); }
-  .about__img { position: absolute; inset: 0; display: block; }
-  .about__body { position: relative; z-index: 2; padding-top: 4.5rem; padding-left: 39%; }
-  .about__title { font-size: clamp(1.6rem, 2.6vw, 2.15rem); text-transform: uppercase; line-height: 1.1; max-width: 9em; }
-  .about__rule { margin: 1.1rem 0; }
-  .about__text { color: var(--muted); font-size: 0.9rem; margin: 1.3rem 0 1.3rem 28%; max-width: 300px; }
-  .about__cta { margin-left: 28%; display: inline-block; }
+  .about__shadow { position: absolute; left: 0; top: 30px; width: 100%; height: 100%; background: var(--navy); z-index: 0; }
+  .about__img { position: absolute; inset: 0; display: block; z-index: 1; }
+  .about__body { display: contents; }
+  .about__title {
+    position: absolute; z-index: 2;
+    left: 39.1%; top: 73px; width: 47%;
+    font-size: clamp(1.8rem, 3vw, 2.45rem);
+    text-transform: uppercase; line-height: 1.12;
+  }
+  .about__rule { position: absolute; z-index: 2; left: 39.1%; top: 205px; margin: 0; }
+  .about__text {
+    position: absolute; z-index: 2;
+    left: 51.6%; top: 235px; width: 28%;
+    color: var(--muted); font-size: 0.85rem; line-height: 1.65;
+  }
+  .about__cta { position: absolute; z-index: 2; left: 51.6%; top: 335px; display: inline-block; }
 
   /* ---------- FIELD NOTES ---------- */
   .fieldnotes { position: relative; padding-top: 4rem; padding-bottom: 4rem; }
@@ -260,7 +273,8 @@ const lectures = [
     align-items: start;
     padding-top: 5.5rem;
   }
-  .fieldnotes__quote { font-size: 0.85rem; color: var(--muted); border-left: 2px solid var(--navy); padding-left: 1rem; margin: 0 0 1.5rem; line-height: 1.6; }
+  .fieldnotes__quote { font-size: 0.78rem; font-weight: 300; color: var(--muted); border-left: 2px solid var(--navy); padding-left: 1rem; margin: 0 0 2.2rem; line-height: 1.75; }
+  .fieldnotes__intro .nav-arrows { flex-direction: column; width: fit-content; gap: 6px; }
   .fieldnotes__viewport { min-width: 0; }
   .fieldnotes__track { display: flex; gap: 1.75rem; }
   .note { flex: 0 0 calc((100% - 3.5rem) / 3); scroll-snap-align: start; }
@@ -286,27 +300,31 @@ const lectures = [
   .lectures__title { font-size: clamp(1.15rem, 1.7vw, 1.5rem); text-transform: uppercase; line-height: 1.3; margin-bottom: 1.6rem; }
   .lectures__card .readmore { display: inline-block; }
   .lectures__label {
-    position: absolute; right: -4px; bottom: 130px;
+    position: absolute; right: -4px; bottom: 150px;
     writing-mode: vertical-rl;
     text-transform: uppercase; letter-spacing: 0.22em;
     font-size: 0.72rem; color: var(--muted);
   }
-  .lectures__nav { position: absolute; right: 0; bottom: 2rem; }
+  .lectures__line { position: absolute; left: 59.5%; top: 4%; width: 1px; height: 86%; background: var(--navy); z-index: 3; }
+  .lectures__nav { position: absolute; right: 0; bottom: 3rem; }
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px) {
     .hero__media { width: 100%; margin-left: 0; }
     .hero__card { position: static; width: 100%; margin-top: -2.5rem; margin-left: auto; }
     .hero__date, .hero__nav { display: none; }
-    .about { min-height: 0; }
-    .about__media { position: relative; width: 80%; margin-bottom: 2rem; }
-    .about__body { padding-left: 0; padding-top: 0; }
-    .about__text, .about__cta { margin-left: 0; }
+    .about { height: auto; }
+    .about__wm { position: static; display: block; margin-bottom: 0.5rem; }
+    .about__media { position: relative; width: 80%; margin-bottom: 2.5rem; top: 0; }
+    .about__shadow { top: 22px; }
+    .about__title, .about__rule, .about__text, .about__cta { position: static; left: auto; top: auto; width: auto; }
+    .about__rule { margin: 1rem 0; }
+    .about__text { margin-bottom: 1.2rem; max-width: 340px; }
     .fieldnotes__grid { grid-template-columns: 1fr; }
     .note { flex-basis: 70%; }
     .lectures__media { width: 100%; }
     .lectures__card { position: static; width: 100%; margin-top: -2rem; }
-    .lectures__label, .lectures__nav { display: none; }
+    .lectures__line, .lectures__label, .lectures__nav { display: none; }
   }
   @media (max-width: 560px) {
     .tiles { grid-template-columns: 1fr; }
