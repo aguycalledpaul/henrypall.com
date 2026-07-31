@@ -182,7 +182,7 @@ const lectures = [
     background: var(--navy); color: #fff;
     padding: 2.2rem 2.4rem 1.4rem;
   }
-  .hero__tag { position: absolute; left: 0; bottom: 100%; }
+  .hero__tag { position: absolute; left: 0; bottom: calc(100% + 2px); }
   .hero__title {
     color: #fff;
     font-size: clamp(1.3rem, 1.95vw, 1.8rem);
@@ -222,7 +222,7 @@ const lectures = [
     color: #f5f5f5;
   }
   .about__media { position: absolute; left: 0; top: 28px; z-index: 1; width: 44.39%; aspect-ratio: 1 / 1; }
-  .about__shadow { position: absolute; left: -32px; top: 29px; width: 100%; height: 100%; background: var(--navy); z-index: 0; }
+  .about__shadow { position: absolute; left: 0; top: 24px; width: calc(100% + 24px); height: 100%; background: var(--navy); z-index: 0; }
   .about__img { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; background: var(--placeholder); z-index: 1; }
   .about__title {
     position: absolute; z-index: 2;
@@ -230,16 +230,16 @@ const lectures = [
     font-size: clamp(1.9rem, 3.55vw, 40px); font-weight: 500;
     text-transform: uppercase; line-height: 1.375;
   }
-  .about__rule { position: absolute; z-index: 2; left: 39.13%; top: 210px; width: 56px; height: 2px; background: var(--navy); }
-  .about__text { position: absolute; z-index: 2; left: 51.6%; top: 240px; width: 27.99%; margin: 0; color: var(--muted); font-size: 0.85rem; line-height: 1.65; }
-  .about__cta { position: absolute; z-index: 2; left: 51.6%; top: 340px; display: inline-block; }
+  .about__rule { position: absolute; z-index: 2; left: 39.13%; top: 200px; width: 98px; height: 2px; background: var(--navy); }
+  .about__text { position: absolute; z-index: 2; left: 39.13%; top: 240px; width: 30%; margin: 0; color: var(--muted); font-size: 0.85rem; line-height: 1.65; }
+  .about__cta { position: absolute; z-index: 2; left: 39.13%; top: 340px; display: inline-block; }
 
   /* ---------- FIELD NOTES (intro 368px, cards 255px, arrows @24.6%/+256) ---------- */
   .fieldnotes { padding-top: 4rem; padding-bottom: 4rem; }
   .fieldnotes__inner { min-height: 480px; }
-  .fieldnotes__wm { position: absolute; top: 0; left: 0; z-index: 0; }
+  .fieldnotes__wm { position: absolute; top: 0; left: 0; z-index: 0; font-weight: 500; font-size: clamp(3rem, 11vw, 120px); letter-spacing: 0; line-height: 1; }
   .fieldnotes__quote {
-    position: absolute; z-index: 1; left: 0; top: 5.5rem; width: 200px;
+    position: absolute; z-index: 1; left: 0; top: 147px; width: 200px;
     font-size: 0.78rem; font-weight: 300; color: var(--muted);
     border-left: 2px solid var(--navy); padding-left: 1rem; margin: 0; line-height: 1.75;
   }
@@ -256,23 +256,23 @@ const lectures = [
   .lectures__inner { position: relative; }
   .lectures__viewport { display: flex; scroll-snap-type: x mandatory; }
   .lectures__slide { position: relative; flex: 0 0 100%; scroll-snap-align: start; }
-  .lectures__media { width: 71.75%; margin-left: -3%; aspect-ratio: 805 / 600; }
+  .lectures__media { width: 72.92%; margin-left: -6.16%; aspect-ratio: 805 / 600; }
   .lectures__card {
-    position: absolute; right: 0; top: 11.8%;
-    width: 39.93%;
+    position: absolute; right: 0; top: 11.17%;
+    width: 40.58%; min-height: 53.17%;
     background: #fff; box-shadow: 0 18px 55px rgba(17, 41, 46, 0.14);
     padding: 3rem 2.6rem; text-align: center;
   }
   .lectures__tag { display: block; text-transform: uppercase; letter-spacing: 0.24em; font-size: 0.68rem; color: var(--muted); margin-bottom: 1.5rem; }
   .lectures__title { font-size: clamp(1.1rem, 1.6vw, 1.45rem); font-weight: 600; text-transform: uppercase; line-height: 1.3; margin-bottom: 1.6rem; }
   .lectures__card .readmore { display: inline-block; }
-  .lectures__line { position: absolute; left: 71.8%; top: 8.3%; width: 2px; height: 84.3%; background: var(--navy); z-index: 3; }
+  .lectures__line { position: absolute; left: 59.42%; top: 7.67%; width: 2px; height: 84.67%; background: var(--navy); z-index: 3; }
   .lectures__label {
-    position: absolute; left: calc(71.8% + 9px); bottom: 4rem; z-index: 3;
+    position: absolute; left: calc(59.42% + 9px); bottom: 4rem; z-index: 3;
     writing-mode: vertical-rl;
     text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.72rem; color: var(--muted);
   }
-  .lectures__nav { position: absolute; right: 0; top: 67.3%; z-index: 3; }
+  .lectures__nav { position: absolute; left: 59.42%; right: auto; top: 67.3%; z-index: 3; }
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px) {
