@@ -1,0 +1,209 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const featured = {
+  category: 'Cryosphere',
+  date: 'April 8, 2026',
+  title: 'Thin Ice: The Arctic Sea Ice Maximum of 2026 and the World That Depends on It',
+  excerpt: 'On March 15, the Arctic sea ice reached its 2026 maximum: 14.29 million km², the lowest in the 48-year satellite record. An area twice the size of Texas that never froze. The ice is telling its story.',
+};
+
+const latest = [
+  { category: 'Cryosphere', date: 'April 8, 2026', title: 'Thin Ice: The Arctic Sea Ice Maximum of 2026 and the World That Depends on It', excerpt: 'On March 15, the Arctic sea ice reached its 2026 maximum: 14.29 million km², the lowest in the 48-year satellite record. An area twice the size of Texas that never froze. The ice is telling its story.' },
+  { category: 'Cryosphere', date: 'March 13, 2023', title: 'Drilling Through Time: The Thrilling Pursuit of the Oldest Antarctic Ice', excerpt: 'On March 15, the Arctic sea ice reached its 2026 maximum: 14.29 million km², the lowest in the 48-year satellite record. An area twice the size of Texas that never froze. The ice is telling its story.' },
+  { category: 'Changing Poles', date: 'February 15, 2023', title: 'Scramble for the North Pole: Continental Shelf Claims, Geopolitics, and the Future of the Arctic Council', excerpt: 'Three nations claim the Arctic seabed, a Russian flag sits on the ocean floor, and the forum meant to govern it all is fracturing. The scramble for the North Pole is far from settled.' },
+];
+
+const columns = [
+  {
+    heading: 'Cryosphere',
+    posts: [
+      'The Invisible Ocean: How Subglacial Lakes Beneath Antarctica Are Rewriting What We Know About Life on Earth',
+      'Snow That Never Falls: The Physics and Poetry of Diamond Dust',
+      'When Glaciers Gallop: The Mechanics of Surging Glaciers and Why They’re Getting Harder to Predict',
+      'The Colour of Ice: What Blue, White, Green, and Black Tell Us About a Glacier’s Life',
+      'Permafrost’s Long Goodbye: What Happens When the Ground Beneath the Arctic Stops Being Permanent',
+      'Sea Ice Dialects: How Inuit, Yup’ik, and Sámi Ice Vocabularies Encode Centuries of Cryospheric Knowledge',
+      'Calving’s New Geometry: How Antarctic Ice Shelves Are Breaking Apart in Ways We Didn’t Expect',
+    ],
+  },
+  {
+    heading: 'Leadership',
+    posts: [
+      'The Briefing Before the Landing: What Expedition Leaders Can Teach Corporate Managers About Pre-Mission Communication',
+      'When All Options Are Bad: Decision-Making in Polar Environments When the Plan Dissolves',
+      'The Safety Culture Deficit: Why the Polar Expedition Industry Still Hasn’t Learned Its Hardest Lessons',
+      'Leading from the Back of the Line: The Quiet Authority of the Sweep Guide',
+      'Building a Team That Can Disagree at Sea Level and Cooperate at Sea',
+      'The Weight of the Whistle: Personal Responsibility and the Burden of Being the One Who Stops the Fun',
+      'What Shackleton Got Wrong: A Guide’s Honest Reckoning with the Mythology of Heroic Leadership',
+    ],
+  },
+  {
+    heading: 'Changing Poles',
+    posts: [
+      'Greenland Between Empires: What Denmark, the U.S., and China Really Want from the World’s Largest Island',
+      'The Black Carbon Paradox: When the Ships That Bring Us to the Ice Are Melting the Ice',
+      'The New Antarctic Runways: Access, Pollution, and the End of Remoteness',
+      'Russia’s Arctic Silence: What Happens to Circumpolar Science When Half the Arctic Is Off-Limits',
+      'The Polar Bear Paradox: When Conservation Science and Lived Experience Tell Different Stories',
+      'The Map Is Being Redrawn: How Retreating Ice Is Creating New Coastlines, New Islands, and New Territorial Claims',
+      'Who Trains the Trainers? The Fragile Knowledge Pipeline of Polar Expedition Guiding',
+    ],
+  },
+];
+---
+
+<BaseLayout>
+  <!-- ============ FEATURED DISPATCH ============ -->
+  <section class="featured">
+    <div class="wrap featured__inner">
+      <span class="featured__date">{featured.date}</span>
+      <div class="featured__media placeholder"></div>
+      <article class="featured__card">
+        <span class="tag featured__tag">{featured.category}</span>
+        <h1 class="featured__title">{featured.title}</h1>
+        <p class="featured__excerpt">{featured.excerpt}</p>
+        <a class="readmore readmore--light" href="#"><b>Read</b> More</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ LATEST POSTS (full-width, left card) ============ -->
+  {latest.map((p) => (
+    <section class="lp">
+      <div class="wrap lp__inner">
+        <div class="lp__media placeholder"></div>
+        <span class="tag lp__tag">{p.category}</span>
+        <article class="lp__card">
+          <span class="lp__date">{p.date}</span>
+          <h2 class="lp__title">{p.title}</h2>
+          <p class="lp__excerpt">{p.excerpt}</p>
+          <a class="readmore lp__more" href="#"><b>Read</b> More</a>
+        </article>
+      </div>
+    </section>
+  ))}
+
+  <div class="wrap loadmore-wrap">
+    <button class="loadmore" type="button">Load More</button>
+  </div>
+
+  <!-- ============ ARTICLES BY CATEGORY ============ -->
+  <section class="cats-section">
+    <div class="wrap cats">
+      {columns.map((col) => (
+        <div class="col">
+          <h3 class="col__head">{col.heading}</h3>
+          {col.posts.map((title) => (
+            <article class="cp">
+              <span class="cp__img placeholder"></span>
+              <h4 class="cp__title">{title}</h4>
+              <a class="readmore cp__more" href="#"><b>Read</b> More</a>
+            </article>
+          ))}
+        </div>
+      ))}
+    </div>
+    <div class="wrap loadmore-wrap">
+      <button class="loadmore" type="button">Load More</button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* content column — aligned to the header (logo → search), same as Home */
+  .wrap { position: relative; width: min(1104px, calc(100% - 2.5rem)); margin-inline: auto; }
+
+  /* ---------- shared ---------- */
+  .readmore { font-size: 0.85rem; color: var(--navy); border-left: 2px solid currentColor; padding-left: 8px; white-space: nowrap; }
+  .readmore b { font-weight: 600; }
+  .readmore--light { color: #fff; }
+
+  /* ---------- FEATURED (image 1046×500 @+4.81%, card 700×250 @37.43%/54.8%) ---------- */
+  .featured { padding-top: 4.4rem; padding-bottom: 3rem; }
+  .featured__inner { position: relative; }
+  .featured__media { width: 93.23%; margin-left: 4.81%; aspect-ratio: 1046 / 500; }
+  .featured__date {
+    position: absolute; left: 0; top: 50%;
+    transform: translateY(-50%) rotate(180deg);
+    writing-mode: vertical-rl;
+    font-size: 20px; font-weight: 500; color: var(--navy); letter-spacing: 0;
+  }
+  .featured__card {
+    position: absolute; right: 0; top: 54.8%;
+    width: 62.39%;
+    background: var(--navy); color: #fff;
+    padding: 1.6rem 1.9rem 1.2rem;
+  }
+  .featured__tag { position: absolute; left: 0; bottom: calc(100% + 2px); }
+  .featured__title {
+    color: #fff; margin: 0 0 0.7rem;
+    font-size: clamp(1.3rem, 1.95vw, 1.8rem); font-weight: 600;
+    text-transform: uppercase; line-height: 1.18;
+  }
+  .featured__excerpt { font-size: 0.85rem; line-height: 1.6; color: #c3ccd1; margin: 0 0 0.8rem; }
+  .featured__card .readmore { display: inline-block; float: right; }
+
+  /* ---------- LATEST POSTS (image 1102×500 @+1.78%, white card 700 @left/55.6%) ---------- */
+  .lp { padding-bottom: 3.5rem; }
+  .lp__inner { position: relative; }
+  .lp__media { width: 98.22%; margin-left: 1.78%; aspect-ratio: 1102 / 500; }
+  .lp__card {
+    position: absolute; left: 0; top: 55.6%;
+    width: 62.39%;
+    background: #fff; box-shadow: 0 18px 55px rgba(17, 41, 46, 0.14);
+    padding: 1.75rem 1.9rem 1.6rem;
+  }
+  .lp__tag { position: absolute; left: 0; top: calc(55.6% - 38px); }
+  .lp__date { display: block; color: var(--navy); font-weight: 500; font-size: 0.875rem; margin-bottom: 0.5rem; }
+  .lp__title {
+    margin: 0 0 0.7rem; color: #111;
+    font-size: clamp(1.35rem, 2.55vw, 1.875rem); font-weight: 500;
+    text-transform: uppercase; line-height: 1.18;
+  }
+  .lp__excerpt { font-size: 0.72rem; line-height: 1.6; color: #333; margin: 0 0 1rem; max-width: 88%; }
+  .lp__more { display: inline-block; }
+
+  /* ---------- LOAD MORE ---------- */
+  .loadmore-wrap { display: flex; justify-content: center; padding: 1rem 0 3.5rem; }
+  .loadmore {
+    background: var(--navy); color: #fff; border: 0; cursor: pointer;
+    font-family: inherit; font-size: 0.72rem; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.16em;
+    padding: 0.6rem 1.4rem;
+  }
+  .loadmore:hover { background: var(--navy-800); }
+
+  /* ---------- CATEGORY COLUMNS (3 × 356, gap 28) ---------- */
+  .cats-section { padding-top: 1rem; }
+  .cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .col { display: flex; flex-direction: column; }
+  .col__head {
+    margin: 0 0 1.6rem; padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--navy);
+    text-transform: uppercase; letter-spacing: 0.12em;
+    font-size: 0.82rem; font-weight: 600; color: var(--navy);
+  }
+  .cp { margin-bottom: 2.25rem; }
+  .cp__img { display: block; aspect-ratio: 355 / 200; background: var(--placeholder); margin-bottom: 0.7rem; }
+  .cp__title {
+    margin: 0 0 0.7rem; color: #111;
+    font-size: 1rem; font-weight: 500; text-transform: uppercase; line-height: 1.3;
+  }
+  .cp__more { display: inline-block; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .featured__media, .lp__media { width: 100%; margin-left: 0; }
+    .featured__card { position: static; width: 100%; margin-top: -2.5rem; }
+    .featured__date { display: none; }
+    .lp__card { position: static; width: 100%; margin-top: -2.5rem; }
+    .lp__tag { top: auto; bottom: calc(100% - 2.5rem); }
+    .lp__excerpt { max-width: 100%; }
+    .cats { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .cats { grid-template-columns: 1fr; }
+  }
+</style>
