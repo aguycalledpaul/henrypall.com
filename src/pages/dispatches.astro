@@ -1,17 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+const EXCERPT = 'On March 15, the Arctic sea ice reached its 2026 maximum: 14.29 million km², the lowest in the 48-year satellite record. An area twice the size of Texas that never froze. The ice is telling its story.';
+
 const featured = {
   category: 'Cryosphere',
   date: 'April 8, 2026',
   title: 'Thin Ice: The Arctic Sea Ice Maximum of 2026 and the World That Depends on It',
-  excerpt: 'On March 15, the Arctic sea ice reached its 2026 maximum: 14.29 million km², the lowest in the 48-year satellite record. An area twice the size of Texas that never froze. The ice is telling its story.',
+  excerpt: EXCERPT,
 };
 
+// Newest first — the button reveals three more per click.
 const latest = [
-  { category: 'Cryosphere', date: 'April 8, 2026', title: 'Thin Ice: The Arctic Sea Ice Maximum of 2026 and the World That Depends on It', excerpt: 'On March 15, the Arctic sea ice reached its 2026 maximum: 14.29 million km², the lowest in the 48-year satellite record. An area twice the size of Texas that never froze. The ice is telling its story.' },
-  { category: 'Cryosphere', date: 'March 13, 2023', title: 'Drilling Through Time: The Thrilling Pursuit of the Oldest Antarctic Ice', excerpt: 'On March 15, the Arctic sea ice reached its 2026 maximum: 14.29 million km², the lowest in the 48-year satellite record. An area twice the size of Texas that never froze. The ice is telling its story.' },
-  { category: 'Changing Poles', date: 'February 15, 2023', title: 'Scramble for the North Pole: Continental Shelf Claims, Geopolitics, and the Future of the Arctic Council', excerpt: 'Three nations claim the Arctic seabed, a Russian flag sits on the ocean floor, and the forum meant to govern it all is fracturing. The scramble for the North Pole is far from settled.' },
+  { category: 'Cryosphere', date: 'April 8, 2026', title: 'Thin Ice: The Arctic Sea Ice Maximum of 2026 and the World That Depends on It', excerpt: EXCERPT },
+  { category: 'Cryosphere', date: 'March 13, 2026', title: 'Drilling Through Time: The Thrilling Pursuit of the Oldest Antarctic Ice', excerpt: EXCERPT },
+  { category: 'Changing Poles', date: 'February 15, 2026', title: 'Scramble for the North Pole: Continental Shelf Claims, Geopolitics, and the Future of the Arctic Council', excerpt: 'Three nations claim the Arctic seabed, a Russian flag sits on the ocean floor, and the forum meant to govern it all is fracturing. The scramble for the North Pole is far from settled.' },
+  { category: 'Cryosphere', date: 'January 30, 2026', title: 'The Colour of Ice: What Blue, White, Green, and Black Tell Us About a Glacier’s Life', excerpt: EXCERPT },
+  { category: 'Leadership', date: 'January 9, 2026', title: 'When All Options Are Bad: Decision-Making in Polar Environments When the Plan Dissolves', excerpt: EXCERPT },
+  { category: 'Changing Poles', date: 'December 18, 2025', title: 'The Map Is Being Redrawn: How Retreating Ice Is Creating New Coastlines and New Territorial Claims', excerpt: EXCERPT },
 ];
 
 const columns = [
@@ -25,6 +31,9 @@ const columns = [
       'Permafrost’s Long Goodbye: What Happens When the Ground Beneath the Arctic Stops Being Permanent',
       'Sea Ice Dialects: How Inuit, Yup’ik, and Sámi Ice Vocabularies Encode Centuries of Cryospheric Knowledge',
       'Calving’s New Geometry: How Antarctic Ice Shelves Are Breaking Apart in Ways We Didn’t Expect',
+      'Blue Ice and the Physics of Ancient Trapped Air',
+      'Reading the Story Locked Inside an Ice Core',
+      'The Hidden Rivers That Run Beneath the Ice',
     ],
   },
   {
@@ -37,6 +46,9 @@ const columns = [
       'Building a Team That Can Disagree at Sea Level and Cooperate at Sea',
       'The Weight of the Whistle: Personal Responsibility and the Burden of Being the One Who Stops the Fun',
       'What Shackleton Got Wrong: A Guide’s Honest Reckoning with the Mythology of Heroic Leadership',
+      'Communicating Risk Without Spreading Fear',
+      'The Quiet Courage of the Decision to Turn Back',
+      'Debriefs That Actually Change Behaviour',
     ],
   },
   {
@@ -49,9 +61,15 @@ const columns = [
       'The Polar Bear Paradox: When Conservation Science and Lived Experience Tell Different Stories',
       'The Map Is Being Redrawn: How Retreating Ice Is Creating New Coastlines, New Islands, and New Territorial Claims',
       'Who Trains the Trainers? The Fragile Knowledge Pipeline of Polar Expedition Guiding',
+      'The New Shipping Lanes Opening Across the Arctic',
+      'Fisheries at the Retreating Edge of the Ice',
+      'Who Owns the Central Arctic Ocean?',
     ],
   },
 ];
+
+const LATEST_INITIAL = 3;
+const COL_INITIAL = 7;
 ---
 
 <BaseLayout>
@@ -70,12 +88,12 @@ const columns = [
   </section>
 
   <!-- ============ LATEST POSTS (full-width, left card) ============ -->
-  {latest.map((p) => (
-    <section class="lp">
+  {latest.map((p, i) => (
+    <section class="lp" hidden={i >= LATEST_INITIAL}>
       <div class="wrap lp__inner">
         <div class="lp__media placeholder"></div>
-        <span class="tag lp__tag">{p.category}</span>
         <article class="lp__card">
+          <span class="tag lp__tag">{p.category}</span>
           <span class="lp__date">{p.date}</span>
           <h2 class="lp__title">{p.title}</h2>
           <p class="lp__excerpt">{p.excerpt}</p>
@@ -85,8 +103,8 @@ const columns = [
     </section>
   ))}
 
-  <div class="wrap loadmore-wrap">
-    <button class="loadmore" type="button">Load More</button>
+  <div class="wrap loadmore-wrap loadmore-wrap--latest">
+    <button class="loadmore" type="button" data-loadmore="latest">Load More</button>
   </div>
 
   <!-- ============ ARTICLES BY CATEGORY ============ -->
@@ -95,8 +113,8 @@ const columns = [
       {columns.map((col) => (
         <div class="col">
           <h3 class="col__head">{col.heading}</h3>
-          {col.posts.map((title) => (
-            <article class="cp">
+          {col.posts.map((title, i) => (
+            <article class="cp" hidden={i >= COL_INITIAL}>
               <span class="cp__img placeholder"></span>
               <h4 class="cp__title">{title}</h4>
               <a class="readmore cp__more" href="#"><b>Read</b> More</a>
@@ -106,7 +124,7 @@ const columns = [
       ))}
     </div>
     <div class="wrap loadmore-wrap">
-      <button class="loadmore" type="button">Load More</button>
+      <button class="loadmore" type="button" data-loadmore="cats">Load More</button>
     </div>
   </section>
 </BaseLayout>
@@ -120,8 +138,8 @@ const columns = [
   .readmore b { font-weight: 600; }
   .readmore--light { color: #fff; }
 
-  /* ---------- FEATURED (image 1046×500 @+4.81%, card 700×250 @37.43%/54.8%) ---------- */
-  .featured { padding-top: 4.4rem; padding-bottom: 3rem; }
+  /* ---------- FEATURED (image 1046×500 @+4.81%; card 700×250 @right, 24px below image) ---------- */
+  .featured { padding-top: 70px; padding-bottom: 93px; }
   .featured__inner { position: relative; }
   .featured__media { width: 93.23%; margin-left: 4.81%; aspect-ratio: 1046 / 500; }
   .featured__date {
@@ -131,52 +149,53 @@ const columns = [
     font-size: 20px; font-weight: 500; color: var(--navy); letter-spacing: 0;
   }
   .featured__card {
-    position: absolute; right: 0; top: 54.8%;
+    position: absolute; right: 0; bottom: -24px; top: auto;
     width: 62.39%;
     background: var(--navy); color: #fff;
-    padding: 1.6rem 1.9rem 1.2rem;
+    padding: 21px 29px 14px;
   }
   .featured__tag { position: absolute; left: 0; bottom: calc(100% + 2px); }
   .featured__title {
-    color: #fff; margin: 0 0 0.7rem;
-    font-size: clamp(1.3rem, 1.95vw, 1.8rem); font-weight: 600;
-    text-transform: uppercase; line-height: 1.18;
+    color: #fff; margin: 0 0 0.35rem;
+    font-size: clamp(1.5rem, 2.9vw, 40px); font-weight: 500;
+    text-transform: uppercase; line-height: 1.125;
   }
-  .featured__excerpt { font-size: 0.85rem; line-height: 1.6; color: #c3ccd1; margin: 0 0 0.8rem; }
+  .featured__excerpt { font-size: 14px; font-weight: 300; line-height: 1.5; color: #c7d0d4; margin: 0 0 0.6rem; }
   .featured__card .readmore { display: inline-block; float: right; }
 
-  /* ---------- LATEST POSTS (image 1102×500 @+1.78%, white card 700 @left/55.6%) ---------- */
-  .lp { padding-bottom: 3.5rem; }
+  /* ---------- LATEST POSTS (image 1102×500 @+1.78%; white card 700 @content-left, 20px overlap L+B) ---------- */
+  .lp { padding-bottom: 89px; }
   .lp__inner { position: relative; }
   .lp__media { width: 98.22%; margin-left: 1.78%; aspect-ratio: 1102 / 500; }
   .lp__card {
-    position: absolute; left: 0; top: 55.6%;
+    position: absolute; left: 0; bottom: -20px; top: auto;
     width: 62.39%;
     background: #fff; box-shadow: 0 18px 55px rgba(17, 41, 46, 0.14);
-    padding: 1.75rem 1.9rem 1.6rem;
+    padding: 21px 28px 18px;
   }
-  .lp__tag { position: absolute; left: 0; top: calc(55.6% - 38px); }
-  .lp__date { display: block; color: var(--navy); font-weight: 500; font-size: 0.875rem; margin-bottom: 0.5rem; }
+  .lp__tag { position: absolute; left: 0; bottom: calc(100% + 1px); }
+  .lp__date { display: block; color: var(--navy); font-weight: 500; font-size: 14px; margin-bottom: 0.55rem; }
   .lp__title {
     margin: 0 0 0.7rem; color: #111;
-    font-size: clamp(1.35rem, 2.55vw, 1.875rem); font-weight: 500;
-    text-transform: uppercase; line-height: 1.18;
+    font-size: clamp(1.35rem, 2.7vw, 30px); font-weight: 500;
+    text-transform: uppercase; line-height: 1.17;
   }
-  .lp__excerpt { font-size: 0.72rem; line-height: 1.6; color: #333; margin: 0 0 1rem; max-width: 88%; }
+  .lp__excerpt { font-size: 11px; font-weight: 300; line-height: 1.6; color: #333; margin: 0 0 0.9rem; max-width: 90%; }
   .lp__more { display: inline-block; }
 
   /* ---------- LOAD MORE ---------- */
-  .loadmore-wrap { display: flex; justify-content: center; padding: 1rem 0 3.5rem; }
+  .loadmore-wrap { display: flex; justify-content: center; }
+  .loadmore-wrap--latest { padding-bottom: 60px; }
+  .cats-section .loadmore-wrap { padding-top: 60px; }
   .loadmore {
     background: var(--navy); color: #fff; border: 0; cursor: pointer;
     font-family: inherit; font-size: 0.72rem; font-weight: 500;
     text-transform: uppercase; letter-spacing: 0.16em;
-    padding: 0.6rem 1.4rem;
+    padding: 0.55rem 2.1rem;
   }
   .loadmore:hover { background: var(--navy-800); }
 
   /* ---------- CATEGORY COLUMNS (3 × 356, gap 28) ---------- */
-  .cats-section { padding-top: 1rem; }
   .cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
   .col { display: flex; flex-direction: column; }
   .col__head {
@@ -196,10 +215,12 @@ const columns = [
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px) {
     .featured__media, .lp__media { width: 100%; margin-left: 0; }
-    .featured__card { position: static; width: 100%; margin-top: -2.5rem; }
+    .featured { padding-bottom: 3.5rem; }
+    .featured__card { position: static; width: 100%; margin-top: -2.5rem; bottom: auto; }
     .featured__date { display: none; }
-    .lp__card { position: static; width: 100%; margin-top: -2.5rem; }
-    .lp__tag { top: auto; bottom: calc(100% - 2.5rem); }
+    .lp { padding-bottom: 3.5rem; }
+    .lp__card { position: static; width: 100%; margin-top: -2.5rem; bottom: auto; }
+    .lp__tag { position: static; display: inline-block; margin: -2.5rem 0 0.5rem; }
     .lp__excerpt { max-width: 100%; }
     .cats { grid-template-columns: 1fr 1fr; }
   }
@@ -207,3 +228,29 @@ const columns = [
     .cats { grid-template-columns: 1fr; }
   }
 </style>
+
+<script>
+  // Load More — reveal the next three hidden items and keep the button at the bottom.
+  function wireLoadMore(key, getGroups) {
+    const btn = document.querySelector(`[data-loadmore="${key}"]`);
+    if (!btn) return;
+    const anyHidden = () => getGroups().some((g) => g.some((el) => el.hidden));
+    if (!anyHidden()) { btn.hidden = true; return; }
+    btn.addEventListener('click', () => {
+      getGroups().forEach((group) => {
+        group.filter((el) => el.hidden).slice(0, 3).forEach((el) => { el.hidden = false; });
+      });
+      if (!anyHidden()) btn.hidden = true;
+    });
+  }
+
+  // Latest posts: one stream, reveal 3 more each click.
+  wireLoadMore('latest', () => [Array.from(document.querySelectorAll('.lp'))]);
+
+  // Category columns: reveal 3 more in every column each click.
+  wireLoadMore('cats', () =>
+    Array.from(document.querySelectorAll('.cats .col')).map((col) =>
+      Array.from(col.querySelectorAll('.cp'))
+    )
+  );
+</script>
