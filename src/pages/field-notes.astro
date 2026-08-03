@@ -5,8 +5,7 @@ const P1 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum 
 const P2 = 'Duis quam enim, tempus non leo eu, posuere tincidunt sem. Duis nec metus consectetur turpis sagittis fermentum. Proin in vestibulum turpis. In volutpat nibh et augue tristique, nec venenatis libero euismod. Nunc mattis, libero eu vulputate eleifend, arcu enim malesuada nibh, vel rutrum tortor libero eu nisi.';
 const P3 = 'Nam auctor ligula a erat semper, ultricies rutrum sapien consectetur. Integer congue dui non leo hendrerit, et convallis metus scelerisque. Fusce consectetur mi eu justo accumsan porttitor. Morbi mattis pulvinar nisl at convallis. Vestibulum in sagittis dolor, in fermentum ipsum. Donec finibus, tellus vel porttitor fringilla, felis urna dignissim est.';
 const P4 = 'Aenean placerat ligula in sodales blandit. Nullam ac vehicula sem. Suspendisse eget pellentesque est. Nulla et ligula a lacus ultricies rutrum. Morbi id sodales augue. Curabitur et dui dapibus, mollis diam nec, auctor neque. Pellentesque consequat sodales tellus vel molestie. Fusce nec turpis id sem hendrerit tempus sit amet a purus.';
-const P5 = 'Nullam eget vehicula turpis, aliquam mattis metus. Mauris sit amet interdum massa, efficitur tincidunt elit. Integer id eros ac justo fringilla imperdiet et vitae mi. Mauris hendrerit commodo purus, eu viverra elit molestie quis. Nulla tempus nulla ante, quis gravida ligula ultrices ut. Suspendisse a nisi id justo varius volutpat.';
-const BODY = [P1, P2, P3, P4, P5];
+const P5 = 'Nullam eget vehicula turpis, aliquam mattis metus. Mauris sit amet interdum massa, efficitur tincidunt elit. Integer id eros ac justo fringilla imperdiet et vitae mi. Mauris hendrerit commodo purus, eu viverra elit molestie quis. Nulla tempus nulla ante, quis gravida ligula ultrices ut.';
 
 const latest = {
   date: 'December 12, 2025',
@@ -20,7 +19,10 @@ const listings = [
   { date: 'November 2, 2025', location: 'Ilulissat, Greenland', title: 'What Shackleton got wrong about heroic leadership.' },
   { date: 'October 21, 2025', location: 'Kirkenes, Norway', title: 'Sea ice dialects and the language of the north.' },
   { date: 'October 5, 2025', location: 'Punta Arenas, Chile', title: 'Permafrost’s long goodbye and the shifting ground.' },
+  { date: 'September 22, 2025', location: 'Nuuk, Greenland', title: 'The quiet authority of the sweep guide.' },
+  { date: 'September 8, 2025', location: 'Tromsø, Norway', title: 'When all options are bad: deciding on the ice.' },
 ];
+const LISTINGS_INITIAL = 5;
 
 // Masonry gallery — column stacks of aspect ratios (width / height), per Figma.
 const gallery = [
@@ -29,6 +31,20 @@ const gallery = [
   ['250 / 139', '1 / 1', '250 / 198'],
   ['250 / 294', '250 / 320'],
 ];
+
+const H1 = 'Love has no age no limit and no death.';
+const H2 = 'Love has no age no limit sed scelerisque and no ullamcorper magna no death.';
+
+const records = [
+  { style: 1, date: 'December 12, 2025', location: 'Transylvania, Romania', title: H1, body: [P1, P2, P3, P4, P5] },
+  { style: 2, date: 'November 28, 2025', location: 'Ushuaia, Argentina', title: H2, body: [P1, P2, P3] },
+  { style: 3, date: 'November 14, 2025', location: 'Longyearbyen, Svalbard', title: H2, body: [P1, P2, P3] },
+  { style: 2, date: 'October 30, 2025', location: 'Ilulissat, Greenland', title: H2, body: [P1, P2, P3] },
+  { style: 1, date: 'October 15, 2025', location: 'Kirkenes, Norway', title: H1, body: [P1, P2, P3, P4, P5] },
+  { style: 2, date: 'September 28, 2025', location: 'Punta Arenas, Chile', title: H2, body: [P1, P2, P3] },
+  { style: 3, date: 'September 10, 2025', location: 'Nuuk, Greenland', title: H2, body: [P1, P2, P3] },
+];
+const RECORDS_INITIAL = 4;
 ---
 
 <BaseLayout>
@@ -43,7 +59,7 @@ const gallery = [
         <h2 class="fnhero__title">{latest.title}</h2>
         <em class="fnhero__loc">{latest.location}</em>
       </article>
-      <a class="fnhero__btn" href="#"><b>Read</b> More</a>
+      <a class="fnhero__btn" href="#"><span class="fnhero__bar">|</span> <b>Read</b> More</a>
     </div>
   </section>
 
@@ -52,8 +68,8 @@ const gallery = [
     <div class="wrap fnlist__inner">
       <h1 class="fnlist__wm">Field Notes</h1>
       <div class="fnlist__items">
-        {listings.map((n) => (
-          <article class="fni">
+        {listings.map((n, i) => (
+          <article class="fni" hidden={i >= LISTINGS_INITIAL}>
             <p class="fni__meta"><span class="fni__date">{n.date}</span><span class="fni__bar">|</span><em class="fni__loc">{n.location}</em></p>
             <div class="fni__row">
               <h3 class="fni__title">{n.title}</h3>
@@ -62,67 +78,61 @@ const gallery = [
             <span class="fni__rule"></span>
           </article>
         ))}
-        <div class="loadmore-wrap"><button class="loadmore" type="button">Load More</button></div>
+        <div class="loadmore-wrap"><button class="loadmore" type="button" data-loadmore="listings">Load More</button></div>
       </div>
     </div>
   </section>
 
   <!-- ============ RECORDS (blog styles) ============ -->
   <div class="records">
+    {records.map((r, i) => (
+      <div class="rec-block" hidden={i >= RECORDS_INITIAL}>
+        {i > 0 && <span class="rec-sep"></span>}
 
-    <!-- Style #1 — text with single hero picture -->
-    <section class="wrap rec rec1">
-      <div class="rec1__media">
-        <span class="rec1__shadow"></span>
-        <span class="rec1__img placeholder"></span>
+        {r.style === 1 && (
+          <section class="wrap rec rec1">
+            <div class="rec1__media">
+              <span class="rec1__shadow"></span>
+              <span class="rec1__img"></span>
+            </div>
+            <div class="rec1__col">
+              <p class="rec__meta"><span class="rec__date">{r.date}</span><span class="rec__bar">|</span><em class="rec__loc">{r.location}</em></p>
+              <h2 class="rec__title">{r.title}</h2>
+              <span class="rec__rule"></span>
+              <div class="rec1__body">{r.body.map((p) => <p>{p}</p>)}</div>
+            </div>
+          </section>
+        )}
+
+        {r.style === 2 && (
+          <section class="wrap rec rec2">
+            <p class="rec__meta"><span class="rec__date">{r.date}</span><span class="rec__bar">|</span><em class="rec__loc">{r.location}</em></p>
+            <h2 class="rec__title">{r.title}</h2>
+            <span class="rec__rule"></span>
+            <div class="rec2__body">{r.body.map((p) => <p>{p}</p>)}</div>
+          </section>
+        )}
+
+        {r.style === 3 && (
+          <section class="wrap rec rec3">
+            <p class="rec__meta rec__meta--center"><span class="rec__date">{r.date}</span><span class="rec__bar">|</span><em class="rec__loc">{r.location}</em></p>
+            <h2 class="rec__title rec__title--center">{r.title}</h2>
+            <span class="rec__rule"></span>
+            <div class="rec3__body"><p>{r.body[0]}</p></div>
+            <div class="gallery">
+              {gallery.map((col) => (
+                <div class="gallery__col">
+                  {col.map((ar) => <span class="gallery__img" style={`aspect-ratio:${ar}`}></span>)}
+                </div>
+              ))}
+            </div>
+            <div class="rec3__body">{r.body.slice(1).map((p) => <p>{p}</p>)}</div>
+          </section>
+        )}
       </div>
-      <div class="rec1__col">
-        <p class="rec__meta"><span class="rec__date">December 12, 2025</span><span class="rec__bar">|</span><em class="rec__loc">Transylvania, Romania</em></p>
-        <h2 class="rec__title">Love has no age no limit and no death.</h2>
-        <span class="rec__rule"></span>
-        <div class="rec1__body">{BODY.map((p) => <p>{p}</p>)}</div>
-      </div>
-    </section>
+    ))}
 
-    <span class="rec-sep"></span>
-
-    <!-- Style #2 — text only -->
-    <section class="wrap rec rec2">
-      <p class="rec__meta"><span class="rec__date">December 12, 2025</span><span class="rec__bar">|</span><em class="rec__loc">Transylvania, Romania</em></p>
-      <h2 class="rec__title">Love has no age no limit sed scelerisque and no ullamcorper magna no death.</h2>
-      <span class="rec__rule"></span>
-      <div class="rec2__body">{BODY.map((p) => <p>{p}</p>)}</div>
-    </section>
-
-    <span class="rec-sep"></span>
-
-    <!-- Style #3 — picture gallery with text -->
-    <section class="wrap rec rec3">
-      <p class="rec__meta rec__meta--center"><span class="rec__date">December 12, 2025</span><span class="rec__bar">|</span><em class="rec__loc">Transylvania, Romania</em></p>
-      <h2 class="rec__title rec__title--center">Love has no age no limit sed scelerisque and no ullamcorper magna no death.</h2>
-      <span class="rec__rule"></span>
-      <div class="rec3__body"><p>{P1}</p></div>
-      <div class="gallery">
-        {gallery.map((col) => (
-          <div class="gallery__col">
-            {col.map((ar) => <span class="gallery__img placeholder" style={`aspect-ratio:${ar}`}></span>)}
-          </div>
-        ))}
-      </div>
-      <div class="rec3__body"><p>{P2}</p><p>{P3}</p></div>
-    </section>
-
-    <span class="rec-sep"></span>
-
-    <!-- Style #2 — text only -->
-    <section class="wrap rec rec2">
-      <p class="rec__meta"><span class="rec__date">December 12, 2025</span><span class="rec__bar">|</span><em class="rec__loc">Transylvania, Romania</em></p>
-      <h2 class="rec__title">Love has no age no limit sed scelerisque and no ullamcorper magna no death.</h2>
-      <span class="rec__rule"></span>
-      <div class="rec2__body">{BODY.map((p) => <p>{p}</p>)}</div>
-    </section>
-
-    <div class="wrap loadmore-wrap loadmore-wrap--records"><button class="loadmore" type="button">Load More</button></div>
+    <div class="wrap loadmore-wrap loadmore-wrap--records"><button class="loadmore" type="button" data-loadmore="records">Load More</button></div>
   </div>
 </BaseLayout>
 
@@ -131,13 +141,13 @@ const gallery = [
   .readmore { font-size: 0.85rem; color: var(--navy); border-left: 2px solid currentColor; padding-left: 8px; white-space: nowrap; }
   .readmore b { font-weight: 600; }
 
-  /* ---------- LATEST FIELD NOTE (image 755×600 left; card 448×319 @60%; boxed button) ---------- */
+  /* ---------- LATEST FIELD NOTE ---------- */
   .fnhero { padding-top: 70px; padding-bottom: 4.5rem; }
   .fnhero__inner { position: relative; }
   .fnhero__media { width: 67.29%; aspect-ratio: 755 / 600; background: var(--placeholder); }
   .fnhero__line { position: absolute; left: 70.41%; top: 8.33%; width: 2px; height: 84.33%; background: var(--navy); z-index: 1; }
   .fnhero__label {
-    position: absolute; left: calc(70.41% + 8px); bottom: 4.5rem; z-index: 1;
+    position: absolute; left: calc(70.41% + 8px); bottom: 7.34%; z-index: 1;
     writing-mode: vertical-rl; transform: rotate(180deg);
     text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; font-weight: 500; color: #111;
   }
@@ -153,15 +163,15 @@ const gallery = [
   .fnhero__loc { font-family: inherit; font-style: italic; font-size: 10px; font-weight: 500; color: rgba(0,0,0,0.5); }
   .fnhero__btn {
     position: absolute; right: 0; top: 67.3%; z-index: 3;
-    display: inline-grid; place-items: center; white-space: nowrap;
-    width: 129px; height: 40px;
+    display: inline-block; width: 129px; height: 40px; line-height: 40px;
+    text-align: center; white-space: nowrap;
     background: var(--navy); color: #fff; font-size: 14px;
   }
+  .fnhero__bar { font-weight: 300; }
   .fnhero__btn b { font-weight: 600; }
-  .fnhero__btn::before { content: '| '; }
   .fnhero__btn:hover { background: var(--navy-800); }
 
-  /* ---------- FIELD NOTES LIST (180px watermark + listings) ---------- */
+  /* ---------- FIELD NOTES LIST ---------- */
   .fnlist { position: relative; padding-top: 2.5rem; padding-bottom: 3.5rem; }
   .fnlist__wm {
     position: absolute; left: 0; top: 2rem; margin: 0; z-index: 0; pointer-events: none; user-select: none;
@@ -177,12 +187,11 @@ const gallery = [
   .fni__loc { font-style: italic; font-size: 10px; font-weight: 300; }
   .fni__row { display: flex; align-items: baseline; gap: 1.4rem; }
   .fni__title { margin: 0; font-size: 18px; font-weight: 500; text-transform: uppercase; line-height: 1.3; color: #111; }
-  .fni__more { border-left-width: 2px; }
   .fni__rule { display: block; width: 98px; height: 2px; background: var(--navy); margin-top: 1rem; }
 
   /* ---------- LOAD MORE ---------- */
   .loadmore-wrap { display: flex; justify-content: center; padding-top: 1.5rem; }
-  .loadmore-wrap--records { padding-top: 3rem; padding-bottom: 1rem; }
+  .loadmore-wrap--records { padding-top: 1rem; padding-bottom: 1rem; }
   .loadmore {
     background: var(--navy); color: #fff; border: 0; cursor: pointer;
     font-family: inherit; font-size: 0.72rem; font-weight: 500;
@@ -191,31 +200,29 @@ const gallery = [
   .loadmore:hover { background: var(--navy-800); }
 
   /* ---------- RECORDS (shared) ---------- */
-  .records { padding-top: 2.5rem; }
-  .rec { margin-bottom: 3.5rem; }
+  .records { padding-top: 3.5rem; }
+  .rec { margin-bottom: 0; }
   .rec__meta { margin: 0 0 1rem; color: rgba(0,0,0,0.5); }
   .rec__date { font-size: 12px; font-weight: 500; }
   .rec__bar { font-size: 12px; font-weight: 300; margin: 0 0.5rem; }
   .rec__loc { font-style: italic; font-size: 10px; font-weight: 500; }
   .rec__title { margin: 0; font-size: clamp(1.6rem, 2.9vw, 40px); font-weight: 500; text-transform: uppercase; line-height: 1.375; color: #111; }
   .rec__rule { display: block; width: 98px; height: 2px; background: var(--navy); margin: 1.4rem 0; }
-  .rec-sep { display: block; width: 100px; height: 1px; background: var(--line); margin: 2.5rem auto 4rem; }
+  .rec-sep { display: block; width: 100px; height: 4px; background: var(--navy); margin: 69px auto 73px; }
 
-  /* Style #1 — portrait image + shadow (down-left) on the left, text on the right */
+  /* Style #1 — portrait image + shadow (down-left); text overlaps the picture by 59px */
   .rec1 { position: relative; padding-bottom: 1rem; }
   .rec1__media { position: absolute; left: 32px; top: 1.6rem; width: 44.39%; aspect-ratio: 498 / 675; z-index: 1; }
   .rec1__shadow { position: absolute; left: -32px; top: 29px; width: 100%; height: 100%; background: var(--navy); z-index: 0; }
   .rec1__img { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; background: var(--placeholder); z-index: 1; }
-  .rec1__col { margin-left: 48%; padding-top: 1.6rem; }
-  .rec1__body { margin-left: 72px; }
+  .rec1__col { position: relative; z-index: 2; margin-left: 41.98%; padding-top: 1.6rem; }
+  .rec1__body { margin-left: 138px; }
   .rec1__body p, .rec2__body p, .rec3__body p { margin: 0 0 1rem; font-size: 11px; font-weight: 300; line-height: 1.7; color: #222; }
 
-  /* Style #2 — text only, indented 37px */
-  .rec2 { margin-left: 3.35%; }
+  /* Style #2 — text only, left-aligned with the content (logo edge) */
   .rec2__body { max-width: 98%; }
 
-  /* Style #3 — centered header, gallery, body */
-  .rec3 { margin-left: 3.35%; }
+  /* Style #3 — centered header, gallery, body; left-aligned with the content */
   .rec__meta--center { text-align: center; }
   .rec__title--center { text-align: center; }
   .rec3__body { margin: 0 0 1.5rem; }
@@ -231,7 +238,6 @@ const gallery = [
     .rec1__media { position: static; width: 70%; margin-bottom: 1.5rem; }
     .rec1__col { margin-left: 0; padding-top: 0; }
     .rec1__body { margin-left: 0; }
-    .rec2, .rec3 { margin-left: 0; }
   }
   @media (max-width: 640px) {
     .gallery { flex-wrap: wrap; }
@@ -239,3 +245,20 @@ const gallery = [
     .fni__row { flex-direction: column; gap: 0.3rem; }
   }
 </style>
+
+<script>
+  function wireLoadMore(key, getGroups) {
+    const btn = document.querySelector(`[data-loadmore="${key}"]`);
+    if (!btn) return;
+    const anyHidden = () => getGroups().some((g) => g.some((el) => el.hidden));
+    if (!anyHidden()) { btn.hidden = true; return; }
+    btn.addEventListener('click', () => {
+      getGroups().forEach((group) => {
+        group.filter((el) => el.hidden).slice(0, 3).forEach((el) => { el.hidden = false; });
+      });
+      if (!anyHidden()) btn.hidden = true;
+    });
+  }
+  wireLoadMore('listings', () => [Array.from(document.querySelectorAll('.fni'))]);
+  wireLoadMore('records', () => [Array.from(document.querySelectorAll('.rec-block'))]);
+</script>
