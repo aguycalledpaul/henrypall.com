@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const EXC = 'On March 15, the Arctic sea ice reached its 2026 maximum: 14.29 million km², the lowest in the 48-year satellite record. An area twice the size of Texas that never froze. The ice is telling its story.';
+
+// The featured lecture (full-width hero row).
+const hero = {
+  category: 'Cryosphere',
+  title: 'Thin Ice: The Arctic Sea Ice Maximum of 2026 and the World That Depends on It',
+  excerpt: EXC,
+};
+
+// Grid rows. Each card carries its Figma cell width (w) + row image height (h)
+// so the flex layout reproduces the exact proportions and equal row heights.
+const rows = [
+  { h: 600, cards: [
+    { w: 690, category: 'Geopolitics', title: 'Reading a Warming Arctic: Politics, Science, and the New Maps', excerpt: EXC },
+    { w: 462, category: 'History', title: 'Triumph and Defeat: What the Age of Exploration Still Teaches Us', excerpt: EXC },
+  ]},
+  { h: 500, cards: [
+    { w: 250, category: 'Foundations', title: 'How Ice Works: A Field Primer for Guides and Operators', excerpt: EXC },
+    { w: 841, category: 'Oceanography', title: 'Currents Beneath the Ice: The Ocean That Shapes the Poles', excerpt: EXC },
+  ]},
+  { h: 545, cards: [
+    { w: 545, category: 'Geopolitics', title: 'Scramble for the North Pole: Continental Shelf Claims and the Arctic Council', excerpt: EXC },
+    { w: 545, category: 'Cryosphere', title: 'The Colour of Ice: What Blue, White, Green, and Black Reveal', excerpt: EXC },
+  ]},
+  { h: 545, cards: [
+    { w: 355, category: 'Cryosphere', title: 'Permafrost’s Long Goodbye: When the Ground Stops Being Permanent', excerpt: EXC },
+    { w: 355, category: 'Oceanography', title: 'Sea Ice Dialects: How Northern Peoples Read the Ice', excerpt: EXC },
+    { w: 355, category: 'Volcanism', title: 'Fire Under Ice: The Volcanoes That Shape Antarctica', excerpt: EXC },
+  ]},
+];
+---
+
+<BaseLayout>
+  <div class="lectures">
+    <!-- ===== HERO (full-width featured lecture) ===== -->
+    <section class="wrap lechero">
+      <div class="lechero__inner">
+        <div class="lechero__media placeholder"></div>
+        <article class="lechero__card">
+          <span class="tag lechero__chip">{hero.category}</span>
+          <h1 class="lechero__title">{hero.title}</h1>
+          <p class="lechero__excerpt">{hero.excerpt}</p>
+          <a class="readmore readmore--light lechero__more" href="#"><b>Read</b> More</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== GRID ROWS ===== -->
+    {rows.map((row) => (
+      <div class="wrap lecrow">
+        {row.cards.map((c) => (
+          <article class="lec" style={`flex:${c.w} 1 0`}>
+            <div class="lec__media placeholder" style={`aspect-ratio:${c.w} / ${row.h}`}></div>
+            <div class="lec__card">
+              <span class="tag lec__chip">{c.category}</span>
+              <h3 class="lec__title">{c.title}</h3>
+              <p class="lec__excerpt">{c.excerpt}</p>
+              <a class="readmore readmore--light lec__more" href="#"><b>Read</b> More</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .wrap { position: relative; width: min(1104px, calc(100% - 2.5rem)); margin-inline: auto; }
+  .readmore { font-size: 0.85rem; color: var(--navy); border-left: 2px solid currentColor; padding-left: 8px; white-space: nowrap; }
+  .readmore b { font-weight: 600; }
+  .readmore--light { color: #fff; }
+
+  .lectures { padding-top: 70px; padding-bottom: 2rem; }
+
+  /* ---------- HERO (image full width; navy card on the right, 24px below image) ---------- */
+  .lechero { padding-bottom: 44px; }
+  .lechero__inner { position: relative; }
+  .lechero__media { width: 100%; aspect-ratio: 1091 / 500; background: var(--placeholder); }
+  .lechero__card {
+    position: absolute; right: 0; bottom: -24px; width: 62.39%;
+    background: var(--navy); color: #fff; padding: 21px 29px 16px;
+  }
+  .lechero__chip { position: absolute; left: 0; bottom: calc(100% + 2px); }
+  .lechero__title { color: #fff; margin: 0 0 0.4rem; font-size: clamp(1.5rem, 2.9vw, 40px); font-weight: 500; text-transform: uppercase; line-height: 1.125; }
+  .lechero__excerpt { font-size: 14px; font-weight: 300; line-height: 1.5; color: #c7d0d4; margin: 0 0 0.6rem; }
+  .lechero__more { display: inline-block; float: right; }
+
+  /* ---------- GRID ROWS ---------- */
+  .lecrow { display: flex; gap: 21px; margin-bottom: 20px; align-items: flex-start; }
+
+  .lec { position: relative; container-type: inline-size; }
+  .lec__media { width: 100%; background: var(--placeholder); }
+  .lec__card {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: var(--navy); color: #fff;
+    padding: clamp(0.75rem, 4cqw, 1.5rem);
+  }
+  .lec__chip { position: absolute; left: 0; bottom: calc(100% + 2px); }
+  .lec__title { color: #fff; margin: 0 0 0.4rem; font-size: clamp(1rem, 6cqw, 40px); font-weight: 500; text-transform: uppercase; line-height: 1.15; }
+  .lec__excerpt { font-size: clamp(0.62rem, 2cqw, 14px); font-weight: 300; line-height: 1.5; color: #c7d0d4; margin: 0 0 0.5rem; }
+  .lec__more { display: inline-block; float: right; font-size: clamp(0.62rem, 2cqw, 0.85rem); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 820px) {
+    .lechero__media { aspect-ratio: 3 / 2; }
+    .lechero__card { position: static; width: 100%; transform: none; margin-top: -3rem; }
+    .lechero { padding-bottom: 0; }
+    .lecrow { flex-wrap: wrap; }
+    .lec { flex: 1 1 45% !important; }
+  }
+  @media (max-width: 480px) {
+    .lec { flex: 1 1 100% !important; }
+  }
+</style>
