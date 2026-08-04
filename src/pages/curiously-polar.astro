@@ -43,12 +43,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <blockquote class="cpmid__quote">
         <p>It’s our very own curiosity that’s our key driver. We want to learn, understand, and share about the most remote, most fragile ecosystems on our planet.</p>
-        <a class="cpbtn cpbtn--solid cpmid__more" href="#"><span class="cpbtn__bar">|</span> <b>Read</b> More</a>
+        <a class="cpmid__more" href="#"><span class="cpmid__bar">|</span> <b>Read</b> More</a>
       </blockquote>
 
       <figure class="cpmotto">
         <span class="cpmotto__mark cpmotto__mark--open">“</span>
+        <span class="cpmotto__line cpmotto__line--1"></span>
         <blockquote>In the end, we will conserve only what we love, we will love only what we understand, and we will understand only what we are taught.</blockquote>
+        <span class="cpmotto__line cpmotto__line--2"></span>
         <figcaption>Baba Dioum</figcaption>
         <span class="cpmotto__mark cpmotto__mark--close">”</span>
       </figure>
@@ -99,10 +101,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .cpplayer {
     position: absolute; left: 0; right: 0; bottom: 0; height: 75px; z-index: 2;
     background: rgba(0, 0, 0, 0.35); backdrop-filter: blur(2px);
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; justify-content: center;
     padding: 0 clamp(1rem, 4vw, 3rem); color: #fff;
   }
-  .cpplayer__info { display: flex; align-items: center; gap: 0.8rem; min-width: 0; }
+  .cpplayer__info { position: absolute; left: clamp(1rem, 4vw, 3rem); top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 0.8rem; min-width: 0; max-width: 42%; }
   .cpplayer__thumb { flex: 0 0 auto; width: 55px; height: 55px; background: #2b4a52; }
   .cpplayer__meta { display: flex; flex-direction: column; min-width: 0; }
   .cpplayer__show { font-size: 0.8rem; color: #b9c4c9; }
@@ -121,12 +123,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .cpmid__quote {
     position: absolute; left: 0; top: 74px; width: 46.34%; margin: 0;
     background: #fff; box-shadow: 0 24px 60px rgba(17, 41, 46, 0.16);
-    border-left: 2px solid var(--navy);
-    padding: 3rem 3rem 2.6rem;
+    padding: 52px 48px 40px 65px;
   }
-  .cpmid__quote p { margin: 0 0 1.8rem; font-size: 1.05rem; font-weight: 300; line-height: 1.7; color: #1a2a2f; }
-  .cpmid__more { display: inline-flex; align-items: center; gap: 4px; }
-  .cpbtn__bar { font-weight: 300; }
+  .cpmid__quote::before { content: ''; position: absolute; left: 34px; top: 52px; width: 2px; height: 158px; background: var(--navy); }
+  .cpmid__quote p { margin: 0 0 1.9rem; font-size: 1.05rem; font-weight: 300; line-height: 1.7; color: #1a2a2f; }
+  .cpmid__more { display: inline-block; width: 128px; height: 40px; line-height: 40px; text-align: center; background: var(--navy); color: #fff; font-size: 14px; white-space: nowrap; }
+  .cpmid__more:hover { background: var(--navy-800); }
+  .cpmid__bar { font-weight: 300; }
   .cpmid__more b { font-weight: 600; }
 
   .cpmotto {
@@ -138,6 +141,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .cpmotto__mark { position: absolute; font-size: 5rem; line-height: 1; color: #fff; font-family: Georgia, serif; }
   .cpmotto__mark--open { top: 0.4rem; left: 1.4rem; }
   .cpmotto__mark--close { bottom: -1.6rem; right: 1.4rem; }
+  .cpmotto__line { position: absolute; height: 1px; background: rgba(255, 255, 255, 0.28); }
+  .cpmotto__line--1 { left: 19.8%; top: 49px; width: 69.8%; }
+  .cpmotto__line--2 { left: 11.5%; bottom: 40px; width: 53.3%; }
 
   /* ---------- NEWSLETTER ---------- */
   .cpnews-outer { padding: 3rem 0 4rem; }
