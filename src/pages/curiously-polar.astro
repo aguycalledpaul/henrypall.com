@@ -63,13 +63,13 @@ try {
       </div>
       <div class="cpplayer__controls">
         <button class="cpplayer__btn cpplayer__speed" id="cpspeed" type="button" aria-label="Playback speed">1x</button>
-        <button class="cpplayer__btn" id="cpback" type="button" aria-label="Back 15 seconds">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 6V2L5 6l6 4V7a6 6 0 11-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <button class="cpplayer__btn cpplayer__seek" id="cpback" type="button" aria-label="Back 15 seconds">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/></svg>
           <span class="cpplayer__sec">15</span>
         </button>
         <button class="cpplayer__play" id="cpplay" type="button" aria-label="Play"><span class="cpplayer__tri"></span></button>
-        <button class="cpplayer__btn" id="cpfwd" type="button" aria-label="Forward 60 seconds">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 6V2l6 4-6 4V7a6 6 0 106 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <button class="cpplayer__btn cpplayer__seek" id="cpfwd" type="button" aria-label="Forward 60 seconds">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1 -3-6.7"/><path d="M21 4v4h-4"/></svg>
           <span class="cpplayer__sec">60</span>
         </button>
         <span class="cpplayer__vol">
@@ -98,7 +98,7 @@ try {
         <blockquote class="cpmotto__text">In the end, we will conserve only what we love, we will love only what we understand, and we will understand only what we are taught.</blockquote>
         <span class="cpmotto__line cpmotto__line--2"></span>
         <figcaption>Baba Dioum</figcaption>
-        <span class="cpmotto__mark cpmotto__mark--close">”</span>
+        <span class="cpmotto__mark cpmotto__mark--close">“</span>
       </figure>
     </div>
   </section>
@@ -106,18 +106,20 @@ try {
   <!-- ============ BOTTOM THIRD — NEWSLETTER ============ -->
   <section class="cpnews-outer" id="cpnews">
     <div class="wrap cpnews">
-      <p class="cpnews__eyebrow"><span>Narrating the Poles</span></p>
-      <h2 class="cpnews__title">
-        <span class="cpnews__l cpnews__l1">Sign up for <span class="cpnews__hl">your</span></span>
-        <span class="cpnews__l cpnews__l2">monthly dose</span>
-        <span class="cpnews__l cpnews__l3">of <span class="cpnews__hl">polar curiosity</span></span>
-      </h2>
-      <p class="cpnews__sub">Stay up to date with our monthly reminders of how awesome, precious and fun the polar regions are.</p>
-      <form class="cpnews__form" action="#" method="post" onsubmit="return false">
-        <input type="text" name="cm-name" placeholder="Your Name" aria-label="Your Name" />
-        <input type="email" name="cm-email" placeholder="Your Email" aria-label="Your Email" />
-        <button class="cpnews__join" type="submit">Join Now</button>
-      </form>
+      <div class="cpnews__block">
+        <p class="cpnews__eyebrow"><span>Narrating the Poles</span></p>
+        <h2 class="cpnews__title">
+          <span class="cpnews__l cpnews__l1"><span class="cpnews__hl">Sign up</span> for your</span>
+          <span class="cpnews__l cpnews__l2">monthly dose</span>
+          <span class="cpnews__l cpnews__l3">of <span class="cpnews__hl">polar curiosity</span></span>
+        </h2>
+        <p class="cpnews__sub">Stay up to date with our monthly reminders of how awesome, precious and fun the polar regions are.</p>
+        <form class="cpnews__form" action="#" method="post" onsubmit="return false">
+          <input type="text" name="cm-name" placeholder="Your Name" aria-label="Your Name" />
+          <input type="email" name="cm-email" placeholder="Your Email" aria-label="Your Email" />
+          <button class="cpnews__join" type="submit">Join Now</button>
+        </form>
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -125,23 +127,24 @@ try {
 <style>
   .wrap { position: relative; width: min(1104px, calc(100% - 2.5rem)); margin-inline: auto; }
 
-  /* ---------- HERO (full-bleed, image runs behind the transparent header) ---------- */
+  /* ---------- HERO (full-bleed grey plate, runs behind the transparent header) ---------- */
   .cphero {
     position: relative; color: #fff;
     min-height: 88vh; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     padding: 8rem 1.5rem 7rem; text-align: center; overflow: hidden;
   }
-  /* grey placeholder image plate (extends to the very top, under the header) */
+  /* grey placeholder image plate — same grey as every other placeholder */
   .cphero__bg { position: absolute; inset: 0; background: var(--placeholder); z-index: 0; }
+  /* neutral grey darkening (NOT navy) so white text stays legible without tinting the plate green */
   .cphero__scrim {
     position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(180deg, rgba(17,41,46,0.55) 0%, rgba(17,41,46,0.32) 42%, rgba(17,41,46,0.62) 100%);
+    background: linear-gradient(180deg, rgba(30,30,30,0.30) 0%, rgba(30,30,30,0.22) 45%, rgba(30,30,30,0.40) 100%);
   }
-  .cphero__body { position: relative; z-index: 2; }
+  .cphero__body { position: relative; z-index: 2; text-shadow: 0 1px 18px rgba(0,0,0,0.35); }
   .cphero__eyebrow { text-transform: uppercase; letter-spacing: 0.22em; font-weight: 300; font-size: 20px; margin: 0 0 1.4rem; }
   .cphero__line { font-weight: 400; font-size: clamp(1.9rem, 4.6vw, 50px); line-height: 1.12; margin: 0; }
-  .cphero__actions { margin-top: 2.4rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .cphero__actions { margin-top: 2.4rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; text-shadow: none; }
 
   /* both buttons: #11292E fill, white type */
   .cpbtn {
@@ -153,26 +156,30 @@ try {
 
   /* ---------- podcast player bar (functional) ---------- */
   .cpplayer {
-    position: absolute; left: 0; right: 0; bottom: 0; height: 78px; z-index: 3;
+    position: absolute; left: 0; right: 0; bottom: 0; height: 75px; z-index: 3;
     background: rgba(9, 22, 25, 0.55); backdrop-filter: blur(3px);
     display: flex; align-items: center; justify-content: center;
     padding: 0 clamp(1rem, 4vw, 3rem); color: #fff;
   }
-  .cpplayer__info { position: absolute; left: clamp(1rem, 4vw, 3rem); top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 0.8rem; min-width: 0; max-width: 42%; }
-  .cpplayer__thumb { flex: 0 0 auto; width: 56px; height: 56px; background: #2b4a52 center/cover no-repeat; }
-  .cpplayer__meta { display: flex; flex-direction: column; min-width: 0; }
-  .cpplayer__show { font-size: 0.78rem; color: #b9c4c9; }
-  .cpplayer__ep { font-size: 0.95rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .cpplayer__controls { display: flex; align-items: center; gap: clamp(0.7rem, 2.4vw, 1.7rem); }
+  .cpplayer__info { position: absolute; left: clamp(1rem, 4vw, 3rem); top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 10px; min-width: 0; max-width: 42%; }
+  .cpplayer__thumb { flex: 0 0 auto; width: 55px; height: 55px; background: #2b4a52 center/cover no-repeat; }
+  /* episode information left-aligned toward the thumbnail */
+  .cpplayer__meta { display: flex; flex-direction: column; align-items: flex-start; text-align: left; min-width: 0; }
+  .cpplayer__show { font-size: 14px; font-weight: 300; color: #cdd6da; line-height: 1.3; }
+  .cpplayer__ep { font-size: 15px; font-weight: 500; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .cpplayer__controls { display: flex; align-items: center; gap: clamp(0.7rem, 2.2vw, 1.55rem); }
   .cpplayer__btn { position: relative; background: none; border: 0; color: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: grid; place-items: center; padding: 0; }
   .cpplayer__btn:hover { opacity: 0.72; }
-  .cpplayer__sec { position: absolute; left: 0; right: 0; top: 52%; transform: translateY(-50%); font-size: 8px; font-weight: 600; text-align: center; pointer-events: none; }
-  .cpplayer__speed { min-width: 30px; font-weight: 500; }
-  .cpplayer__play { width: 52px; height: 52px; border-radius: 50%; background: #fff; border: 0; cursor: pointer; display: grid; place-items: center; transition: transform 0.15s ease; }
-  .cpplayer__tri { width: 0; height: 0; border-left: 14px solid #11292E; border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 3px; }
+  .cpplayer__speed { min-width: 30px; font-weight: 500; font-size: 15px; }
+  /* larger circular-arrow seek buttons with the number centred inside */
+  .cpplayer__seek { width: 44px; height: 44px; }
+  .cpplayer__seek svg { width: 44px; height: 44px; }
+  .cpplayer__sec { position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; font-weight: 600; pointer-events: none; }
+  .cpplayer__play { width: 60px; height: 60px; border-radius: 50%; background: #fff; border: 0; cursor: pointer; display: grid; place-items: center; transition: transform 0.15s ease; }
+  .cpplayer__tri { width: 0; height: 0; border-left: 16px solid #11292E; border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 4px; }
   .cpplayer__play.is-playing .cpplayer__tri {
-    width: 12px; height: 15px; border: 0; margin: 0;
-    border-left: 4px solid #11292E; border-right: 4px solid #11292E;
+    width: 14px; height: 17px; border: 0; margin: 0;
+    border-left: 5px solid #11292E; border-right: 5px solid #11292E;
     box-sizing: border-box;
   }
   .cpplayer__play:hover { transform: scale(1.05); }
@@ -183,63 +190,82 @@ try {
   /* ---------- MIDDLE (image + quote card + motto) ---------- */
   .cpmid { padding: 4.5rem 0 4rem; }
   .cpmid__inner { position: relative; min-height: 760px; }
-  .cpmid__img { margin-left: 24.2%; width: 66.85%; aspect-ratio: 1 / 1; background: var(--placeholder); }
+  .cpmid__img { margin-left: 24.24%; width: 66.84%; aspect-ratio: 1 / 1; background: var(--placeholder); }
+
+  /* quote card 520×324 in Figma → padding 52 / 40 / 47 / 65 */
   .cpmid__quote {
-    position: absolute; left: 0; top: 74px; width: 46.34%; margin: 0;
+    position: absolute; left: 0; top: 74px; width: 46.35%; margin: 0;
     background: #fff; box-shadow: 0 24px 60px rgba(17, 41, 46, 0.16);
-    padding: 52px 48px 40px 65px;
+    padding: 52px 40px 47px 65px;
   }
-  /* vertical rule — marginally longer than the quote text block */
-  .cpmid__quote::before { content: ''; position: absolute; left: 34px; top: 46px; width: 2px; height: calc(100% - 118px); background: var(--navy); }
-  .cpmid__qtext { margin: 0 0 1.9rem; font-size: 1.05rem; font-weight: 300; font-style: italic; line-height: 1.7; color: #1a2a2f; }
-  .cpmid__more { display: inline-block; width: 128px; height: 40px; line-height: 40px; text-align: center; background: var(--navy); color: #fff; font-size: 14px; white-space: nowrap; }
+  .cpmid__qtext { position: relative; margin: 0; font-size: 16px; font-weight: 300; font-style: italic; line-height: 1.72; color: #1a2a2f; }
+  /* vertical rule spans EXACTLY the height of the quote text, offset 31px to its left */
+  .cpmid__qtext::before { content: ''; position: absolute; left: -31px; top: 0; bottom: 0; width: 2px; background: var(--navy); }
+  .cpmid__more { display: inline-block; margin-top: 20px; width: 128px; height: 40px; line-height: 40px; text-align: center; background: var(--navy); color: #fff; font-size: 14px; white-space: nowrap; }
   .cpmid__more:hover { background: var(--navy-800); }
   .cpmid__bar { font-weight: 300; }
   .cpmid__more b { font-weight: 600; }
 
-  /* motto — navy card, centre-aligned italic text, slab-serif marks, 2px white rules */
+  /* motto — navy card 461×205, exact element positions from Figma (as % of the card) */
   .cpmotto {
-    position: absolute; left: 53.62%; top: 585px; width: 41.09%; margin: 0;
-    background: var(--navy); color: #fff; padding: 46px 52px 30px; text-align: center;
+    position: absolute; left: 53.57%; top: 585px; width: 41.09%; aspect-ratio: 461 / 205; margin: 0;
+    background: var(--navy); color: #fff;
   }
-  .cpmotto__text { margin: 0 auto; max-width: 300px; font-size: 16px; font-style: italic; font-weight: 300; line-height: 1.55; }
-  .cpmotto figcaption { margin-top: 1.1rem; text-align: center; font-size: 10px; letter-spacing: 0.04em; color: #c7d0d4; }
+  .cpmotto__text {
+    position: absolute; left: 11.28%; top: 33.66%; width: 77.0%; margin: 0;
+    text-align: center; font-size: 16px; font-style: italic; font-weight: 300; line-height: 1.5;
+  }
+  .cpmotto figcaption {
+    position: absolute; left: 67.03%; top: 76.6%; width: 12.6%;
+    text-align: left; font-size: 10px; letter-spacing: 0.02em; color: #dfe5e8;
+  }
   .cpmotto__mark { position: absolute; font-family: 'Port Lligat Slab', Georgia, serif; font-size: 75px; line-height: 1; color: #fff; }
-  .cpmotto__mark--open { top: 16px; left: 20px; }
-  .cpmotto__mark--close { bottom: -18px; right: 26px; transform: rotate(180deg); }
+  .cpmotto__mark--open { left: 9.54%; top: 11.7%; }
+  .cpmotto__mark--close { left: 89.4%; top: 91.7%; transform: rotate(180deg); transform-origin: left top; }
   .cpmotto__line { position: absolute; height: 2px; background: #fff; }
-  .cpmotto__line--1 { top: 40px; left: 96px; width: 60%; }
-  .cpmotto__line--2 { bottom: 44px; left: 60px; width: 46%; }
+  .cpmotto__line--1 { left: 19.52%; top: 23.9%; width: 68.76%; }
+  .cpmotto__line--2 { left: 11.28%; top: 80.49%; width: 52.5%; }
 
-  /* ---------- NEWSLETTER (light image plate, black type, white highlight bars) ---------- */
+  /* ---------- NEWSLETTER (grey plate; content block anchored bottom-right) ---------- */
   .cpnews-outer { padding: 3rem 0 4.5rem; scroll-margin-top: 90px; }
-  .cpnews { background: var(--placeholder); color: #11292E; text-align: center; padding: clamp(3rem, 6vw, 5rem) 1.5rem; }
-  .cpnews__eyebrow {
-    display: flex; align-items: center; gap: 1.2rem; justify-content: center;
-    text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.78rem; color: #11292E; margin: 0 0 2rem;
+  .cpnews { position: relative; background: var(--placeholder); aspect-ratio: 1122 / 680; color: #11292E; }
+  .cpnews__block {
+    position: absolute; right: 3.92%; bottom: 6.62%; width: 66.13%;
+    display: flex; flex-direction: column;
   }
-  .cpnews__eyebrow::before, .cpnews__eyebrow::after { content: ''; height: 1px; background: rgba(17,41,46,0.4); flex: 1; max-width: 240px; }
-  .cpnews__title { color: #11292E; margin: 0 0 1.6rem; font-weight: 600; text-transform: uppercase; font-size: clamp(2rem, 5vw, 50px); line-height: 1.12; letter-spacing: 0.01em; }
-  .cpnews__l { display: block; }
-  .cpnews__l1 { margin-left: -6%; }
-  .cpnews__l2 { margin-left: 10%; }
-  .cpnews__l3 { margin-left: -3%; }
-  /* white highlight bars sitting behind the words */
-  .cpnews__hl { position: relative; white-space: nowrap; z-index: 0; }
+
+  /* eyebrow: centred label over a continuous full-width rule, white knock-out behind the text */
+  .cpnews__eyebrow { position: relative; text-align: center; margin: 0 0 18px; }
+  .cpnews__eyebrow::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(17,41,46,0.55); }
+  .cpnews__eyebrow span {
+    position: relative; background: var(--placeholder); padding: 4px 16px;
+    text-transform: uppercase; letter-spacing: 0.22em; font-size: 12px; color: #11292E;
+  }
+
+  /* staggered headline, 50px SemiBold, indents from Figma */
+  .cpnews__title { margin: 0 0 22px; font-weight: 600; text-transform: uppercase; font-size: clamp(2rem, 4.6vw, 50px); line-height: 1.1; letter-spacing: 0.01em; }
+  .cpnews__l { display: block; text-align: left; white-space: nowrap; }
+  .cpnews__l1 { padding-left: 22.1%; }
+  .cpnews__l2 { padding-left: 0.5%; }
+  .cpnews__l3 { padding-left: 21.8%; }
+  /* white highlight bars behind the words (under "Sign up" and "polar curiosity") */
+  .cpnews__hl { position: relative; z-index: 0; }
   .cpnews__hl::before {
-    content: ''; position: absolute; left: -0.14em; right: -0.14em; bottom: 0.2em; height: 0.3em;
+    content: ''; position: absolute; left: -0.1em; right: -0.1em; bottom: 0.12em; height: 0.3em;
     background: #fff; z-index: -1;
   }
-  .cpnews__sub { max-width: 560px; margin: 0 auto 2.4rem; font-size: 20px; font-weight: 400; line-height: 1.5; color: #11292E; }
-  .cpnews__form { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+
+  .cpnews__sub { max-width: 73%; margin: 0 auto 30px; font-size: clamp(1rem, 1.7vw, 18px); font-weight: 400; line-height: 1.45; text-align: center; color: #11292E; }
+
+  .cpnews__form { display: flex; gap: 17px; justify-content: space-between; }
   .cpnews__form input {
-    width: 300px; max-width: 100%; height: 44px; padding: 0 1.1rem; border: 0; border-radius: 6px;
+    flex: 1 1 0; min-width: 0; height: 44px; padding: 0 1rem; border: 0; border-radius: 6px;
     font-family: inherit; font-size: 0.9rem; background: #fff; color: #11292E; text-align: center;
   }
-  .cpnews__form input::placeholder { color: rgba(0,0,0,0.35); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .cpnews__form input::placeholder { color: rgba(0,0,0,0.35); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
   .cpnews__join {
-    height: 44px; padding: 0 1.7rem; border: 0; background: #11292E; color: #fff;
-    font-family: inherit; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+    flex: 0 0 auto; height: 44px; padding: 0 1.6rem; border: 0; background: #11292E; color: #fff;
+    font-family: inherit; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
     font-size: 14px; cursor: pointer; border-radius: 6px;
   }
   .cpnews__join:hover { background: var(--navy-800); }
@@ -250,9 +276,18 @@ try {
     .cpmid__inner { min-height: 0; }
     .cpmid__img { margin-left: 0; width: 100%; }
     .cpmid__quote { position: static; width: 90%; margin: -3rem 0 2rem; }
-    .cpmotto { position: static; width: 100%; margin-top: 1.5rem; }
-    .cpmotto__mark--close { bottom: 0.4rem; }
-    .cpnews__l1, .cpnews__l2, .cpnews__l3 { margin-left: 0; }
+    .cpmotto { position: static; width: 100%; aspect-ratio: auto; padding: 46px 40px 40px; margin-top: 1.5rem; }
+    .cpmotto__text { position: static; width: auto; }
+    .cpmotto figcaption { position: static; width: auto; text-align: center; margin-top: 1rem; }
+    .cpmotto__line { display: none; }
+    .cpmotto__mark--open { top: 14px; left: 18px; }
+    .cpmotto__mark--close { top: auto; bottom: 6px; left: auto; right: 22px; transform: rotate(180deg); }
+    .cpnews { aspect-ratio: auto; }
+    .cpnews__block { position: static; width: auto; padding: clamp(2.5rem, 6vw, 4rem) 1.5rem; }
+    .cpnews__l { white-space: normal; text-align: center; padding-left: 0; }
+    .cpnews__sub { max-width: 100%; }
+    .cpnews__form { flex-wrap: wrap; justify-content: center; }
+    .cpnews__form input { flex: 1 1 240px; }
   }
   @media (max-width: 560px) {
     .cpplayer__ep { max-width: 120px; }
