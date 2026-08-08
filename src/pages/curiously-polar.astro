@@ -1,37 +1,83 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, ''); // "/beta"
+const FEED = 'https://curiouslypolar.com/curiouslypolar/mp3';
+
+// --- Latest episode, pulled from the podcast RSS feed at build time. ---
+// Falls back to the last-known episode if the feed can't be reached during the build.
+let episode = {
+  show: 'Curiously Polar',
+  title: '168 Scramble for the North Pole',
+  audio: 'https://feedpress.me/link/17484/16152061/cp168.mp3',
+  cover: 'https://curiouslypolar.com/media/cp168.jpg',
+};
+
+try {
+  const res = await fetch(FEED, { headers: { 'User-Agent': 'henrypall.com build' } });
+  if (res.ok) {
+    const xml = await res.text();
+    const chTitle = xml.match(/<channel>[\s\S]*?<title>\s*(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?\s*<\/title>/);
+    const chImg = xml.match(/<itunes:image[^>]*href="([^"]+)"/);
+    const item = xml.split('<item>')[1] || '';
+    const pick = (re) => { const m = item.match(re); return m ? (m[1] || '').trim() : ''; };
+    const title = pick(/<title>\s*(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?\s*<\/title>/);
+    const audio = pick(/<enclosure[^>]*url="([^"]+)"/);
+    const cover = pick(/<itunes:image[^>]*href="([^"]+)"/);
+    if (chTitle && chTitle[1]) episode.show = chTitle[1];
+    if (title) episode.title = title;
+    if (audio) episode.audio = audio;
+    if (cover) episode.cover = cover;
+    else if (chImg) episode.cover = chImg[1];
+  }
+} catch (e) {
+  // keep fallback episode
+}
 ---
 
-<BaseLayout>
+<BaseLayout overlayHeader>
   <!-- ============ TOP THIRD — HERO ============ -->
   <section class="cphero">
+    <div class="cphero__bg"></div>
+    <div class="cphero__scrim"></div>
+
     <div class="cphero__body">
       <p class="cphero__eyebrow">Curiously Polar</p>
       <p class="cphero__line">Let’s explore together</p>
       <p class="cphero__line">the magnificent polar regions</p>
       <div class="cphero__actions">
-        <a class="cpbtn cpbtn--solid" href="#">The Podcast</a>
-        <a class="cpbtn cpbtn--ghost" href="#">Monthly Email</a>
+        <a class="cpbtn" href={base + '/curiously-polar/podcast'}>The Podcast</a>
+        <a class="cpbtn" href="#cpnews">Monthly Email</a>
       </div>
     </div>
 
-    <!-- Podcast playback bar -->
-    <div class="cpplayer">
+    <!-- Podcast playback bar (pulls the latest episode from the RSS feed) -->
+    <div class="cpplayer" id="cpplayer" data-audio={episode.audio}>
+      <audio id="cpaudio" preload="none" src={episode.audio}></audio>
       <div class="cpplayer__info">
-        <span class="cpplayer__thumb"></span>
+        <span class="cpplayer__thumb" style={`background-image:url('${episode.cover}')`}></span>
         <span class="cpplayer__meta">
-          <span class="cpplayer__show">Curiously Polar</span>
-          <span class="cpplayer__ep">168 · Scramble for the North Pole</span>
+          <span class="cpplayer__show">{episode.show}</span>
+          <span class="cpplayer__ep">{episode.title}</span>
         </span>
       </div>
       <div class="cpplayer__controls">
-        <button class="cpplayer__btn" type="button" aria-label="Playback speed">1x</button>
-        <button class="cpplayer__btn" type="button" aria-label="Back 15 seconds">↺15</button>
-        <button class="cpplayer__play" type="button" aria-label="Play"><span></span></button>
-        <button class="cpplayer__btn" type="button" aria-label="Forward 60 seconds">60↻</button>
-        <button class="cpplayer__btn" type="button" aria-label="Volume">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a4 4 0 010 7"/></svg>
+        <button class="cpplayer__btn cpplayer__speed" id="cpspeed" type="button" aria-label="Playback speed">1x</button>
+        <button class="cpplayer__btn" id="cpback" type="button" aria-label="Back 15 seconds">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 6V2L5 6l6 4V7a6 6 0 11-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="cpplayer__sec">15</span>
         </button>
+        <button class="cpplayer__play" id="cpplay" type="button" aria-label="Play"><span class="cpplayer__tri"></span></button>
+        <button class="cpplayer__btn" id="cpfwd" type="button" aria-label="Forward 60 seconds">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 6V2l6 4-6 4V7a6 6 0 106 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="cpplayer__sec">60</span>
+        </button>
+        <span class="cpplayer__vol">
+          <button class="cpplayer__btn" id="cpmute" type="button" aria-label="Volume">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a4 4 0 010 7"/></svg>
+          </button>
+          <input class="cpplayer__range" id="cpvol" type="range" min="0" max="1" step="0.05" value="1" aria-label="Volume level" />
+        </span>
       </div>
     </div>
   </section>
@@ -42,14 +88,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="cpmid__img placeholder"></div>
 
       <blockquote class="cpmid__quote">
-        <p>It’s our very own curiosity that’s our key driver. We want to learn, understand, and share about the most remote, most fragile ecosystems on our planet.</p>
-        <a class="cpmid__more" href="#"><span class="cpmid__bar">|</span> <b>Read</b> More</a>
+        <p class="cpmid__qtext">It’s our very own curiosity that’s our key driver. We want to learn, understand, and share about the most remote, most fragile ecosystems on our planet.</p>
+        <a class="cpmid__more" href={base + '/curiously-polar/podcast'}><span class="cpmid__bar">|</span> <b>Read</b> More</a>
       </blockquote>
 
       <figure class="cpmotto">
         <span class="cpmotto__mark cpmotto__mark--open">“</span>
         <span class="cpmotto__line cpmotto__line--1"></span>
-        <blockquote>In the end, we will conserve only what we love, we will love only what we understand, and we will understand only what we are taught.</blockquote>
+        <blockquote class="cpmotto__text">In the end, we will conserve only what we love, we will love only what we understand, and we will understand only what we are taught.</blockquote>
         <span class="cpmotto__line cpmotto__line--2"></span>
         <figcaption>Baba Dioum</figcaption>
         <span class="cpmotto__mark cpmotto__mark--close">”</span>
@@ -58,14 +104,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </section>
 
   <!-- ============ BOTTOM THIRD — NEWSLETTER ============ -->
-  <section class="cpnews-outer">
+  <section class="cpnews-outer" id="cpnews">
     <div class="wrap cpnews">
       <p class="cpnews__eyebrow"><span>Narrating the Poles</span></p>
-      <h2 class="cpnews__title">Sign up for your<br /><span class="cpnews__hl">monthly dose</span><br />of polar <span class="cpnews__hl">curiosity</span></h2>
+      <h2 class="cpnews__title">
+        <span class="cpnews__l cpnews__l1">Sign up for <span class="cpnews__hl">your</span></span>
+        <span class="cpnews__l cpnews__l2">monthly dose</span>
+        <span class="cpnews__l cpnews__l3">of <span class="cpnews__hl">polar curiosity</span></span>
+      </h2>
       <p class="cpnews__sub">Stay up to date with our monthly reminders of how awesome, precious and fun the polar regions are.</p>
-      <form class="cpnews__form" onsubmit="return false">
-        <input type="text" placeholder="Your Name" aria-label="Your Name" />
-        <input type="email" placeholder="Your Email" aria-label="Your Email" />
+      <form class="cpnews__form" action="#" method="post" onsubmit="return false">
+        <input type="text" name="cm-name" placeholder="Your Name" aria-label="Your Name" />
+        <input type="email" name="cm-email" placeholder="Your Email" aria-label="Your Email" />
         <button class="cpnews__join" type="submit">Join Now</button>
       </form>
     </div>
@@ -75,46 +125,60 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <style>
   .wrap { position: relative; width: min(1104px, calc(100% - 2.5rem)); margin-inline: auto; }
 
-  /* shared buttons */
-  .cpbtn {
-    display: inline-block; padding: 0.6rem 1.4rem; font-size: 0.9rem; letter-spacing: 0.02em;
-    border: 1px solid #fff; white-space: nowrap; transition: background 0.18s ease, color 0.18s ease;
-  }
-  .cpbtn--solid { background: #fff; color: var(--navy); }
-  .cpbtn--solid:hover { background: transparent; color: #fff; }
-  .cpbtn--ghost { background: transparent; color: #fff; }
-  .cpbtn--ghost:hover { background: #fff; color: var(--navy); }
-
-  /* ---------- HERO (full-bleed) ---------- */
+  /* ---------- HERO (full-bleed, image runs behind the transparent header) ---------- */
   .cphero {
-    position: relative; background: var(--navy); color: #fff;
-    min-height: 82vh; display: flex; flex-direction: column;
+    position: relative; color: #fff;
+    min-height: 88vh; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    padding: 5rem 1.5rem 7rem; text-align: center; overflow: hidden;
+    padding: 8rem 1.5rem 7rem; text-align: center; overflow: hidden;
   }
-  .cphero__body { position: relative; z-index: 1; }
+  /* grey placeholder image plate (extends to the very top, under the header) */
+  .cphero__bg { position: absolute; inset: 0; background: var(--placeholder); z-index: 0; }
+  .cphero__scrim {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, rgba(17,41,46,0.55) 0%, rgba(17,41,46,0.32) 42%, rgba(17,41,46,0.62) 100%);
+  }
+  .cphero__body { position: relative; z-index: 2; }
   .cphero__eyebrow { text-transform: uppercase; letter-spacing: 0.22em; font-weight: 300; font-size: 20px; margin: 0 0 1.4rem; }
   .cphero__line { font-weight: 400; font-size: clamp(1.9rem, 4.6vw, 50px); line-height: 1.12; margin: 0; }
   .cphero__actions { margin-top: 2.4rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-  /* podcast player bar */
+  /* both buttons: #11292E fill, white type */
+  .cpbtn {
+    display: inline-block; padding: 0.72rem 1.7rem; font-size: 0.9rem; letter-spacing: 0.02em;
+    background: #11292E; color: #fff; border: 1px solid #11292E; white-space: nowrap;
+    transition: background 0.18s ease, color 0.18s ease;
+  }
+  .cpbtn:hover { background: transparent; color: #fff; }
+
+  /* ---------- podcast player bar (functional) ---------- */
   .cpplayer {
-    position: absolute; left: 0; right: 0; bottom: 0; height: 75px; z-index: 2;
-    background: rgba(0, 0, 0, 0.35); backdrop-filter: blur(2px);
+    position: absolute; left: 0; right: 0; bottom: 0; height: 78px; z-index: 3;
+    background: rgba(9, 22, 25, 0.55); backdrop-filter: blur(3px);
     display: flex; align-items: center; justify-content: center;
     padding: 0 clamp(1rem, 4vw, 3rem); color: #fff;
   }
   .cpplayer__info { position: absolute; left: clamp(1rem, 4vw, 3rem); top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 0.8rem; min-width: 0; max-width: 42%; }
-  .cpplayer__thumb { flex: 0 0 auto; width: 55px; height: 55px; background: #2b4a52; }
+  .cpplayer__thumb { flex: 0 0 auto; width: 56px; height: 56px; background: #2b4a52 center/cover no-repeat; }
   .cpplayer__meta { display: flex; flex-direction: column; min-width: 0; }
-  .cpplayer__show { font-size: 0.8rem; color: #b9c4c9; }
+  .cpplayer__show { font-size: 0.78rem; color: #b9c4c9; }
   .cpplayer__ep { font-size: 0.95rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .cpplayer__controls { display: flex; align-items: center; gap: clamp(0.8rem, 2.5vw, 1.8rem); }
-  .cpplayer__btn { background: none; border: 0; color: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: grid; place-items: center; }
-  .cpplayer__btn:hover { opacity: 0.7; }
-  .cpplayer__play { width: 52px; height: 52px; border-radius: 50%; background: #fff; border: 0; cursor: pointer; display: grid; place-items: center; }
-  .cpplayer__play span { width: 0; height: 0; border-left: 14px solid var(--navy); border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 3px; }
+  .cpplayer__controls { display: flex; align-items: center; gap: clamp(0.7rem, 2.4vw, 1.7rem); }
+  .cpplayer__btn { position: relative; background: none; border: 0; color: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: grid; place-items: center; padding: 0; }
+  .cpplayer__btn:hover { opacity: 0.72; }
+  .cpplayer__sec { position: absolute; left: 0; right: 0; top: 52%; transform: translateY(-50%); font-size: 8px; font-weight: 600; text-align: center; pointer-events: none; }
+  .cpplayer__speed { min-width: 30px; font-weight: 500; }
+  .cpplayer__play { width: 52px; height: 52px; border-radius: 50%; background: #fff; border: 0; cursor: pointer; display: grid; place-items: center; transition: transform 0.15s ease; }
+  .cpplayer__tri { width: 0; height: 0; border-left: 14px solid #11292E; border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 3px; }
+  .cpplayer__play.is-playing .cpplayer__tri {
+    width: 12px; height: 15px; border: 0; margin: 0;
+    border-left: 4px solid #11292E; border-right: 4px solid #11292E;
+    box-sizing: border-box;
+  }
   .cpplayer__play:hover { transform: scale(1.05); }
+  .cpplayer__vol { display: flex; align-items: center; gap: 0.4rem; }
+  .cpplayer__range { width: 0; opacity: 0; transition: width 0.2s ease, opacity 0.2s ease; accent-color: #fff; cursor: pointer; }
+  .cpplayer__vol:hover .cpplayer__range, .cpplayer__range:focus { width: 74px; opacity: 1; }
 
   /* ---------- MIDDLE (image + quote card + motto) ---------- */
   .cpmid { padding: 4.5rem 0 4rem; }
@@ -125,61 +189,121 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     background: #fff; box-shadow: 0 24px 60px rgba(17, 41, 46, 0.16);
     padding: 52px 48px 40px 65px;
   }
-  .cpmid__quote::before { content: ''; position: absolute; left: 34px; top: 52px; width: 2px; height: 158px; background: var(--navy); }
-  .cpmid__quote p { margin: 0 0 1.9rem; font-size: 1.05rem; font-weight: 300; line-height: 1.7; color: #1a2a2f; }
+  /* vertical rule — marginally longer than the quote text block */
+  .cpmid__quote::before { content: ''; position: absolute; left: 34px; top: 46px; width: 2px; height: calc(100% - 118px); background: var(--navy); }
+  .cpmid__qtext { margin: 0 0 1.9rem; font-size: 1.05rem; font-weight: 300; font-style: italic; line-height: 1.7; color: #1a2a2f; }
   .cpmid__more { display: inline-block; width: 128px; height: 40px; line-height: 40px; text-align: center; background: var(--navy); color: #fff; font-size: 14px; white-space: nowrap; }
   .cpmid__more:hover { background: var(--navy-800); }
   .cpmid__bar { font-weight: 300; }
   .cpmid__more b { font-weight: 600; }
 
+  /* motto — navy card, centre-aligned italic text, slab-serif marks, 2px white rules */
   .cpmotto {
     position: absolute; left: 53.62%; top: 585px; width: 41.09%; margin: 0;
-    background: var(--navy); color: #fff; padding: 3rem 3rem 2.4rem;
+    background: var(--navy); color: #fff; padding: 46px 52px 30px; text-align: center;
   }
-  .cpmotto blockquote { margin: 0; font-size: 1rem; font-weight: 300; line-height: 1.7; }
-  .cpmotto figcaption { margin-top: 1.4rem; text-align: right; font-size: 0.85rem; font-style: italic; color: #c7d0d4; }
-  .cpmotto__mark { position: absolute; font-size: 5rem; line-height: 1; color: #fff; font-family: Georgia, serif; }
-  .cpmotto__mark--open { top: 0.4rem; left: 1.4rem; }
-  .cpmotto__mark--close { bottom: -1.6rem; right: 1.4rem; }
-  .cpmotto__line { position: absolute; height: 1px; background: rgba(255, 255, 255, 0.28); }
-  .cpmotto__line--1 { left: 19.8%; top: 49px; width: 69.8%; }
-  .cpmotto__line--2 { left: 11.5%; bottom: 40px; width: 53.3%; }
+  .cpmotto__text { margin: 0 auto; max-width: 300px; font-size: 16px; font-style: italic; font-weight: 300; line-height: 1.55; }
+  .cpmotto figcaption { margin-top: 1.1rem; text-align: center; font-size: 10px; letter-spacing: 0.04em; color: #c7d0d4; }
+  .cpmotto__mark { position: absolute; font-family: 'Port Lligat Slab', Georgia, serif; font-size: 75px; line-height: 1; color: #fff; }
+  .cpmotto__mark--open { top: 16px; left: 20px; }
+  .cpmotto__mark--close { bottom: -18px; right: 26px; transform: rotate(180deg); }
+  .cpmotto__line { position: absolute; height: 2px; background: #fff; }
+  .cpmotto__line--1 { top: 40px; left: 96px; width: 60%; }
+  .cpmotto__line--2 { bottom: 44px; left: 60px; width: 46%; }
 
-  /* ---------- NEWSLETTER ---------- */
-  .cpnews-outer { padding: 3rem 0 4rem; }
-  .cpnews { background: var(--navy); color: #fff; text-align: center; padding: clamp(3rem, 6vw, 5rem) 1.5rem; }
+  /* ---------- NEWSLETTER (light image plate, black type, white highlight bars) ---------- */
+  .cpnews-outer { padding: 3rem 0 4.5rem; scroll-margin-top: 90px; }
+  .cpnews { background: var(--placeholder); color: #11292E; text-align: center; padding: clamp(3rem, 6vw, 5rem) 1.5rem; }
   .cpnews__eyebrow {
     display: flex; align-items: center; gap: 1.2rem; justify-content: center;
-    text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.78rem; color: #cdd6da; margin: 0 0 2rem;
+    text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.78rem; color: #11292E; margin: 0 0 2rem;
   }
-  .cpnews__eyebrow::before, .cpnews__eyebrow::after { content: ''; height: 1px; background: rgba(255,255,255,0.35); flex: 1; max-width: 240px; }
-  .cpnews__title { color: #fff; margin: 0 0 1.6rem; font-weight: 500; text-transform: uppercase; font-size: clamp(2rem, 5vw, 52px); line-height: 1.08; letter-spacing: 0.01em; }
-  .cpnews__hl { position: relative; white-space: nowrap; }
-  .cpnews__hl::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.08em; height: 0.18em; background: rgba(255,255,255,0.22); z-index: -1; }
-  .cpnews__sub { max-width: 560px; margin: 0 auto 2.4rem; font-size: 0.95rem; font-weight: 300; line-height: 1.6; color: #cdd6da; }
+  .cpnews__eyebrow::before, .cpnews__eyebrow::after { content: ''; height: 1px; background: rgba(17,41,46,0.4); flex: 1; max-width: 240px; }
+  .cpnews__title { color: #11292E; margin: 0 0 1.6rem; font-weight: 600; text-transform: uppercase; font-size: clamp(2rem, 5vw, 50px); line-height: 1.12; letter-spacing: 0.01em; }
+  .cpnews__l { display: block; }
+  .cpnews__l1 { margin-left: -6%; }
+  .cpnews__l2 { margin-left: 10%; }
+  .cpnews__l3 { margin-left: -3%; }
+  /* white highlight bars sitting behind the words */
+  .cpnews__hl { position: relative; white-space: nowrap; z-index: 0; }
+  .cpnews__hl::before {
+    content: ''; position: absolute; left: -0.18em; right: -0.18em; bottom: 0.06em; height: 0.34em;
+    background: #fff; z-index: -1;
+  }
+  .cpnews__sub { max-width: 560px; margin: 0 auto 2.4rem; font-size: 20px; font-weight: 400; line-height: 1.5; color: #11292E; }
   .cpnews__form { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
   .cpnews__form input {
-    width: 300px; max-width: 100%; height: 44px; padding: 0 1.1rem; border: 0; border-radius: 2px;
-    font-family: inherit; font-size: 0.85rem; background: #fff; color: #111;
+    width: 300px; max-width: 100%; height: 44px; padding: 0 1.1rem; border: 0; border-radius: 6px;
+    font-family: inherit; font-size: 0.9rem; background: #fff; color: #11292E; text-align: center;
   }
+  .cpnews__form input::placeholder { color: rgba(0,0,0,0.35); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; }
   .cpnews__join {
-    height: 44px; padding: 0 1.6rem; border: 0; background: #7fb2c7; color: var(--navy);
-    font-family: inherit; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
-    font-size: 0.78rem; cursor: pointer; border-radius: 2px;
+    height: 44px; padding: 0 1.7rem; border: 0; background: #11292E; color: #fff;
+    font-family: inherit; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+    font-size: 14px; cursor: pointer; border-radius: 6px;
   }
-  .cpnews__join:hover { background: #6aa3ba; }
+  .cpnews__join:hover { background: var(--navy-800); }
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 820px) {
-    .cphero { min-height: 70vh; }
+    .cphero { min-height: 74vh; }
     .cpmid__inner { min-height: 0; }
     .cpmid__img { margin-left: 0; width: 100%; }
     .cpmid__quote { position: static; width: 90%; margin: -3rem 0 2rem; }
-    .cpmotto { position: static; width: 100%; }
+    .cpmotto { position: static; width: 100%; margin-top: 1.5rem; }
     .cpmotto__mark--close { bottom: 0.4rem; }
+    .cpnews__l1, .cpnews__l2, .cpnews__l3 { margin-left: 0; }
   }
   @media (max-width: 560px) {
     .cpplayer__ep { max-width: 120px; }
-    .cpplayer__controls { gap: 0.7rem; }
+    .cpplayer__controls { gap: 0.6rem; }
+    .cpplayer__vol .cpplayer__range { display: none; }
   }
 </style>
+
+<script>
+  (function () {
+    const audio = document.getElementById('cpaudio');
+    const play = document.getElementById('cpplay');
+    const speed = document.getElementById('cpspeed');
+    const back = document.getElementById('cpback');
+    const fwd = document.getElementById('cpfwd');
+    const mute = document.getElementById('cpmute');
+    const vol = document.getElementById('cpvol');
+    if (!audio) return;
+
+    play && play.addEventListener('click', function () {
+      if (audio.paused) { audio.play(); } else { audio.pause(); }
+    });
+    audio.addEventListener('play', function () {
+      play.classList.add('is-playing'); play.setAttribute('aria-label', 'Pause');
+    });
+    audio.addEventListener('pause', function () {
+      play.classList.remove('is-playing'); play.setAttribute('aria-label', 'Play');
+    });
+
+    const rates = [0.8, 1, 1.5, 2];
+    let ri = 1; // default 1x
+    speed && speed.addEventListener('click', function () {
+      ri = (ri + 1) % rates.length;
+      audio.playbackRate = rates[ri];
+      speed.textContent = rates[ri] + 'x';
+    });
+
+    back && back.addEventListener('click', function () {
+      audio.currentTime = Math.max(0, audio.currentTime - 15);
+    });
+    fwd && fwd.addEventListener('click', function () {
+      audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + 60);
+    });
+
+    vol && vol.addEventListener('input', function () {
+      audio.volume = parseFloat(vol.value);
+      audio.muted = audio.volume === 0;
+    });
+    mute && mute.addEventListener('click', function () {
+      audio.muted = !audio.muted;
+      vol.value = audio.muted ? 0 : (audio.volume || 1);
+    });
+  })();
+</script>
