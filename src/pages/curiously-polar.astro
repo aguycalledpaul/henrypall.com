@@ -64,12 +64,12 @@ try {
       <div class="cpplayer__controls">
         <button class="cpplayer__btn cpplayer__speed" id="cpspeed" type="button" aria-label="Playback speed">1x</button>
         <button class="cpplayer__btn cpplayer__seek" id="cpback" type="button" aria-label="Back 15 seconds">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/></svg>
           <span class="cpplayer__sec">15</span>
         </button>
         <button class="cpplayer__play" id="cpplay" type="button" aria-label="Play"><span class="cpplayer__tri"></span></button>
         <button class="cpplayer__btn cpplayer__seek" id="cpfwd" type="button" aria-label="Forward 60 seconds">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1 -3-6.7"/><path d="M21 4v4h-4"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1 -3-6.7"/><path d="M21 4v4h-4"/></svg>
           <span class="cpplayer__sec">60</span>
         </button>
         <span class="cpplayer__vol">
@@ -95,7 +95,7 @@ try {
       <figure class="cpmotto">
         <span class="cpmotto__mark cpmotto__mark--open">“</span>
         <span class="cpmotto__line cpmotto__line--1"></span>
-        <blockquote class="cpmotto__text">In the end, we will conserve only what we love, we will love only what we understand, and we will understand only what we are taught.</blockquote>
+        <blockquote class="cpmotto__text">In the end, we will conserve only what we love,<br />we will love only what we understand,<br />and we will understand only what we are taught.</blockquote>
         <span class="cpmotto__line cpmotto__line--2"></span>
         <figcaption>Baba Dioum</figcaption>
         <span class="cpmotto__mark cpmotto__mark--close">“</span>
@@ -213,7 +213,7 @@ try {
   }
   .cpmotto__text {
     position: absolute; left: 11.28%; top: 33.66%; width: 77.0%; margin: 0;
-    text-align: center; font-size: 16px; font-style: italic; font-weight: 300; line-height: 1.5;
+    text-align: center; font-size: 15px; font-style: italic; font-weight: 300; line-height: 1.55;
   }
   .cpmotto figcaption {
     position: absolute; left: 67.03%; top: 76.6%; white-space: nowrap;
@@ -238,7 +238,7 @@ try {
   .cpnews__eyebrow { position: relative; text-align: center; margin: 0 0 18px; }
   .cpnews__eyebrow::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(17,41,46,0.55); }
   .cpnews__eyebrow span {
-    position: relative; background: var(--placeholder); padding: 4px 16px;
+    position: relative; background: #fff; padding: 5px 16px;
     text-transform: uppercase; letter-spacing: 0.22em; font-size: 12px; color: #11292E;
   }
 
