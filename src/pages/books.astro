@@ -3,157 +3,173 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/+$/, ''); // "/beta"
 
-const featuredDesc = `Ice in Practice is Henry’s first book, a field guide for the people who work where the ice does — polar expedition guides, field operations professionals, and students of the cryosphere. In it, Henry shows that the best decisions — on glaciers, sea ice, and tidewater termini — all share the same habit of mind, and it’s not the one most training programmes teach. He calls this approach Observe — Understand — Decide — Communicate, and it provides a framework that turns a crevasse field or a calving face from a hazard to be feared into a landscape that can be read.`;
+const desc = `Ice in Practice is Henry’s first book, a field guide for the people who work where the ice does — polar expedition guides, field operations professionals, and students of the cryosphere. In it, Henry shows that the guides and operators who make the best decisions on glaciers, sea ice, and tidewater termini all share the same habit of mind — and it’s not the one most training programmes teach. He calls this approach Observe → Understand → Decide → Communicate, and it provides a framework that turns a crevasse field or a calving face from a hazard to be feared into a landscape that can be read.`;
 
-const lorem1 = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum molestie augue nec mauris posuere aliquam. Fusce velit magna, auctor at fringilla vitae, sodales vel dui. Curabitur dictum posuere semper. Donec at posuere nibh. Proin a sem sit amet neque molestie egestas eget sit amet risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent a mauris est. Vivamus tincidunt feugiat interdum. Fusce sit amet velit pretium, condimentum magna ac, dictum odio.`;
-const lorem2 = `Duis quam enim, tempus non leo eu, posuere tincidunt sem. Duis nec metus consectetur turpis sagittis fermentum. Proin in vestibulum turpis. In volutpat nibh et augue tristique, nec venenatis libero euismod. Nunc mattis, libero eu vulputate eleifend, arcu enim malesuada nibh, vel rutrum tortor libero eu nisi. Vivamus eu ultricies nibh, eu faucibus massa. Curabitur volutpat accumsan eleifend. Aliquam vestibulum consequat lectus eget consequat.`;
-const lorem3 = `Aenean placerat ligula in sodales blandit. Nullam ac vehicula sem. Suspendisse eget pellentesque est. Nullam sit ligula a lacus ultricies rutrum. Morbi id sodales augue. Curabitur vel dui dapibus, mollis diam nec, auctor neque. Pellentesque consequat sodales tellus vel molestie. Fusce nec turpis id sem hendrerit tempus sit amet a purus. Integer vehicula massa id ex luctus convallis. Nam tincidunt, nisl vitae hendrerit lacinia, ligula odio facilisis augue.`;
-const lorem4 = `Nullam eget vehicula turpis, aliquam mattis metus. Mauris sit amet interdum massa, efficitur tincidunt elit. Integer id eros ac justa fringilla imperdiet et vitae mi. Mauris hendrerit commodo purus, eu viverra elit molestie quis. Nulla tempus nulla ante, quis gravida turpis ultrices ut. Suspendisse a nisl id justa varius volutpat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.`;
+const bodyA = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum molestie augue nec mauris posuere aliquam. Fusce velit magna, auctor at fringilla vitae, sodales vel dui. Curabitur dictum posuere semper. Donec et posuere nibh. Proin a sem sit amet neque molestie egestas eget sit amet risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent a mauris est. Vivamus tincidunt feugiat interdum. Fusce sit amet velit pretium, condimentum magna ac, dictum odio. Duis quam enim, tempus non leo eu, posuere tincidunt sem. Duis nec metus consectetur turpis sagittis fermentum. Proin in vestibulum turpis. In volutpat nibh et augue tristique, nec venenatis libero euismod. Nunc mattis, libero eu vulputate eleifend, arcu enim malesuada nibh, vel rutrum tortor libero eu nisi. Vivamus eu ultrices nibh, eu faucibus massa. Curabitur volutpat accumsan eleifend. Aliquam vestibulum consequat lectus eget consequat.`;
+const bodyB = `Aenean placerat ligula in sodales blandit. Nullam ac vehicula sem. Suspendisse eget pellentesque est. Nulla et ligula a lacus ultricies rutrum. Morbi id sodales augue. Curabitur et dui dapibus, mollis diam nec, auctor neque. Pellentesque consequat sodales tellus vel molestie. Fusce nec turpis id sem hendrerit tempus sit amet a purus. Integer vehicula massa id ex luctus convallis. Nam tincidunt, nisi vitae hendrerit lacinia, ligula odio facilisis augue, vel laoreet leo nunc quis lectus. Vestibulum scelerisque ultrices ipsum, quis mattis orci malesuada in. Etiam enim leo, consectetur eget auctor eget, blandit eget erat. Nullam et libero laoreet, tincidunt erat at, ullamcorper urna. Praesent blandit posuere orci, vel pellentesque purus imperdiet sit amet. Integer bibendum ut dolor lacinia ultrices. Suspendisse metus ante, pellentesque non fermentum at, porttitor mollis elit.`;
 ---
 
-<BaseLayout title="Books — Henry Páll Wulff">
-  <div class="books">
-    <!-- ========== FEATURED BOOK ========== -->
-    <section class="wrap bkfeat">
-      <div class="bkfeat__cover placeholder" aria-label="Ice in Practice — book cover"></div>
-      <article class="bkfeat__card">
-        <h1 class="bkfeat__title">Ice in Practice</h1>
-        <p class="bkfeat__sub">A Field Guide to Understanding and Working in the Cryosphere</p>
-        <p class="bkfeat__desc">{featuredDesc}</p>
-        <p class="bkfeat__desc bkfeat__desc--last">And it all starts with learning to read the ice.</p>
+<BaseLayout title="Books — Henry Páll Wulff" overlayHeader overlayDark={false}>
+  <!-- ================= FEATURED BOOK — full-bleed grey hero ================= -->
+  <section class="bkhero">
+    <div class="wrap bkhero__inner">
+      <div class="bkhero__cover placeholder" aria-label="Ice in Practice — book cover"></div>
+      <article class="bkhero__card">
+        <h1 class="bkhero__title">Ice in Practice</h1>
+        <p class="bkhero__sub">A Field Guide to Understanding and Working in the Cryosphere</p>
+        <p class="bkhero__desc">{desc}</p>
+        <p class="bkhero__desc bkhero__desc--last">And it all starts with learning to read the ice.</p>
       </article>
-    </section>
-
-    <!-- action bar (full-bleed navy) -->
-    <div class="bkbar">
-      <div class="wrap bkbar__inner">
-        <a class="bkbtn" href="#"><span class="bkbtn__bar">|</span> <b>Read</b> Sample</a>
-        <a class="bkbtn" href="#"><span class="bkbtn__bar">|</span> <b>Pre</b> Order</a>
-      </div>
     </div>
+  </section>
 
-    <!-- ========== PULL-QUOTE + BODY ========== -->
-    <section class="wrap bksec">
-      <blockquote class="bkquote">
-        The ice is changing faster than the people who work on it can be trained. <i>Ice in Practice</i> is a field guide for reading a cryosphere in transition — for guides, operators, and students whose decisions depend on understanding what the ice is about to do, not what it will do.
-      </blockquote>
-      <div class="bkbody">
-        <p>{lorem1}</p>
-        <p>{lorem2}</p>
-      </div>
-    </section>
-
-    <!-- ========== SECOND FEATURE (image + navy title card) ========== -->
-    <section class="wrap bkfeat2">
-      <div class="bkfeat2__media placeholder"></div>
-      <div class="bkfeat2__card">
-        <h2 class="bkfeat2__title">The New Supremacist Survivalists Are Far From Impregnable.</h2>
-      </div>
-    </section>
-
-    <section class="wrap bksec2">
-      <p class="bksec2__kicker">Description Headline</p>
-      <div class="bkbody">
-        <p>{lorem3}</p>
-        <p>{lorem4}</p>
-      </div>
-    </section>
-
-    <!-- ========== RECEIVE UPDATES BAR ========== -->
-    <section class="wrap">
-      <div class="bkupdates">
-        <p class="bkupdates__label">Receive updates on <i>Ice in Practice</i></p>
-        <form class="bkupdates__form" onsubmit="return false">
-          <input type="text" name="cm-name" placeholder="Your Name" aria-label="Your Name" />
-          <input type="email" name="cm-email" placeholder="Your Email" aria-label="Your Email" />
-          <button class="bkupdates__join" type="submit">Join Now</button>
-        </form>
-      </div>
-    </section>
+  <!-- action bar (full-bleed navy) -->
+  <div class="bkactions">
+    <div class="wrap bkactions__inner">
+      <a class="bkbtn" href="#"><span class="bkbtn__bar">|</span> <b>Read</b> Sample</a>
+      <a class="bkbtn" href="#"><span class="bkbtn__bar">|</span> <b>Pre</b> Order</a>
+    </div>
   </div>
+
+  <!-- ================= INTRODUCTION — image + overlapping quote ================= -->
+  <section class="wrap bkintro">
+    <div class="bkintro__img placeholder"></div>
+    <blockquote class="bkintro__quote">
+      The ice is changing faster than the people who work on it can be trained. <i>Ice in Practice</i> is a field guide for reading a cryosphere in transition — for guides, operators, and students whose decisions depend on understanding what the ice is about to do, not what it used to do.
+    </blockquote>
+  </section>
+
+  <!-- two-column body -->
+  <section class="wrap bkcopy">
+    <p>{bodyA}</p>
+    <p>{bodyB}</p>
+  </section>
+
+  <!-- ================= SECOND FEATURE — image + navy title card ================= -->
+  <section class="wrap bktag">
+    <div class="bktag__img placeholder"></div>
+    <div class="bktag__card">
+      <h2 class="bktag__title">The new supremacist survivalists are far from impregnable.</h2>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <p class="bkkicker">Description Headline</p>
+  </section>
+
+  <section class="wrap bkcopy bkcopy--2">
+    <p>{bodyA}</p>
+    <p>{bodyB}</p>
+  </section>
+
+  <!-- ================= NEWSLETTER SIGN-UP (content-width navy bar) ================= -->
+  <section class="wrap">
+    <div class="bknews">
+      <p class="bknews__label">Receive updates on <i>Ice in Practice</i></p>
+      <form class="bknews__form" onsubmit="return false">
+        <input type="text" name="cm-name" placeholder="Your Name" aria-label="Your Name" />
+        <input type="email" name="cm-email" placeholder="Your Email" aria-label="Your Email" />
+        <button class="bknews__join" type="submit">Join Now</button>
+      </form>
+    </div>
+  </section>
 </BaseLayout>
+
 <style>
   .wrap { position: relative; width: min(1104px, calc(100% - 2.5rem)); margin-inline: auto; }
-  .books { padding-top: 70px; padding-bottom: 3rem; }
 
-  /* ---------- FEATURED BOOK (cover overlaps a navy info card) ---------- */
-  .bkfeat { position: relative; }
-  .bkfeat__cover {
-    position: absolute; left: 16%; top: 0; width: 230px; aspect-ratio: 230 / 350; z-index: 2;
-    background: var(--placeholder); box-shadow: 0 22px 50px rgba(17, 41, 46, 0.28);
-  }
-  .bkfeat__card {
-    margin-left: 20%; margin-top: 34px; min-height: 296px;
-    background: var(--navy); color: #fff;
-    padding: 46px 56px 44px 210px;
-  }
-  .bkfeat__title { margin: 0 0 0.5rem; color: #fff; font-size: clamp(1.7rem, 3.4vw, 38px); font-weight: 600; text-transform: uppercase; line-height: 1.1; }
-  .bkfeat__sub { margin: 0 0 1.4rem; font-size: clamp(1rem, 1.7vw, 18px); font-weight: 400; line-height: 1.4; color: #e9edef; }
-  .bkfeat__desc { margin: 0 0 1rem; font-size: 13px; font-style: italic; font-weight: 300; line-height: 1.75; color: #c2ccd0; }
-  .bkfeat__desc--last { margin-bottom: 0; color: #dfe6e9; }
+  /* ================= FEATURED HERO (full-bleed grey, header overlaid) ================= */
+  .bkhero { position: relative; background: var(--placeholder); }
+  .bkhero__inner { position: relative; height: 818px; }
 
-  /* ---------- action bar ---------- */
-  .bkbar { background: var(--navy); margin-top: 26px; }
-  .bkbar__inner { display: flex; gap: 2.5rem; padding: 18px 0; }
-  .bkbtn { color: #fff; font-size: 14px; white-space: nowrap; }
-  .bkbtn:hover { opacity: 0.75; }
-  .bkbtn__bar { font-weight: 300; margin-right: 4px; }
+  /* cover 262×393 @ x409/y284  (as % of the 1122 content column) */
+  .bkhero__cover {
+    position: absolute; left: 21.39%; top: 284px; width: 23.35%; aspect-ratio: 262 / 393; z-index: 2;
+    background: var(--placeholder); box-shadow: 0 22px 46px rgba(17, 41, 46, 0.30);
+  }
+  /* navy card 910×372 @ x373/y339; text inset 349 left / 21 top */
+  .bkhero__card {
+    position: absolute; left: 18.18%; top: 339px; width: 81.10%; min-height: 372px;
+    background: var(--navy); color: #fff; padding: 21px 12% 30px 39%;
+  }
+  .bkhero__title { margin: 0 0 8px; color: #fff; font-size: 30px; font-weight: 600; text-transform: uppercase; line-height: 1.1; letter-spacing: 0.01em; }
+  .bkhero__sub { margin: 0 0 34px; color: #fff; font-size: 16px; font-weight: 400; line-height: 1.35; }
+  .bkhero__desc { margin: 0 0 12px; font-size: 12px; font-style: italic; font-weight: 300; line-height: 1.6; color: #d3dbde; }
+  .bkhero__desc--last { margin-bottom: 0; color: #e4eaec; }
+
+  /* ================= action bar (full-bleed navy, centred boxed buttons) ================= */
+  .bkactions { background: var(--navy); }
+  .bkactions__inner { display: flex; justify-content: center; align-items: center; gap: 40px; height: 75px; }
+  .bkbtn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+    min-width: 128px; height: 33px; background: #fff; color: #11292E; border-radius: 2px;
+    font-size: 13px; white-space: nowrap;
+  }
+  .bkbtn:hover { background: #e6ebed; }
+  .bkbtn__bar { font-weight: 300; }
   .bkbtn b { font-weight: 600; }
 
-  /* ---------- pull-quote + two-column body ---------- */
-  .bksec { padding-top: 70px; }
-  .bkquote {
-    width: 41%; margin: 0 0 40px; background: var(--navy); color: #fff;
-    padding: 34px 40px; font-size: 15px; font-weight: 300; line-height: 1.6;
+  /* ================= INTRODUCTION (image 1070×438 + quote 471×205) ================= */
+  .bkintro { margin-top: 68px; }
+  .bkintro__img { margin-left: 3.92%; width: 95.40%; aspect-ratio: 1070 / 438; background: var(--placeholder); }
+  .bkintro__quote {
+    position: absolute; left: 0; top: 151px; width: 41.98%; margin: 0;
+    background: var(--navy); color: #fff; padding: 21px 32px 24px 35px;
+    font-size: 15px; font-weight: 300; line-height: 1.6;
   }
-  .bkquote i { font-style: italic; }
-  .bkbody { columns: 2; column-gap: 48px; }
-  .bkbody p { margin: 0 0 1rem; font-size: 13px; font-weight: 300; line-height: 1.9; color: #3a4245; break-inside: avoid; }
-  .bkbody p:last-child { margin-bottom: 0; }
+  .bkintro__quote i { font-style: italic; }
 
-  /* ---------- second feature (image full width, navy title card bottom-right) ---------- */
-  .bkfeat2 { margin-top: 80px; padding-bottom: 44px; }
-  .bkfeat2__media { width: 100%; aspect-ratio: 1091 / 470; background: var(--placeholder); }
-  .bkfeat2__card {
-    position: absolute; right: 0; bottom: 0; width: 52%;
-    background: var(--navy); color: #fff; padding: 26px 34px;
+  /* ================= two-column body (89px gutter) ================= */
+  .bkcopy { margin-top: 37px; columns: 2; column-gap: 89px; }
+  .bkcopy--2 { margin-top: 32px; }
+  .bkcopy p { margin: 0; font-size: 12px; font-weight: 300; line-height: 1.75; color: #3a4245; break-inside: avoid; }
+
+  /* ================= SECOND FEATURE (image + navy title card 700×250) ================= */
+  .bktag { margin-top: 41px; padding-bottom: 47px; }
+  .bktag__img { width: 95.40%; aspect-ratio: 1070 / 438; background: var(--placeholder); }
+  .bktag__card {
+    position: absolute; left: 36.60%; top: 228px; width: 62.39%;
+    background: var(--navy); color: #fff; padding: 21px 29px;
   }
-  .bkfeat2__title { margin: 0; color: #fff; font-size: clamp(1.4rem, 2.7vw, 34px); font-weight: 600; text-transform: uppercase; line-height: 1.12; }
+  .bktag__title { margin: 0; color: #fff; font-size: clamp(1.5rem, 2.9vw, 34px); font-weight: 600; text-transform: uppercase; line-height: 1.12; }
 
-  .bksec2 { padding-top: 8px; }
-  .bksec2__kicker { margin: 0 0 1.2rem; font-size: 13px; font-weight: 600; }
+  .bkkicker { margin: 9px 0 0; font-size: 14px; font-weight: 600; color: #11292E; }
 
-  /* ---------- receive updates bar ---------- */
-  .bkupdates {
-    margin-top: 64px; background: var(--navy); color: #fff;
-    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
-    padding: 22px 34px;
+  /* ================= newsletter bar (content-width navy) ================= */
+  .bknews {
+    margin-top: 50px; background: var(--navy); color: #fff; height: 67px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 41px 0 20px;
   }
-  .bkupdates__label { margin: 0; font-size: 15px; white-space: nowrap; }
-  .bkupdates__label i { font-style: italic; }
-  .bkupdates__form { display: flex; gap: 12px; flex: 1; justify-content: flex-end; flex-wrap: wrap; }
-  .bkupdates__form input {
-    width: 220px; max-width: 100%; height: 44px; padding: 0 1rem; border: 0; border-radius: 6px;
+  .bknews__label { margin: 0; font-size: 16px; white-space: nowrap; }
+  .bknews__label i { font-style: italic; }
+  .bknews__form { display: flex; align-items: center; gap: 17px; }
+  .bknews__form input {
+    width: 300px; height: 44px; padding: 0 1rem; border: 0; border-radius: 6px;
     font-family: inherit; font-size: 0.85rem; background: #fff; color: #11292E; text-align: center;
   }
-  .bkupdates__form input::placeholder { color: rgba(0,0,0,0.35); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
-  .bkupdates__join {
-    height: 44px; padding: 0 1.6rem; border: 0; background: #fff; color: #11292E;
+  .bknews__form input::placeholder { color: rgba(0,0,0,0.35); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .bknews__join {
+    height: 44px; padding: 0 1.4rem; border: 0; background: #fff; color: #11292E;
     font-family: inherit; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
     font-size: 14px; cursor: pointer; border-radius: 6px;
   }
-  .bkupdates__join:hover { background: #e6ebed; }
+  .bknews__join:hover { background: #e6ebed; }
 
-  /* ---------- responsive ---------- */
-  @media (max-width: 820px) {
-    .bkfeat__cover { position: static; width: 200px; margin: 0 auto 1.5rem; display: block; }
-    .bkfeat__card { margin-left: 0; margin-top: 0; padding: 32px 28px; min-height: 0; }
-    .bkbody { columns: 1; }
-    .bkquote { width: 100%; }
-    .bkfeat2__card { position: static; width: 100%; }
-    .bkfeat2 { padding-bottom: 0; }
-    .bkupdates { flex-direction: column; align-items: stretch; }
-    .bkupdates__form { justify-content: stretch; }
-    .bkupdates__form input { flex: 1 1 200px; width: auto; }
+  /* ================= responsive ================= */
+  @media (max-width: 860px) {
+    .bkhero__inner { height: auto; padding: 90px 0 40px; }
+    .bkhero__cover { position: static; width: 200px; margin: 0 auto 1.5rem; }
+    .bkhero__card { position: static; width: 100%; padding: 32px 28px; }
+    .bkintro__img, .bktag__img { margin-left: 0; width: 100%; }
+    .bkintro__quote { position: static; width: 100%; margin-top: -60px; }
+    .bkintro { margin-top: 40px; }
+    .bkcopy { columns: 1; column-gap: 0; }
+    .bktag { padding-bottom: 0; }
+    .bktag__card { position: static; width: 100%; }
+    .bkkicker { margin-top: 24px; }
+    .bknews { height: auto; flex-direction: column; align-items: stretch; gap: 1rem; padding: 22px 20px; }
+    .bknews__form { flex-wrap: wrap; justify-content: center; }
+    .bknews__form input { flex: 1 1 200px; width: auto; }
   }
 </style>
