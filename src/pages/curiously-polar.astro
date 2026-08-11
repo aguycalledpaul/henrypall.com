@@ -213,7 +213,7 @@ try {
   }
   .cpmotto__text {
     position: absolute; left: 11.28%; top: 33.66%; width: 77.0%; margin: 0;
-    text-align: center; font-size: 15px; font-style: italic; font-weight: 300; line-height: 1.55;
+    text-align: center; font-size: 15px; font-style: italic; font-weight: 300; line-height: 1.55; white-space: nowrap;
   }
   .cpmotto figcaption {
     position: absolute; left: 67.03%; top: 76.6%; white-space: nowrap;
@@ -235,11 +235,17 @@ try {
   }
 
   /* eyebrow: centred label over a continuous full-width rule, white knock-out behind the text */
-  .cpnews__eyebrow { position: relative; text-align: center; margin: 0 0 18px; }
-  .cpnews__eyebrow::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(17,41,46,0.55); }
+  .cpnews__eyebrow { position: relative; isolation: isolate; text-align: center; margin: 0 0 18px; }
+  /* continuous full-width rule — text sits ~3px above it */
+  .cpnews__eyebrow::before { content: ''; position: absolute; left: 0; right: 0; top: calc(50% + 3px); height: 1px; background: rgba(17,41,46,0.55); z-index: 0; }
   .cpnews__eyebrow span {
-    position: relative; background: #fff; padding: 5px 16px;
+    position: relative; padding: 0 2px;
     text-transform: uppercase; letter-spacing: 0.22em; font-size: 12px; color: #11292E;
+  }
+  /* white rectangle sits BEHIND both the rule and the text (interrupts neither):
+     offset 3px left / 2px beyond text right, 6px down from the top, reaching 3px below the rule */
+  .cpnews__eyebrow span::before {
+    content: ''; position: absolute; z-index: -1; left: -3px; right: -2px; top: 6px; bottom: -6px; background: #fff;
   }
 
   /* staggered headline, 50px SemiBold, indents from Figma */
@@ -277,7 +283,7 @@ try {
     .cpmid__img { margin-left: 0; width: 100%; }
     .cpmid__quote { position: static; width: 90%; margin: -3rem 0 2rem; }
     .cpmotto { position: static; width: 100%; aspect-ratio: auto; padding: 46px 40px 40px; margin-top: 1.5rem; }
-    .cpmotto__text { position: static; width: auto; }
+    .cpmotto__text { position: static; width: auto; white-space: normal; }
     .cpmotto figcaption { position: static; width: auto; text-align: center; margin-top: 1rem; }
     .cpmotto__line { display: none; }
     .cpmotto__mark--open { top: 14px; left: 18px; }
