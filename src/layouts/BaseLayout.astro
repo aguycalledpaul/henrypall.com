@@ -7,6 +7,7 @@ const {
   title = 'Henry Páll Wulff — Narrating the Poles',
   description = 'Dispatches, field notes, lectures, the Curiously Polar podcast, and books from Henry Páll Wulff.',
   overlayHeader = false,
+  overlayDark = true,
 } = Astro.props;
 ---
 
@@ -25,7 +26,7 @@ const {
     />
   </head>
   <body class={overlayHeader ? 'has-overlay-header' : ''}>
-    <Header overlay={overlayHeader} />
+    <Header overlay={overlayHeader} overlayDark={overlayDark} />
     <main>
       <slot />
     </main>
