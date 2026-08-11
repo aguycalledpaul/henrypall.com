@@ -9,10 +9,10 @@ const nav = [
   { label: 'Books', href: base + '/books' },
 ];
 const current = Astro.url.pathname.replace(/\/$/, '');
-const { overlay = false } = Astro.props;
+const { overlay = false, overlayDark = true } = Astro.props;
 ---
 
-<header class:list={['site-header', { 'site-header--overlay': overlay }]}>
+<header class:list={['site-header', { 'site-header--overlay': overlay, 'site-header--overlay-dark': overlay && overlayDark }]}>
   <div class="container header-inner">
     <a class="logo" href={base + '/'} aria-label="Henry Páll Wulff — home">
       <span class="logo__box">
@@ -66,11 +66,11 @@ const { overlay = false } = Astro.props;
   .site-header--overlay {
     position: absolute; top: 0; left: 0; right: 0; z-index: 20; background: transparent;
   }
-  .site-header--overlay .nav__link,
-  .site-header--overlay .header-actions,
-  .site-header--overlay .icon { color: #fff; }
-  .site-header--overlay .nav__link.is-active::after { background: #fff; }
-  .site-header--overlay .nav-burger span { background: #fff; }
+  .site-header--overlay-dark .nav__link,
+  .site-header--overlay-dark .header-actions,
+  .site-header--overlay-dark .icon { color: #fff; }
+  .site-header--overlay-dark .nav__link.is-active::after { background: #fff; }
+  .site-header--overlay-dark .nav-burger span { background: #fff; }
   .header-inner {
     display: flex;
     align-items: center;
