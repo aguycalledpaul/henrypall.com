@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const modules = import.meta.glob('../../dispatches/*.md', { eager: true });
+const base = import.meta.env.BASE_URL.replace(/\/+$/, ''); // "/beta"
 
 export function getStaticPaths() {
   const mods = import.meta.glob('../../dispatches/*.md', { eager: true });
@@ -16,17 +16,19 @@ const fm = mod.frontmatter;
 const Content = mod.Content;
 
 const dateStr = new Date(fm.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const year = new Date(fm.date).getFullYear();
 const references = fm.references || [];
+const figures = fm.figures || [];
+const resources = fm.resources || [];
 const citation = `Henry Páll Wulff, "${fm.title}," Dispatches, ${dateStr}.${fm.doi ? ' ' + fm.doi : ''}`;
+const pdfUrl = fm.pdf ? base + fm.pdf : null;
 ---
 
 <BaseLayout title={fm.title + ' — Dispatches'} description={fm.excerpt} overlayHeader overlayDark={false}>
-  <!-- TOC rail (decorative) -->
   <button class="ds-toc" aria-label="Table of contents" type="button">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="8" y1="7" x2="20" y2="7"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="8" y1="17" x2="20" y2="17"/><circle cx="4" cy="7" r="0.9" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="0.9" fill="currentColor" stroke="none"/><circle cx="4" cy="17" r="0.9" fill="currentColor" stroke="none"/></svg>
   </button>
 
-  <!-- ============ POST HEADER (full-bleed grey hero + navy title box) ============ -->
   <section class="ds-hero">
     <div class="wrap ds-hero__inner">
       <div class="ds-hero__box">
@@ -37,7 +39,6 @@ const citation = `Henry Páll Wulff, "${fm.title}," Dispatches, ${dateStr}.${fm.
     </div>
   </section>
 
-  <!-- ============ BODY (article + sidebar) ============ -->
   <div class="wrap ds-grid">
     <article class="ds-main">
       <p class="ds-reading">Reading Time: {fm.readingTime}</p>
@@ -45,10 +46,8 @@ const citation = `Henry Páll Wulff, "${fm.title}," Dispatches, ${dateStr}.${fm.
         <Content />
       </div>
 
-      <!-- About this article -->
       <section class="ds-about">
         <h2 class="ds-about__head">About this article</h2>
-
         <div class="ds-about__row">
           <svg class="ds-about__icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M7 7h4v6c0 2.2-1.4 3.6-3.6 4L7 20v-1.5c1.4-.4 2.2-1.1 2.3-2.5H7V7zm7 0h4v6c0 2.2-1.4 3.6-3.6 4L14 20v-1.5c1.4-.4 2.2-1.1 2.3-2.5H14V7z"/></svg>
           <div class="ds-about__body">
@@ -58,7 +57,6 @@ const citation = `Henry Páll Wulff, "${fm.title}," Dispatches, ${dateStr}.${fm.
             {fm.doi && <p class="ds-about__meta"><b>DOI</b><br /><a href={fm.doi}>{fm.doi}</a></p>}
           </div>
         </div>
-
         <div class="ds-about__row">
           <svg class="ds-about__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="3" width="14" height="18" rx="1.5"/><line x1="7" y1="8" x2="15" y2="8"/><line x1="7" y1="12" x2="15" y2="12"/><line x1="7" y1="16" x2="12" y2="16"/></svg>
           <div class="ds-about__body">
@@ -67,7 +65,6 @@ const citation = `Henry Páll Wulff, "${fm.title}," Dispatches, ${dateStr}.${fm.
             <p>For commercial reuse, permission must be requested <a href="#">here</a>.</p>
           </div>
         </div>
-
         <div class="ds-about__row">
           <svg class="ds-about__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><line x1="12" y1="3" x2="12" y2="21"/><line x1="6" y1="7" x2="18" y2="7"/><path d="M6 7l-3 6h6l-3-6zM18 7l-3 6h6l-3-6z"/></svg>
           <div class="ds-about__body">
@@ -81,66 +78,111 @@ const citation = `Henry Páll Wulff, "${fm.title}," Dispatches, ${dateStr}.${fm.
 
     <aside class="ds-side">
       <div class="ds-side__actions">
-        <button class="ds-actbtn" type="button">Share</button>
-        <button class="ds-actbtn" type="button">Cite</button>
-        <button class="ds-actbtn" type="button">Download PDF</button>
+        <button class="ds-actbtn" type="button" data-open="shareModal">Share</button>
+        <button class="ds-actbtn" type="button" data-open="citeModal">Cite</button>
+        {pdfUrl && <a class="ds-actbtn" href={pdfUrl} download>Download PDF</a>}
       </div>
 
-      <div class="ds-tabs">
-        <span class="ds-tab is-active">References</span>
-        <span class="ds-tab">Figures</span>
-        <span class="ds-tab">Resources</span>
+      <div class="ds-tabs" role="tablist">
+        <button class="ds-tab is-active" data-tab="references" role="tab">References</button>
+        <button class="ds-tab" data-tab="figures" role="tab">Figures</button>
+        <button class="ds-tab" data-tab="resources" role="tab">Resources</button>
       </div>
 
-      <ol class="ds-refs">
+      <ol class="ds-refs ds-panel is-active" data-panel="references">
         {references.map((r) => (
-          <li>{r.url ? <a href={r.url}>{r.text}</a> : r.text}</li>
+          <li>{r.url ? <a href={r.url} target="_blank" rel="noopener">{r.text}</a> : r.text}</li>
         ))}
       </ol>
+
+      <div class="ds-panel ds-figpanel" data-panel="figures" hidden>
+        {figures.length === 0 && <p class="ds-empty">No figures.</p>}
+        {figures.map((f, i) => (
+          <figure class="ds-figitem">
+            <div class="ds-figitem__img placeholder"></div>
+            <figcaption><b>Fig. {i + 1}</b> {f.caption} {f.source && <span class="ds-figitem__src">{f.source}</span>}</figcaption>
+          </figure>
+        ))}
+      </div>
+
+      <ul class="ds-panel ds-reslist" data-panel="resources" hidden>
+        {resources.length === 0 && <li class="ds-empty">No resources.</li>}
+        {resources.map((r) => (
+          <li><a href={r.url} target="_blank" rel="noopener">{r.text}</a></li>
+        ))}
+      </ul>
     </aside>
   </div>
+
+  <!-- Share modal -->
+  <div class="ds-modal" id="shareModal" hidden>
+    <div class="ds-modal__backdrop" data-close></div>
+    <div class="ds-modal__card" role="dialog" aria-label="Share">
+      <button class="ds-modal__x" data-close aria-label="Close">&times;</button>
+      <h3 class="ds-modal__title">Share this article</h3>
+      <p class="ds-modal__sub">Anyone you share the following link with will be able to read this article:</p>
+      <div class="ds-share__link">
+        <input id="shareUrl" type="text" readonly />
+        <button id="copyLink" type="button">Copy link</button>
+      </div>
+      <div class="ds-share__socials">
+        <a id="shX" target="_blank" rel="noopener">X</a>
+        <a id="shLi" target="_blank" rel="noopener">LinkedIn</a>
+        <a id="shFb" target="_blank" rel="noopener">Facebook</a>
+        <a id="shMail">Email</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cite modal -->
+  <div class="ds-modal" id="citeModal" hidden>
+    <div class="ds-modal__backdrop" data-close></div>
+    <div class="ds-modal__card" role="dialog" aria-label="Cite">
+      <button class="ds-modal__x" data-close aria-label="Close">&times;</button>
+      <h3 class="ds-modal__title">Cite this article</h3>
+      <p class="ds-cite__text" id="citeText">{citation}</p>
+      <div class="ds-cite__actions">
+        <button id="copyCite" type="button">Copy citation</button>
+        <button id="dlRis" type="button">Download .RIS</button>
+        <button id="dlBib" type="button">Download .BIB</button>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
+
 <style>
   .wrap { position: relative; width: min(1104px, calc(100% - 2.5rem)); margin-inline: auto; }
 
-  /* TOC rail — fixed at the left margin */
-  .ds-toc {
-    position: fixed; left: 18px; top: 42%; z-index: 15;
-    width: 44px; height: 44px; display: grid; place-items: center;
-    background: #fff; border: 1px solid #e3e7e9; border-radius: 4px;
-    box-shadow: 0 6px 20px rgba(17,41,46,0.10); color: var(--navy); cursor: pointer;
-  }
+  .ds-toc { position: fixed; left: 18px; top: 42%; z-index: 15; width: 44px; height: 44px; display: grid; place-items: center; background: #fff; border: 1px solid #e3e7e9; border-radius: 4px; box-shadow: 0 6px 20px rgba(17,41,46,0.10); color: var(--navy); cursor: pointer; }
   @media (max-width: 1180px) { .ds-toc { display: none; } }
 
-  /* ---------- POST HEADER ---------- */
   .ds-hero { position: relative; background: var(--placeholder); }
   .ds-hero__inner { position: relative; height: 785px; }
-  .ds-hero__box {
-    position: absolute; left: 0; right: 0; bottom: 55px;
-    background: var(--navy); color: #fff; padding: 40px 40px 44px;
-  }
+  .ds-hero__box { position: absolute; left: 0; right: 0; bottom: 55px; background: var(--navy); color: #fff; padding: 40px 40px 44px; }
   .ds-hero__tag { position: absolute; left: 0; bottom: calc(100% + 2px); }
   .ds-hero__date { display: block; font-size: 14px; font-weight: 500; margin-bottom: 1rem; }
   .ds-hero__title { margin: 0; color: #fff; font-size: clamp(2rem, 4vw, 50px); font-weight: 600; text-transform: uppercase; line-height: 1.12; letter-spacing: 0.01em; }
 
-  /* ---------- BODY GRID (article 61.5% + sidebar 30.4%, 8.1% gutter) ---------- */
   .ds-grid { display: grid; grid-template-columns: 61.5% 30.4%; column-gap: 8.1%; padding: 44px 0 90px; align-items: start; }
-
   .ds-reading { margin: 0 0 2rem; font-style: italic; font-size: 13px; color: #5a6367; }
 
-  /* prose (rendered markdown) */
+  /* prose */
   .ds-prose :global(h2) { margin: 2.4rem 0 1rem; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; color: var(--navy); }
   .ds-prose :global(h2:first-child) { margin-top: 0; }
   .ds-prose :global(p) { margin: 0 0 1.1rem; font-size: 14px; font-weight: 300; line-height: 1.62; color: #2b3133; }
   .ds-prose :global(a) { color: #b45a2b; text-decoration: underline; }
-  .ds-prose :global(img) { display: block; width: 100%; background: var(--placeholder); margin: 1.6rem 0 0.5rem; }
-  .ds-prose :global(blockquote) {
-    margin: 1.8rem 0; padding: 0 0 0 22px; border-left: 2px solid var(--navy);
-    font-style: italic; font-size: 14px; line-height: 1.6; color: #3a4245;
-  }
+  .ds-prose :global(blockquote) { margin: 1.8rem 0; padding: 0 0 0 22px; border-left: 2px solid var(--navy); font-style: italic; font-size: 14px; line-height: 1.6; color: #3a4245; }
   .ds-prose :global(blockquote p) { font-style: italic; color: #3a4245; }
 
-  /* about this article */
+  /* inline figures */
+  .ds-prose :global(.ds-fig) { margin: 1.8rem 0; }
+  .ds-prose :global(.ds-fig__two) { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ds-prose :global(.ds-fig__img) { width: 100%; aspect-ratio: 3 / 2; background: var(--placeholder); }
+  .ds-prose :global(.ds-fig__img--tall) { aspect-ratio: 16 / 10; }
+  .ds-prose :global(.ds-fig figcaption) { margin-top: 10px; padding-left: 14px; border-left: 2px solid var(--navy); font-style: italic; font-size: 11.5px; line-height: 1.5; color: #4a5457; }
+  .ds-prose :global(.ds-fig__src) { display: block; margin-top: 3px; font-style: normal; font-size: 10px; color: #8b9498; }
+
+  /* about */
   .ds-about { margin-top: 3.5rem; }
   .ds-about__head { margin: 0 0 0.4rem; padding-bottom: 0.8rem; border-bottom: 1px solid #dfe3e5; font-size: 20px; font-weight: 600; color: var(--navy); }
   .ds-about__row { display: flex; gap: 16px; padding: 1.6rem 0; border-bottom: 1px solid #eef1f2; }
@@ -148,32 +190,53 @@ const citation = `Henry Páll Wulff, "${fm.title}," Dispatches, ${dateStr}.${fm.
   .ds-about__body h3 { margin: 0 0 0.6rem; font-size: 16px; font-weight: 600; color: #1a2226; }
   .ds-about__body p { margin: 0 0 0.7rem; font-size: 12.5px; line-height: 1.6; color: #2b3133; }
   .ds-about__cite { font-size: 13px !important; }
-  .ds-about__meta b { font-weight: 600; }
   .ds-about__body a { color: #3a7ca5; text-decoration: none; word-break: break-word; }
 
-  /* ---------- SIDEBAR ---------- */
+  /* sidebar */
   .ds-side { position: sticky; top: 24px; }
   .ds-side__actions { display: flex; gap: 8px; margin-bottom: 1.6rem; }
-  .ds-actbtn {
-    flex: 1; height: 40px; padding: 0 0.5rem; border: 0; background: var(--navy); color: #fff;
-    font-family: inherit; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em;
-    cursor: pointer; white-space: nowrap;
-  }
+  .ds-actbtn { flex: 1; height: 40px; padding: 0 0.5rem; border: 0; background: var(--navy); color: #fff; font-family: inherit; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
   .ds-actbtn:hover { background: var(--navy-800); }
 
   .ds-tabs { display: flex; gap: 1.4rem; border-bottom: 1px solid #dfe3e5; margin-bottom: 1.3rem; }
-  .ds-tab { padding-bottom: 0.7rem; font-size: 13px; font-weight: 500; color: #8b9498; cursor: pointer; }
-  .ds-tab.is-active { color: var(--navy); border-bottom: 2px solid var(--navy); }
+  .ds-tab { padding: 0 0 0.7rem; background: none; border: 0; border-bottom: 2px solid transparent; font-family: inherit; font-size: 13px; font-weight: 500; color: #8b9498; cursor: pointer; }
+  .ds-tab.is-active { color: var(--navy); border-bottom-color: var(--navy); }
 
+  .ds-panel[hidden] { display: none; }
   .ds-refs { margin: 0; padding: 0; list-style: none; counter-reset: ref; }
-  .ds-refs li {
-    counter-increment: ref; position: relative; padding-left: 26px; margin-bottom: 1rem;
-    font-size: 11.5px; line-height: 1.55; color: #3a4245;
-  }
+  .ds-refs li { counter-increment: ref; position: relative; padding-left: 26px; margin-bottom: 1rem; font-size: 11.5px; line-height: 1.55; color: #3a4245; }
   .ds-refs li::before { content: "(" counter(ref) ")"; position: absolute; left: 0; top: 0; font-weight: 600; color: var(--navy); }
-  .ds-refs a { color: #3a7ca5; text-decoration: underline; word-break: break-word; }
+  .ds-refs a, .ds-reslist a { color: #3a7ca5; text-decoration: underline; word-break: break-word; }
 
-  /* ---------- RESPONSIVE ---------- */
+  .ds-figpanel { display: flex; flex-direction: column; gap: 1.4rem; }
+  .ds-figitem { margin: 0; }
+  .ds-figitem__img { width: 100%; aspect-ratio: 3 / 2; background: var(--placeholder); }
+  .ds-figitem figcaption { margin-top: 8px; font-size: 11px; line-height: 1.5; color: #4a5457; }
+  .ds-figitem figcaption b { color: var(--navy); }
+  .ds-figitem__src { display: block; margin-top: 3px; font-size: 10px; color: #8b9498; }
+
+  .ds-reslist { margin: 0; padding: 0; list-style: none; }
+  .ds-reslist li { margin-bottom: 0.9rem; font-size: 12px; line-height: 1.5; }
+  .ds-empty { color: #8b9498; font-size: 12px; }
+
+  /* modals */
+  .ds-modal { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; }
+  .ds-modal[hidden] { display: none; }
+  .ds-modal__backdrop { position: absolute; inset: 0; background: rgba(17,41,46,0.55); }
+  .ds-modal__card { position: relative; width: min(460px, calc(100% - 2rem)); background: #fff; border-radius: 6px; padding: 28px 30px 30px; box-shadow: 0 30px 80px rgba(0,0,0,0.35); }
+  .ds-modal__x { position: absolute; top: 12px; right: 14px; border: 0; background: none; font-size: 26px; line-height: 1; color: #6a747a; cursor: pointer; }
+  .ds-modal__title { margin: 0 0 0.5rem; font-size: 18px; font-weight: 600; color: var(--navy); }
+  .ds-modal__sub { margin: 0 0 1rem; font-size: 13px; line-height: 1.5; color: #4a5457; }
+  .ds-share__link { display: flex; gap: 8px; }
+  .ds-share__link input { flex: 1; height: 40px; padding: 0 0.7rem; border: 1px solid #d7dcdf; border-radius: 4px; font-family: inherit; font-size: 12px; color: #2b3133; background: #f6f8f9; }
+  .ds-share__link button, .ds-cite__actions button { height: 40px; padding: 0 1rem; border: 0; background: var(--navy); color: #fff; font-family: inherit; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; border-radius: 4px; cursor: pointer; white-space: nowrap; }
+  .ds-share__link button:hover, .ds-cite__actions button:hover { background: var(--navy-800); }
+  .ds-share__socials { display: flex; gap: 10px; margin-top: 1.2rem; }
+  .ds-share__socials a { flex: 1; text-align: center; height: 38px; line-height: 38px; border: 1px solid #d7dcdf; border-radius: 4px; font-size: 12px; color: var(--navy); text-decoration: none; cursor: pointer; }
+  .ds-share__socials a:hover { background: #f2f5f6; }
+  .ds-cite__text { font-size: 13px; line-height: 1.55; color: #2b3133; background: #f6f8f9; border: 1px solid #e3e7e9; border-radius: 4px; padding: 12px 14px; margin: 0 0 1rem; }
+  .ds-cite__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
   @media (max-width: 900px) {
     .ds-hero__inner { height: 520px; }
     .ds-hero__box { padding: 28px 24px 30px; }
@@ -181,3 +244,61 @@ const citation = `Henry Páll Wulff, "${fm.title}," Dispatches, ${dateStr}.${fm.
     .ds-side { position: static; }
   }
 </style>
+
+<script define:vars={{ shareTitle: fm.title, citationText: citation, doi: fm.doi || '', year, dateStr }}>
+  // ----- Sidebar tabs -----
+  document.querySelectorAll('.ds-tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const name = tab.getAttribute('data-tab');
+      document.querySelectorAll('.ds-tab').forEach((t) => t.classList.toggle('is-active', t === tab));
+      document.querySelectorAll('.ds-panel').forEach((p) => { p.hidden = p.getAttribute('data-panel') !== name; });
+    });
+  });
+
+  // ----- Modals -----
+  function openModal(id) { const m = document.getElementById(id); if (m) m.hidden = false; }
+  function closeModals() { document.querySelectorAll('.ds-modal').forEach((m) => (m.hidden = true)); }
+  document.querySelectorAll('[data-open]').forEach((b) => b.addEventListener('click', () => openModal(b.getAttribute('data-open'))));
+  document.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', closeModals));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModals(); });
+
+  // ----- Share -----
+  const url = window.location.href;
+  const input = document.getElementById('shareUrl');
+  if (input) input.value = url;
+  const enc = encodeURIComponent;
+  const setHref = (id, href) => { const el = document.getElementById(id); if (el) el.href = href; };
+  setHref('shX', `https://twitter.com/intent/tweet?text=${enc(shareTitle)}&url=${enc(url)}`);
+  setHref('shLi', `https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}`);
+  setHref('shFb', `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`);
+  setHref('shMail', `mailto:?subject=${enc(shareTitle)}&body=${enc(url)}`);
+  const copyBtn = document.getElementById('copyLink');
+  if (copyBtn) copyBtn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(url); copyBtn.textContent = 'Copied'; setTimeout(() => (copyBtn.textContent = 'Copy link'), 1600); } catch (e) {}
+  });
+
+  // ----- Cite (RIS / BibTeX) -----
+  function download(filename, text) {
+    const a = document.createElement('a');
+    a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(text);
+    a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+  }
+  const copyCite = document.getElementById('copyCite');
+  if (copyCite) copyCite.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(citationText); copyCite.textContent = 'Copied'; setTimeout(() => (copyCite.textContent = 'Copy citation'), 1600); } catch (e) {}
+  });
+  const ris = [
+    'TY  - GEN', 'AU  - Wulff, Henry Páll', 'TI  - ' + shareTitle, 'T2  - Dispatches',
+    'PY  - ' + year, 'DA  - ' + dateStr, doi ? 'DO  - ' + doi.replace('https://doi.org/', '') : '',
+    'UR  - ' + url, 'ER  - ',
+  ].filter(Boolean).join('\n');
+  const bib = [
+    '@article{wulff' + year + ',', '  author  = {Wulff, Henry Páll},', '  title   = {' + shareTitle + '},',
+    '  journal = {Dispatches},', '  year    = {' + year + '},',
+    doi ? '  doi     = {' + doi.replace('https://doi.org/', '') + '},' : '', '  url     = {' + url + '}', '}',
+  ].filter(Boolean).join('\n');
+  const dlRis = document.getElementById('dlRis');
+  const dlBib = document.getElementById('dlBib');
+  if (dlRis) dlRis.addEventListener('click', () => download('thin-ice.ris', ris));
+  if (dlBib) dlBib.addEventListener('click', () => download('thin-ice.bib', bib));
+</script>
