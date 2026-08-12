@@ -90,8 +90,8 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
       </div>
 
       <ol class="ds-refs ds-panel is-active" data-panel="references">
-        {references.map((r) => (
-          <li>{r.url ? <a href={r.url} target="_blank" rel="noopener">{r.text}</a> : r.text}</li>
+        {references.map((r, i) => (
+          <li id={`ref-${i + 1}`} data-reftext={r.text}>{r.url ? <a href={r.url} target="_blank" rel="noopener">{r.text}</a> : r.text}</li>
         ))}
       </ol>
 
@@ -148,6 +148,19 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
       </div>
     </div>
   </div>
+
+  <!-- Table of contents modal -->
+  <div class="ds-modal" id="tocModal" hidden>
+    <div class="ds-modal__backdrop" data-close></div>
+    <div class="ds-modal__card ds-toc__card" role="dialog" aria-label="Table of contents">
+      <button class="ds-modal__x" data-close aria-label="Close">&times;</button>
+      <h3 class="ds-modal__title">Contents</h3>
+      <nav class="ds-toc__list" id="tocList"></nav>
+    </div>
+  </div>
+
+  <!-- Citation hover tooltip -->
+  <div class="ds-tip" id="citeTip" hidden></div>
 </BaseLayout>
 
 <style>
@@ -171,7 +184,7 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
   .ds-prose :global(h2:first-child) { margin-top: 0; }
   .ds-prose :global(p) { margin: 0 0 1.1rem; font-size: 14px; font-weight: 300; line-height: 1.62; color: #2b3133; }
   .ds-prose :global(a) { color: #b45a2b; text-decoration: underline; }
-  .ds-prose :global(blockquote) { margin: 1.8rem 0; padding: 0 0 0 22px; border-left: 2px solid var(--navy); font-style: italic; font-size: 14px; line-height: 1.6; color: #3a4245; }
+  .ds-prose :global(blockquote) { margin: 1.8rem 0; padding: 0 0 0 22px; border-left: 2px solid #c2ccd0; font-style: italic; font-size: 14px; line-height: 1.6; color: #3a4245; }
   .ds-prose :global(blockquote p) { font-style: italic; color: #3a4245; }
 
   /* inline figures */
@@ -179,7 +192,11 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
   .ds-prose :global(.ds-fig__two) { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .ds-prose :global(.ds-fig__img) { width: 100%; aspect-ratio: 3 / 2; background: var(--placeholder); }
   .ds-prose :global(.ds-fig__img--tall) { aspect-ratio: 16 / 10; }
-  .ds-prose :global(.ds-fig figcaption) { margin-top: 10px; padding-left: 14px; border-left: 2px solid var(--navy); font-style: italic; font-size: 11.5px; line-height: 1.5; color: #4a5457; }
+  .ds-prose :global(.ds-fig figcaption) { margin-top: 10px; padding-left: 14px; border-left: 2px solid #c2ccd0; font-style: italic; font-size: 11.5px; line-height: 1.5; color: #4a5457; }
+
+  /* inline citation markers */
+  .ds-prose :global(a.ds-cite) { color: #c0392b; text-decoration: underline; font-weight: 500; cursor: pointer; white-space: nowrap; }
+  .ds-prose :global(a.ds-cite:hover) { color: #96271b; }
   .ds-prose :global(.ds-fig__src) { display: block; margin-top: 3px; font-style: normal; font-size: 10px; color: #8b9498; }
 
   /* about */
@@ -236,6 +253,24 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
   .ds-share__socials a:hover { background: #f2f5f6; }
   .ds-cite__text { font-size: 13px; line-height: 1.55; color: #2b3133; background: #f6f8f9; border: 1px solid #e3e7e9; border-radius: 4px; padding: 12px 14px; margin: 0 0 1rem; }
   .ds-cite__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* TOC modal */
+  .ds-toc__card { width: min(420px, calc(100% - 2rem)); }
+  .ds-toc__list { display: flex; flex-direction: column; }
+  .ds-toc__list a { counter-increment: toc; display: flex; gap: 12px; align-items: baseline; padding: 11px 4px; border-bottom: 1px solid #eef1f2; color: #2b3133; text-decoration: none; font-size: 13.5px; line-height: 1.4; }
+  .ds-toc__list a:last-child { border-bottom: 0; }
+  .ds-toc__list a:hover { color: var(--navy); }
+  .ds-toc__list a::before { content: counter(toc, decimal-leading-zero); color: #b45a2b; font-size: 11px; font-weight: 600; flex: 0 0 auto; }
+  .ds-toc__list { counter-reset: toc; }
+
+  /* citation reference highlight (when jumped to) */
+  .ds-refs li.is-flash { animation: refflash 1.8s ease; }
+  @keyframes refflash { 0%, 40% { background: #fdf1e7; } 100% { background: transparent; } }
+
+  /* citation hover tooltip */
+  .ds-tip { position: fixed; z-index: 80; max-width: 320px; background: var(--navy); color: #eef3f4; font-size: 11.5px; line-height: 1.5; padding: 10px 13px; border-radius: 5px; box-shadow: 0 12px 34px rgba(17,41,46,0.35); pointer-events: none; }
+  .ds-tip[hidden] { display: none; }
+  .ds-tip a { color: #ffd7a8; }
 
   @media (max-width: 900px) {
     .ds-hero__inner { height: 520px; }
@@ -301,4 +336,67 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
   const dlBib = document.getElementById('dlBib');
   if (dlRis) dlRis.addEventListener('click', () => download('thin-ice.ris', ris));
   if (dlBib) dlBib.addEventListener('click', () => download('thin-ice.bib', bib));
+
+  // ----- Inline citation markers: hover tooltip + click to reference -----
+  function showReferencesTab() {
+    document.querySelectorAll('.ds-tab').forEach((t) => t.classList.toggle('is-active', t.getAttribute('data-tab') === 'references'));
+    document.querySelectorAll('.ds-panel').forEach((p) => { p.hidden = p.getAttribute('data-panel') !== 'references'; });
+  }
+  const tip = document.getElementById('citeTip');
+  function refTextFor(n) {
+    const li = document.getElementById('ref-' + n);
+    return li ? (li.getAttribute('data-reftext') || li.textContent.trim()) : '';
+  }
+  function positionTip(e) {
+    const pad = 14;
+    let x = e.clientX + pad, y = e.clientY + pad;
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    if (x + w > window.innerWidth - 8) x = e.clientX - w - pad;
+    if (y + h > window.innerHeight - 8) y = e.clientY - h - pad;
+    tip.style.left = Math.max(8, x) + 'px';
+    tip.style.top = Math.max(8, y) + 'px';
+  }
+  document.querySelectorAll('a.ds-cite').forEach((c) => {
+    const n = c.getAttribute('data-ref');
+    c.addEventListener('mouseenter', (e) => {
+      const txt = refTextFor(n);
+      if (!txt) return;
+      tip.textContent = '(' + n + ') ' + txt;
+      tip.hidden = false;
+      positionTip(e);
+    });
+    c.addEventListener('mousemove', positionTip);
+    c.addEventListener('mouseleave', () => { tip.hidden = true; });
+    c.addEventListener('click', (e) => {
+      e.preventDefault();
+      tip.hidden = true;
+      showReferencesTab();
+      const li = document.getElementById('ref-' + n);
+      if (li) {
+        li.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        li.classList.remove('is-flash'); void li.offsetWidth; li.classList.add('is-flash');
+      }
+    });
+  });
+
+  // ----- Table of contents modal -----
+  const tocList = document.getElementById('tocList');
+  if (tocList) {
+    const heads = document.querySelectorAll('.ds-prose h2');
+    heads.forEach((h) => {
+      if (!h.id) return;
+      const a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.textContent = h.textContent.replace(/\s+/g, ' ').trim();
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeModals();
+        const target = document.getElementById(h.id);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      tocList.appendChild(a);
+    });
+  }
+  const tocBtn = document.querySelector('.ds-toc');
+  if (tocBtn) tocBtn.addEventListener('click', () => openModal('tocModal'));
 </script>
