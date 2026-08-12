@@ -1,0 +1,183 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const modules = import.meta.glob('../../dispatches/*.md', { eager: true });
+
+export function getStaticPaths() {
+  const mods = import.meta.glob('../../dispatches/*.md', { eager: true });
+  return Object.entries(mods).map(([path, mod]) => ({
+    params: { slug: path.split('/').pop().replace(/\.md$/, '') },
+    props: { mod },
+  }));
+}
+
+const { mod } = Astro.props;
+const fm = mod.frontmatter;
+const Content = mod.Content;
+
+const dateStr = new Date(fm.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const references = fm.references || [];
+const citation = `Henry Páll Wulff, "${fm.title}," Dispatches, ${dateStr}.${fm.doi ? ' ' + fm.doi : ''}`;
+---
+
+<BaseLayout title={fm.title + ' — Dispatches'} description={fm.excerpt} overlayHeader overlayDark={false}>
+  <!-- TOC rail (decorative) -->
+  <button class="ds-toc" aria-label="Table of contents" type="button">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="8" y1="7" x2="20" y2="7"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="8" y1="17" x2="20" y2="17"/><circle cx="4" cy="7" r="0.9" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="0.9" fill="currentColor" stroke="none"/><circle cx="4" cy="17" r="0.9" fill="currentColor" stroke="none"/></svg>
+  </button>
+
+  <!-- ============ POST HEADER (full-bleed grey hero + navy title box) ============ -->
+  <section class="ds-hero">
+    <div class="wrap ds-hero__inner">
+      <div class="ds-hero__box">
+        <span class="tag ds-hero__tag">{fm.category}</span>
+        <span class="ds-hero__date">{dateStr}</span>
+        <h1 class="ds-hero__title">{fm.title}</h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BODY (article + sidebar) ============ -->
+  <div class="wrap ds-grid">
+    <article class="ds-main">
+      <p class="ds-reading">Reading Time: {fm.readingTime}</p>
+      <div class="ds-prose">
+        <Content />
+      </div>
+
+      <!-- About this article -->
+      <section class="ds-about">
+        <h2 class="ds-about__head">About this article</h2>
+
+        <div class="ds-about__row">
+          <svg class="ds-about__icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M7 7h4v6c0 2.2-1.4 3.6-3.6 4L7 20v-1.5c1.4-.4 2.2-1.1 2.3-2.5H7V7zm7 0h4v6c0 2.2-1.4 3.6-3.6 4L14 20v-1.5c1.4-.4 2.2-1.1 2.3-2.5H14V7z"/></svg>
+          <div class="ds-about__body">
+            <h3>Cite this article</h3>
+            <p class="ds-about__cite">{citation}</p>
+            <p class="ds-about__meta"><b>Published</b><br />{dateStr}</p>
+            {fm.doi && <p class="ds-about__meta"><b>DOI</b><br /><a href={fm.doi}>{fm.doi}</a></p>}
+          </div>
+        </div>
+
+        <div class="ds-about__row">
+          <svg class="ds-about__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="3" width="14" height="18" rx="1.5"/><line x1="7" y1="8" x2="15" y2="8"/><line x1="7" y1="12" x2="15" y2="12"/><line x1="7" y1="16" x2="12" y2="16"/></svg>
+          <div class="ds-about__body">
+            <h3>Rights &amp; permissions</h3>
+            <p><b>OPEN ACCESS</b> This article is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License, which permits any non-commercial use, sharing, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, and provide a link to the Creative Commons licence. To view a copy of this licence, visit <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">creativecommons.org/licenses/by-nc-nd/4.0</a>.</p>
+            <p>For commercial reuse, permission must be requested <a href="#">here</a>.</p>
+          </div>
+        </div>
+
+        <div class="ds-about__row">
+          <svg class="ds-about__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><line x1="12" y1="3" x2="12" y2="21"/><line x1="6" y1="7" x2="18" y2="7"/><path d="M6 7l-3 6h6l-3-6zM18 7l-3 6h6l-3-6z"/></svg>
+          <div class="ds-about__body">
+            <h3>Ethics declarations</h3>
+            <p><b>FUNDING</b> The author received no specific funding or grants for this work.</p>
+            <p><b>COMPETING INTERESTS</b> The author declares no competing interests.</p>
+          </div>
+        </div>
+      </section>
+    </article>
+
+    <aside class="ds-side">
+      <div class="ds-side__actions">
+        <button class="ds-actbtn" type="button">Share</button>
+        <button class="ds-actbtn" type="button">Cite</button>
+        <button class="ds-actbtn" type="button">Download PDF</button>
+      </div>
+
+      <div class="ds-tabs">
+        <span class="ds-tab is-active">References</span>
+        <span class="ds-tab">Figures</span>
+        <span class="ds-tab">Resources</span>
+      </div>
+
+      <ol class="ds-refs">
+        {references.map((r) => (
+          <li>{r.url ? <a href={r.url}>{r.text}</a> : r.text}</li>
+        ))}
+      </ol>
+    </aside>
+  </div>
+</BaseLayout>
+<style>
+  .wrap { position: relative; width: min(1104px, calc(100% - 2.5rem)); margin-inline: auto; }
+
+  /* TOC rail — fixed at the left margin */
+  .ds-toc {
+    position: fixed; left: 18px; top: 42%; z-index: 15;
+    width: 44px; height: 44px; display: grid; place-items: center;
+    background: #fff; border: 1px solid #e3e7e9; border-radius: 4px;
+    box-shadow: 0 6px 20px rgba(17,41,46,0.10); color: var(--navy); cursor: pointer;
+  }
+  @media (max-width: 1180px) { .ds-toc { display: none; } }
+
+  /* ---------- POST HEADER ---------- */
+  .ds-hero { position: relative; background: var(--placeholder); }
+  .ds-hero__inner { position: relative; height: 785px; }
+  .ds-hero__box {
+    position: absolute; left: 0; right: 0; bottom: 55px;
+    background: var(--navy); color: #fff; padding: 40px 40px 44px;
+  }
+  .ds-hero__tag { position: absolute; left: 0; bottom: calc(100% + 2px); }
+  .ds-hero__date { display: block; font-size: 14px; font-weight: 500; margin-bottom: 1rem; }
+  .ds-hero__title { margin: 0; color: #fff; font-size: clamp(2rem, 4vw, 50px); font-weight: 600; text-transform: uppercase; line-height: 1.12; letter-spacing: 0.01em; }
+
+  /* ---------- BODY GRID (article 61.5% + sidebar 30.4%, 8.1% gutter) ---------- */
+  .ds-grid { display: grid; grid-template-columns: 61.5% 30.4%; column-gap: 8.1%; padding: 44px 0 90px; align-items: start; }
+
+  .ds-reading { margin: 0 0 2rem; font-style: italic; font-size: 13px; color: #5a6367; }
+
+  /* prose (rendered markdown) */
+  .ds-prose :global(h2) { margin: 2.4rem 0 1rem; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; color: var(--navy); }
+  .ds-prose :global(h2:first-child) { margin-top: 0; }
+  .ds-prose :global(p) { margin: 0 0 1.1rem; font-size: 14px; font-weight: 300; line-height: 1.62; color: #2b3133; }
+  .ds-prose :global(a) { color: #b45a2b; text-decoration: underline; }
+  .ds-prose :global(img) { display: block; width: 100%; background: var(--placeholder); margin: 1.6rem 0 0.5rem; }
+  .ds-prose :global(blockquote) {
+    margin: 1.8rem 0; padding: 0 0 0 22px; border-left: 2px solid var(--navy);
+    font-style: italic; font-size: 14px; line-height: 1.6; color: #3a4245;
+  }
+  .ds-prose :global(blockquote p) { font-style: italic; color: #3a4245; }
+
+  /* about this article */
+  .ds-about { margin-top: 3.5rem; }
+  .ds-about__head { margin: 0 0 0.4rem; padding-bottom: 0.8rem; border-bottom: 1px solid #dfe3e5; font-size: 20px; font-weight: 600; color: var(--navy); }
+  .ds-about__row { display: flex; gap: 16px; padding: 1.6rem 0; border-bottom: 1px solid #eef1f2; }
+  .ds-about__icon { flex: 0 0 auto; color: var(--navy); margin-top: 2px; }
+  .ds-about__body h3 { margin: 0 0 0.6rem; font-size: 16px; font-weight: 600; color: #1a2226; }
+  .ds-about__body p { margin: 0 0 0.7rem; font-size: 12.5px; line-height: 1.6; color: #2b3133; }
+  .ds-about__cite { font-size: 13px !important; }
+  .ds-about__meta b { font-weight: 600; }
+  .ds-about__body a { color: #3a7ca5; text-decoration: none; word-break: break-word; }
+
+  /* ---------- SIDEBAR ---------- */
+  .ds-side { position: sticky; top: 24px; }
+  .ds-side__actions { display: flex; gap: 8px; margin-bottom: 1.6rem; }
+  .ds-actbtn {
+    flex: 1; height: 40px; padding: 0 0.5rem; border: 0; background: var(--navy); color: #fff;
+    font-family: inherit; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em;
+    cursor: pointer; white-space: nowrap;
+  }
+  .ds-actbtn:hover { background: var(--navy-800); }
+
+  .ds-tabs { display: flex; gap: 1.4rem; border-bottom: 1px solid #dfe3e5; margin-bottom: 1.3rem; }
+  .ds-tab { padding-bottom: 0.7rem; font-size: 13px; font-weight: 500; color: #8b9498; cursor: pointer; }
+  .ds-tab.is-active { color: var(--navy); border-bottom: 2px solid var(--navy); }
+
+  .ds-refs { margin: 0; padding: 0; list-style: none; counter-reset: ref; }
+  .ds-refs li {
+    counter-increment: ref; position: relative; padding-left: 26px; margin-bottom: 1rem;
+    font-size: 11.5px; line-height: 1.55; color: #3a4245;
+  }
+  .ds-refs li::before { content: "(" counter(ref) ")"; position: absolute; left: 0; top: 0; font-weight: 600; color: var(--navy); }
+  .ds-refs a { color: #3a7ca5; text-decoration: underline; word-break: break-word; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .ds-hero__inner { height: 520px; }
+    .ds-hero__box { padding: 28px 24px 30px; }
+    .ds-grid { grid-template-columns: 1fr; row-gap: 3rem; }
+    .ds-side { position: static; }
+  }
+</style>
