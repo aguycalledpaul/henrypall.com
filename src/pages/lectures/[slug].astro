@@ -100,7 +100,7 @@ const Content = mod.Content;
   /* figure with left-gutter illustration (Picture 3 + Additional Illustration 1) */
   .lec-prose :global(.lec-fig--withillus) { width: calc(100% + 202px); margin-left: -202px; display: flex; gap: 10px; align-items: flex-start; }
   .lec-prose :global(.lec-fig--withillus .lec-illus) { flex: 0 0 192px; display: flex; flex-direction: column; gap: 8px; }
-  .lec-prose :global(.lec-illus__box) { width: 100%; background: var(--placeholder); }
+  .lec-prose :global(.lec-illus__box) { width: 100%; aspect-ratio: var(--ar, 192 / 194); background: var(--placeholder); }
   .lec-prose :global(.lec-fig--withillus .lec-fig__main) { flex: 1 1 auto; min-width: 0; }
 
   /* right-floated inset (Picture 4 inset, 298×236) */
