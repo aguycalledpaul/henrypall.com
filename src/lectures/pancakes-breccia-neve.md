@@ -223,3 +223,5 @@ The phytoplankton are the foundation of the entire polar marine food web. They f
 <p class="lec-coda">Lose the ice, and you do not just lose a landscape.<br />You lose the timing of the system that depends on it.</p>
 
 <hr class="lec-rule lec-rule--center" />
+
+<!-- redeploy -->
