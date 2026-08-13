@@ -16,7 +16,7 @@ readingTime: "approx. 25 minutes"
 
 Roughly ten percent of the Earth's surface is permanently covered by ice, and the great majority of that ice sits at the two ends of the planet. About ten percent of the global ice mass is in the Arctic, just under ninety percent is locked in Antarctica, and the small remainder is distributed across the high mountains of the world — the Himalaya, the Andes, the European Alps, the Southern Alps of New Zealand, the volcanoes of Iceland.
 
-<figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/404"></div><figcaption>World map showing distribution of permanent ice cover: Ice and glaciers cover a significant amount of Earth's land masses, especially in Greenland and Antarctica. <span class="lec-fig__src">NASA, Public domain.</span></figcaption></figure>
+<figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/352"></div><figcaption>World map showing distribution of permanent ice cover: Ice and glaciers cover a significant amount of Earth's land masses, especially in Greenland and Antarctica. <span class="lec-fig__src">NASA, Public domain.</span></figcaption></figure>
 
 ### The Arctic: an ocean surrounded by land
 
@@ -24,29 +24,29 @@ The Arctic is, fundamentally, an ocean. Ice sits in two very different reservoir
 
 The other reservoir is the sea ice that forms on the surface of the Arctic Ocean itself. Its area swings dramatically with the seasons, but its average annual extent of around nine million square kilometres is itself larger than the entire continent of Europe. The volume, however, is comparatively small — around twenty thousand cubic kilometres — because the ice is rarely more than five metres thick.
 
-<figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/433"></div><figcaption>The Arctic — land ice and sea ice volumes and thicknesses. <span class="lec-fig__src">NASA Scientific Visualization Studio, Henry Páll Wulff.</span></figcaption></figure>
+<figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/396"></div><figcaption>The Arctic — land ice and sea ice volumes and thicknesses. <span class="lec-fig__src">NASA Scientific Visualization Studio, Henry Páll Wulff.</span></figcaption></figure>
 
 ### Antarctica: a continent surrounded by ocean
 
 Antarctica is the inverse: a continent buried under ice, ringed by a circumpolar ocean. The Antarctic Ice Sheet contains roughly 26.5 million cubic kilometres of ice — about ninety percent of the freshwater on Earth — and reaches thicknesses of up to 4,776 metres.<span class="lec-ref">(<span class="lec-cite">2</span>)</span> That is nearly five kilometres of ice piled in one place. If the entire Antarctic ice sheet were to melt, global sea level would rise by approximately 58 metres.
 
-<figure class="lec-fig lec-fig--withillus"><div class="lec-illus placeholder" style="--ar:192/423"></div><div class="lec-fig__main"><div class="lec-fig__img placeholder" style="--ar:704/433"></div><figcaption>Antarctica — land ice and sea ice volumes and thicknesses; September maximum and February minimum extent. <span class="lec-fig__src">NASA Scientific Visualization Studio, Henry Páll Wulff.</span></figcaption></div></figure>
+<figure class="lec-fig lec-fig--withillus"><div class="lec-illus"><div class="lec-illus__box placeholder" style="--ar:192/194"></div><div class="lec-illus__box placeholder" style="--ar:192/193"></div></div><div class="lec-fig__main"><div class="lec-fig__img placeholder" style="--ar:704/396"></div><figcaption>Antarctica — land ice and sea ice volumes and thicknesses; September maximum and February minimum extent. <span class="lec-fig__src">NASA Scientific Visualization Studio, Henry Páll Wulff.</span></figcaption></div></figure>
 
-<figure class="lec-fig lec-fig--quote"><hr class="lec-quote__rule" /><div class="lec-quote__inner"><div class="lec-quote__img placeholder"></div><blockquote>The two polar regions look superficially alike from a satellite — both are white — but they are radically different systems, and treating them as mirror images is the first mistake to avoid.</blockquote></div><hr class="lec-quote__rule" /></figure>
+<figure class="lec-fig lec-fig--quote"><hr class="lec-quote__rule" /><div class="lec-quote__img placeholder" style="--ar:330/163"></div><blockquote>The two polar regions look superficially alike from a satellite — both are white — but they are radically different systems, and treating them as mirror images is the first mistake to avoid.</blockquote><hr class="lec-quote__rule" /></figure>
 
 ## The fundamental distinction
 
 Land ice forms from fresh water. Snow falls on a glacier or ice sheet, layer accumulates upon layer, and over years and centuries the lower layers are compacted under the weight of those above into solid, almost air-free ice. Sea ice forms from salt water: the top layer of the ocean cools to its freezing point, ice crystals begin to grow, and within hours a skin of new ice can extend across the surface. Most sea ice lives a single year and is gone again.
 
-<figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/433"></div><figcaption>Land ice and sea ice — two substances, two timescales. <span class="lec-fig__src">Henry Páll Wulff, Pia Harboure.</span></figcaption></figure>
+<figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/396"></div><figcaption>Land ice and sea ice — two substances, two timescales. <span class="lec-fig__src">Henry Páll Wulff, Pia Harboure.</span></figcaption></figure>
 
 ### Albedo and the feedback that runs the polar regions
 
-<figure class="lec-fig lec-fig--inset"><div class="lec-fig__img placeholder" style="--ar:298/236"></div><figcaption>Schematic of the ice-albedo feedback. <span class="lec-fig__src">Henry Páll Wulff.</span></figcaption></figure>
+<figure class="lec-fig lec-fig--inset"><div class="lec-fig__img placeholder" style="--ar:298/197"></div><figcaption>Schematic of the ice-albedo feedback. <span class="lec-fig__src">Henry Páll Wulff.</span></figcaption></figure>
 
 Both kinds of ice share one property that has outsized consequences: they are white, which means they have a high albedo. Roughly eighty percent of the sunlight that strikes intact sea ice is reflected back into space. When that ice melts and exposes the dark ocean beneath, the same surface absorbs around ninety percent of incoming sunlight instead. The water warms, which in turn melts more ice, which exposes more water, which absorbs more sunlight. This is a positive feedback — a self-amplifying loop — and it is one of the principal reasons that polar warming runs ahead of the global average, and one of the reasons climate projections in the Arctic in particular are so difficult to constrain.
 
-<figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/448"></div><figcaption>The two surviving ice sheets, on opposite ends of the planet, cover an area of 1.8 million km² in Greenland and 14 million km² in Antarctica. <span class="lec-fig__src">Henry Páll Wulff.</span></figcaption></figure>
+<figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/396"></div><figcaption>The two surviving ice sheets, on opposite ends of the planet, cover an area of 1.8 million km² in Greenland and 14 million km² in Antarctica. <span class="lec-fig__src">Henry Páll Wulff.</span></figcaption></figure>
 
 ## Land ice
 
@@ -144,4 +144,4 @@ Ice breccia is pieces of sea ice from different stages of development, frozen to
 
 Sea ice is not simply a physical environment to be navigated. It is also a habitat, and one of the most productive on Earth in season.<span class="lec-ref">(<span class="lec-cite">6</span>)</span> The underside of multi-year sea ice supports communities of ice algae; when the ice melts in spring, those algae are released into the water column along with a layer of fresh, nutrient-rich meltwater, triggering blooms of phytoplankton on a scale that satellites can see from space. The phytoplankton are the foundation of the entire polar marine food web, and the annual rhythm of polar life — of breeding, of migration, of pupping — is keyed to the rhythm of ice melt and the bloom that follows.
 
-<figure class="lec-fig lec-fig--quote"><hr class="lec-quote__rule" /><div class="lec-quote__inner"><div class="lec-quote__img placeholder"></div><blockquote>Lose the ice, and you do not just lose a landscape. You lose the timing of the system that depends on it.</blockquote></div><hr class="lec-quote__rule" /></figure>
+<figure class="lec-fig lec-fig--quote"><hr class="lec-quote__rule" /><div class="lec-quote__img placeholder" style="--ar:330/163"></div><blockquote>Lose the ice, and you do not just lose a landscape. You lose the timing of the system that depends on it.</blockquote><hr class="lec-quote__rule" /></figure>
