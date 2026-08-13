@@ -12,8 +12,6 @@ export function getStaticPaths() {
 const { mod } = Astro.props;
 const fm = mod.frontmatter;
 const Content = mod.Content;
-
-const dateStr = new Date(fm.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
 <BaseLayout title={fm.title + ' — Lectures'} description={fm.excerpt} overlayHeader overlayDark={false}>
@@ -48,7 +46,7 @@ const dateStr = new Date(fm.date).toLocaleDateString('en-US', { year: 'numeric',
 <style>
   .lec-wrap { position: relative; width: min(1102px, calc(100% - 2.5rem)); margin-inline: auto; }
 
-  /* floating TOC icon + popover (shared visual language with Dispatches) */
+  /* floating TOC icon + popover */
   .ds-toc { position: fixed; left: 18px; top: 42%; z-index: 15; width: 44px; height: 44px; display: grid; place-items: center; background: #fff; border: 1px solid #e3e7e9; border-radius: 4px; box-shadow: 0 6px 20px rgba(17,41,46,0.10); color: var(--navy); cursor: pointer; }
   .ds-toc:hover { border-color: var(--navy); }
   .ds-toc.is-open { background: var(--navy); color: #fff; border-color: var(--navy); }
@@ -59,47 +57,51 @@ const dateStr = new Date(fm.date).toLocaleDateString('en-US', { year: 'numeric',
   .ds-tocpop__title { margin: 0 0 0.5rem; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #8b9498; }
   @media (max-width: 1180px) { .ds-tocpop { display: none; } }
   .ds-toc__list { display: flex; flex-direction: column; counter-reset: toc; }
-  .ds-toc__list a { counter-increment: toc; display: flex; gap: 10px; align-items: baseline; padding: 9px 2px; border-bottom: 1px solid #eef1f2; color: #2b3133; text-decoration: none; font-size: 12.5px; line-height: 1.35; }
+  .ds-toc__list a { counter-increment: toc; display: flex; gap: 10px; align-items: baseline; padding: 9px 2px; border-bottom: 1px solid #eef1f2; color: #000; text-decoration: none; font-size: 12.5px; line-height: 1.35; }
   .ds-toc__list a:last-child { border-bottom: 0; }
   .ds-toc__list a:hover { color: var(--navy); }
-  .ds-toc__list a::before { content: counter(toc, decimal-leading-zero); color: #b45a2b; font-size: 10px; font-weight: 600; flex: 0 0 auto; }
+  .ds-toc__list a::before { content: counter(toc, decimal-leading-zero); color: #d52e2e; font-size: 10px; font-weight: 600; flex: 0 0 auto; }
 
-  /* ===== hero (grey full-bleed, navy title box at text-column width) ===== */
+  /* ===== hero (grey full-bleed; navy title box at the text-column width) ===== */
   .lec-hero { position: relative; background: var(--placeholder); }
   .lec-hero__inner { height: 893px; }
-  .lec-hero__box { position: absolute; left: 240px; right: 158px; bottom: 203px; background: var(--navy); color: #fff; padding: 22px 39px 24px; }
+  .lec-hero__box { position: absolute; left: 240px; right: 158px; bottom: 174px; background: var(--navy); color: #fff; padding: 21px 29px 30px; }
   .lec-hero__tag { position: absolute; left: 22px; bottom: calc(100% + 9px); }
-  .lec-hero__title { margin: 0; color: #fff; font-size: clamp(1.8rem, 3.4vw, 40px); font-weight: 600; text-transform: uppercase; line-height: 1.12; letter-spacing: 0.01em; }
-  .lec-hero__sub { margin: 10px 0 0; color: #cdd6d9; font-size: 15px; font-weight: 300; }
+  .lec-hero__title { margin: 0; color: #fff; font-family: 'Poppins', sans-serif; font-size: clamp(28px, 3.4vw, 40px); font-weight: 500; text-transform: uppercase; line-height: 1.125; letter-spacing: 0; }
+  .lec-hero__sub { margin: 12px 0 0; color: #fff; font-size: 14px; font-weight: 300; }
 
-  /* ===== offset content column: body 944 (169–1113), prose 704 right-aligned (409–1113) ===== */
-  .lec-body { width: min(944px, 100%); padding: 60px 0 120px; }
-  .lec-prose { width: 704px; max-width: 100%; margin-left: auto; }
+  /* ===== offset column: body 944 (169–1113), prose 704 right-aligned (409–1113) ===== */
+  .lec-body { width: min(944px, 100%); padding: 56px 0 120px; }
+  .lec-prose { width: 704px; max-width: 100%; margin-left: auto; color: #000; }
 
-  /* prose type */
-  .lec-prose :global(h2) { margin: 3rem 0 1rem; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; color: var(--navy); }
-  .lec-prose :global(h3) { margin: 2rem 0 0.7rem; font-size: 15px; font-weight: 400; font-style: italic; color: var(--navy); }
-  .lec-prose :global(p) { margin: 0 0 1.1rem; font-size: 13.5px; font-weight: 300; line-height: 1.68; color: #2b3133; }
-  .lec-prose :global(strong) { font-weight: 600; color: #1f2629; }
-  .lec-prose :global(.lec-standfirst) { font-style: italic; font-size: 15px; line-height: 1.62; color: #384042; margin-bottom: 1rem; }
-  .lec-prose :global(.lec-cite) { color: #c0392b; font-style: italic; margin-left: 1px; }
+  /* prose type — exact Figma values */
+  .lec-prose :global(h2) { margin: 2.6rem 0 0.8rem; font-size: 16px; font-weight: 500; text-transform: uppercase; letter-spacing: 0; color: #000; line-height: 1.3; }
+  .lec-prose :global(h3) { margin: 1.7rem 0 0.55rem; font-size: 12px; font-weight: 300; font-style: italic; color: #000; line-height: 1.4; }
+  .lec-prose :global(p) { margin: 0 0 0.85rem; font-size: 11px; font-weight: 300; line-height: 1.6; color: #000; }
+  .lec-prose :global(strong) { font-weight: 600; }
+  .lec-prose :global(.lec-standfirst) { font-style: italic; font-size: 14px; font-weight: 300; line-height: 1.55; color: #000; margin-bottom: 0.6rem; }
+  .lec-prose :global(.lec-ref) { font-style: italic; white-space: nowrap; }
+  .lec-prose :global(.lec-cite) { color: #d52e2e; font-style: italic; text-decoration: underline; }
 
-  .lec-prose :global(.lec-rule) { width: 112px; height: 0; border: 0; border-top: 2px solid var(--navy); margin: 1.4rem 0 2.4rem; }
-  .lec-prose :global(.lec-rule--center) { margin: 2.6rem auto; border-top: 1px solid #c2ccd0; }
-  .lec-prose :global(.lec-coda) { text-align: center; font-style: italic; font-size: 15px; line-height: 1.6; color: #384042; margin: 2rem 0; }
+  .lec-prose :global(.lec-rule) { width: 112px; height: 0; border: 0; border-top: 1.5px solid var(--navy); margin: 1.1rem 0 2.2rem; }
+  .lec-prose :global(.lec-rule--center) { margin: 2.4rem auto; border-top: 1px solid #c2ccd0; }
+  .lec-prose :global(.lec-coda) { text-align: center; font-style: italic; font-size: 14px; font-weight: 300; line-height: 1.6; color: #000; margin: 1.8rem 0; }
 
-  /* figures */
-  .lec-prose :global(figure) { margin: 1.8rem 0; }
+  /* ===== figures — captions 10px italic black + 8px source ===== */
+  .lec-prose :global(figure) { margin: 1.6rem 0; }
   .lec-prose :global(.lec-fig__img), .lec-prose :global(.lec-fig__globe) { background: var(--placeholder); }
-  .lec-prose :global(.lec-fig__img) { width: 100%; aspect-ratio: 704 / 310; }
-  .lec-prose :global(figcaption) { margin-top: 10px; padding-left: 14px; border-left: 2px solid #11292E; font-style: italic; font-size: 11.5px; line-height: 1.5; color: #4a5457; }
-  .lec-prose :global(.lec-fig__src) { display: block; margin-top: 3px; font-style: normal; font-size: 10px; color: #8b9498; }
+  .lec-prose :global(.lec-fig__img) { width: 100%; aspect-ratio: 2 / 1; }
+  .lec-prose :global(figcaption) { margin-top: 8px; padding-left: 12px; border-left: 2px solid #000; font-style: italic; font-size: 10px; line-height: 1.45; color: #000; }
+  .lec-prose :global(.lec-fig__src) { display: block; margin-top: 2px; font-style: normal; font-size: 8px; color: rgba(0,0,0,0.55); }
 
-  /* breakout wide figure: extend 240px left to reach content-left (169) */
+  /* infographic (flat image in Figma) → grey placeholder, 704×396 */
+  .lec-prose :global(.lec-info .lec-fig__img) { aspect-ratio: 704 / 396; }
+
+  /* breakout wide figure (only used by the truly full-width figures) */
   .lec-prose :global(.lec-fig--wide) { width: calc(100% + 240px); margin-left: -240px; }
   .lec-prose :global(.lec-fig--wide .lec-fig__img) { aspect-ratio: 944 / 425; }
 
-  /* rows: two / three / five up (float layout, cleared by figcaption) */
+  /* rows: two / three / five up (float, cleared by figcaption) */
   .lec-prose :global(.lec-fig--two)::after, .lec-prose :global(.lec-fig--three)::after, .lec-prose :global(.lec-fig--five)::after { content: ""; display: block; clear: both; }
   .lec-prose :global(.lec-fig--two > .lec-fig__img) { width: calc((100% - 16px) / 2); float: left; aspect-ratio: 344 / 310; }
   .lec-prose :global(.lec-fig--two > .lec-fig__img:nth-child(1)) { margin-right: 16px; }
@@ -108,50 +110,31 @@ const dateStr = new Date(fm.date).toLocaleDateString('en-US', { year: 'numeric',
   .lec-prose :global(.lec-fig--five) { width: calc(100% + 240px); margin-left: -240px; }
   .lec-prose :global(.lec-fig--five > .lec-fig__img) { width: calc((100% - 64px) / 5); float: left; margin-right: 16px; aspect-ratio: 178 / 310; }
   .lec-prose :global(.lec-fig--five > .lec-fig__img:nth-child(5)) { margin-right: 0; }
-  .lec-prose :global(.lec-fig--two > figcaption), .lec-prose :global(.lec-fig--three > figcaption), .lec-prose :global(.lec-fig--five > figcaption) { clear: both; padding-top: 10px; }
-  /* row inside a side figure */
+  .lec-prose :global(.lec-fig--two > figcaption), .lec-prose :global(.lec-fig--three > figcaption), .lec-prose :global(.lec-fig--five > figcaption) { clear: both; padding-top: 8px; }
   .lec-prose :global(.lec-fig__row--2) { display: flex; gap: 12px; }
   .lec-prose :global(.lec-fig__row--2 > .lec-fig__img) { width: 100%; aspect-ratio: 1 / 1.15; }
 
   /* text-beside-figure: figure floats right, text wraps left */
-  .lec-prose :global(.lec-fig--side) { float: right; width: 47%; margin: 6px 0 1.2rem 28px; }
+  .lec-prose :global(.lec-fig--side) { float: right; width: 47%; margin: 4px 0 1rem 24px; }
   .lec-prose :global(.lec-fig--side .lec-fig__img) { aspect-ratio: 4 / 3; }
 
-  /* twin-globe figure */
-  .lec-prose :global(.lec-fig--globes) { width: calc(100% + 240px); margin-left: -240px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  /* twin-globe figure (breakout) */
+  .lec-prose :global(.lec-fig--globes) { width: calc(100% + 240px); margin-left: -240px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
   .lec-prose :global(.lec-fig--globes .lec-fig__globe) { width: 300px; height: 300px; border-radius: 50%; }
+  .lec-prose :global(.lec-fig--globes-sm) { width: 100%; margin-left: 0; }
   .lec-prose :global(.lec-fig--globes-sm .lec-fig__globe) { width: 180px; height: 180px; }
-  .lec-prose :global(.lec-fig--globes figcaption) { flex: 1 0 100%; border-left: 2px solid #11292E; }
-
-  /* ===== infographic panels (The Arctic / Antarctica) ===== */
-  .lec-prose :global(.lec-info__panel) { position: relative; background: linear-gradient(160deg, #0c1f23, #16323a 60%, #1d4450); color: #fff; padding: 22px 26px 26px; min-height: 360px; overflow: hidden; }
-  .lec-prose :global(.lec-info__title) { display: block; font-size: 22px; font-weight: 300; letter-spacing: 0.04em; text-transform: uppercase; color: #eef3f4; margin-bottom: 1.4rem; }
-  .lec-prose :global(.lec-info__calls) { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 2rem; }
-  .lec-prose :global(.lec-info__call) { display: flex; flex-direction: column; }
-  .lec-prose :global(.lec-info__call i) { font-style: normal; font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: #9fb2b8; background: rgba(255,255,255,0.10); padding: 3px 7px; align-self: flex-start; }
-  .lec-prose :global(.lec-info__call b) { font-size: 20px; font-weight: 400; margin-top: 4px; }
-  .lec-prose :global(.lec-info__stats) { display: grid; grid-template-columns: 1fr; gap: 6px; margin: 0; max-width: 340px; }
-  .lec-prose :global(.lec-info__stats > div) { display: flex; align-items: center; gap: 12px; }
-  .lec-prose :global(.lec-info__stats dt) { flex: 0 0 92px; font-size: 8.5px; line-height: 1.15; text-transform: uppercase; letter-spacing: 0.05em; color: #9fb2b8; background: rgba(255,255,255,0.10); padding: 6px 8px; }
-  .lec-prose :global(.lec-info__stats dd) { margin: 0; font-size: 21px; font-weight: 300; color: #fff; }
-  .lec-prose :global(.lec-info--thumbs) { width: calc(100% + 240px); margin-left: -240px; display: flex; gap: 16px; flex-wrap: wrap; }
-  .lec-prose :global(.lec-info--thumbs .lec-info__thumbs) { display: flex; flex-direction: column; gap: 12px; flex: 0 0 192px; }
-  .lec-prose :global(.lec-info--thumbs .lec-info__thumb) { width: 192px; height: 192px; position: relative; }
-  .lec-prose :global(.lec-info--thumbs .lec-info__thumb span) { position: absolute; top: 6px; left: 8px; font-size: 9px; color: #6a747a; }
-  .lec-prose :global(.lec-info--thumbs .lec-info__panel) { flex: 1 1 460px; }
-  .lec-prose :global(.lec-info--thumbs figcaption) { flex: 1 0 100%; }
+  .lec-prose :global(.lec-fig--globes figcaption) { flex: 1 0 100%; border-left: 2px solid #000; }
 
   @media (max-width: 1000px) {
     .lec-hero__inner { height: 560px; }
     .lec-hero__box { left: 0; right: 0; bottom: 40px; }
     .lec-body { width: 100%; padding: 40px 0 80px; }
     .lec-prose { width: 100%; }
-    .lec-prose :global(.lec-fig--wide), .lec-prose :global(.lec-fig--five), .lec-prose :global(.lec-fig--globes), .lec-prose :global(.lec-info--thumbs) { width: 100%; margin-left: 0; }
+    .lec-prose :global(.lec-fig--wide), .lec-prose :global(.lec-fig--five), .lec-prose :global(.lec-fig--globes) { width: 100%; margin-left: 0; }
     .lec-prose :global(.lec-fig--side) { float: none; width: 100%; margin: 1.2rem 0; }
   }
   @media (max-width: 560px) {
     .lec-prose :global(.lec-fig--five > .lec-fig__img) { width: calc((100% - 16px) / 2); margin-bottom: 16px; }
-    .lec-prose :global(.lec-info__stats dd) { font-size: 17px; }
   }
 </style>
 
