@@ -99,7 +99,8 @@ const Content = mod.Content;
 
   /* figure with left-gutter illustration (Picture 3 + Additional Illustration 1) */
   .lec-prose :global(.lec-fig--withillus) { width: calc(100% + 202px); margin-left: -202px; display: flex; gap: 10px; align-items: flex-start; }
-  .lec-prose :global(.lec-fig--withillus .lec-illus) { flex: 0 0 192px; aspect-ratio: 192 / 423; }
+  .lec-prose :global(.lec-fig--withillus .lec-illus) { flex: 0 0 192px; display: flex; flex-direction: column; gap: 8px; }
+  .lec-prose :global(.lec-illus__box) { width: 100%; background: var(--placeholder); }
   .lec-prose :global(.lec-fig--withillus .lec-fig__main) { flex: 1 1 auto; min-width: 0; }
 
   /* right-floated inset (Picture 4 inset, 298×236) */
@@ -111,12 +112,11 @@ const Content = mod.Content;
   .lec-prose :global(.lec-fig--5up) { width: calc(100% + 240px); margin-left: -240px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
   .lec-prose :global(.lec-fig--2up figcaption), .lec-prose :global(.lec-fig--3up figcaption), .lec-prose :global(.lec-fig--5up figcaption) { grid-column: 1 / -1; }
 
-  /* centred in-lecture quote with picture (480 wide, 100px rules top & bottom) */
-  .lec-prose :global(.lec-fig--quote) { width: 480px; max-width: 100%; margin: 2.2rem auto; }
+  /* centred in-lecture quote: rule → 330×163 picture → text → rule, all centred (480 wide) */
+  .lec-prose :global(.lec-fig--quote) { width: 480px; max-width: 100%; margin: 2.4rem auto; text-align: center; }
   .lec-prose :global(.lec-quote__rule) { width: 100px; height: 0; border: 0; border-top: 1px solid var(--navy); margin: 0 auto; }
-  .lec-prose :global(.lec-quote__inner) { display: flex; gap: 20px; align-items: center; padding: 20px 0; }
-  .lec-prose :global(.lec-quote__img) { flex: 0 0 150px; aspect-ratio: 150 / 200; }
-  .lec-prose :global(.lec-fig--quote blockquote) { margin: 0; font-style: italic; font-size: 14px; line-height: 1.55; color: #000; }
+  .lec-prose :global(.lec-quote__img) { width: 330px; max-width: 100%; margin: 20px auto; aspect-ratio: 330 / 163; }
+  .lec-prose :global(.lec-fig--quote blockquote) { margin: 20px auto; font-style: italic; font-size: 14px; line-height: 1.55; color: #000; text-align: center; }
 
   @media (max-width: 1000px) {
     .lec-hero__inner { height: 560px; }
@@ -130,8 +130,7 @@ const Content = mod.Content;
   @media (max-width: 560px) {
     .lec-prose :global(.lec-fig--5up) { grid-template-columns: repeat(2, 1fr); }
     .lec-prose :global(.lec-fig--withillus) { flex-direction: column; }
-    .lec-prose :global(.lec-quote__inner) { flex-direction: column; align-items: stretch; }
-    .lec-prose :global(.lec-quote__img) { flex: none; aspect-ratio: 3 / 2; }
+    .lec-prose :global(.lec-fig--withillus .lec-illus) { flex-direction: row; }
   }
 </style>
 
