@@ -18,23 +18,23 @@ Roughly ten percent of the Earth's surface is permanently covered by ice, and th
 
 That single sentence is, in some ways, the entire problem in miniature. The two polar regions look superficially alike from a satellite — both are white — but they are radically different systems, and treating them as mirror images is the first mistake to avoid.
 
-<figure class="lec-fig lec-fig--wide"><div class="lec-fig__img placeholder"></div><figcaption>World map showing distribution of permanent ice cover: Ice and glaciers cover a significant amount of Earth's land masses, especially in Greenland and Antarctica. <span class="lec-fig__src">NASA, Public domain.</span></figcaption></figure>
+<figure class="lec-fig"><div class="lec-fig__img placeholder"></div><figcaption>World map showing distribution of permanent ice cover: Ice and glaciers cover a significant amount of Earth's land masses, especially in Greenland and Antarctica. <span class="lec-fig__src">NASA, Public domain.</span></figcaption></figure>
 
 ### The Arctic: an ocean surrounded by land
 
-The Arctic is, fundamentally, an ocean. Ice sits in two very different reservoirs. On land — most of it on Greenland, with smaller contributions from the Canadian Arctic Archipelago, Svalbard, the Russian Arctic islands and Iceland — the Arctic holds approximately 3.1 million cubic kilometres of ice, with ice thicknesses reaching up to roughly three kilometres at the centre of the Greenland ice sheet.<span class="lec-cite">(1)</span>
+The Arctic is, fundamentally, an ocean. Ice sits in two very different reservoirs. On land — most of it on Greenland, with smaller contributions from the Canadian Arctic Archipelago, Svalbard, the Russian Arctic islands and Iceland — the Arctic holds approximately 3.1 million cubic kilometres of ice, with ice thicknesses reaching up to roughly three kilometres at the centre of the Greenland ice sheet.<span class="lec-ref">(<span class="lec-cite">1</span>)</span>
 
 The other reservoir is the sea ice that forms on the surface of the Arctic Ocean itself. Its area swings dramatically with the seasons, but its average annual extent of around nine million square kilometres is itself larger than the entire continent of Europe. The volume, however, is comparatively small — around twenty thousand cubic kilometres — because the ice is rarely more than five metres thick. Average thickness in the central Arctic basin is closer to two or three metres, with pressure ridges occasionally reaching twenty metres where wind and current have crushed floes against one another. These figures are themselves models, built up from satellite altimetry and a relatively sparse network of in-situ measurements; they should be treated as best estimates rather than precise facts.
 
-<figure class="lec-info"><div class="lec-info__panel"><span class="lec-info__title">The Arctic</span><div class="lec-info__calls"><span class="lec-info__call"><i>Sea ice thickness</i><b>up to 5 m</b></span><span class="lec-info__call"><i>Land ice thickness</i><b>up to 3,000 m</b></span></div><dl class="lec-info__stats"><div><dt>Land ice volume</dt><dd>3,100,000 km³</dd></div><div><dt>Sea ice volume</dt><dd>19,750 km³</dd></div><div><dt>Land ice area</dt><dd>2,040,000 km²</dd></div><div><dt>Sea ice area</dt><dd>9,085,000 km²</dd></div></dl></div><figcaption>The Arctic — land ice and sea ice volumes and thicknesses. <span class="lec-fig__src">NASA Scientific Visualization Studio, Henry Páll Wulff.</span></figcaption></figure>
+<figure class="lec-fig lec-info"><div class="lec-fig__img placeholder"></div><figcaption>The Arctic — land ice and sea ice volumes and thicknesses. <span class="lec-fig__src">NASA Scientific Visualization Studio, Henry Páll Wulff.</span></figcaption></figure>
 
 ### Antarctica: a continent surrounded by ocean
 
-Antarctica is the inverse: a continent buried under ice, ringed by a circumpolar ocean. The Antarctic Ice Sheet contains roughly 26.5 million cubic kilometres of ice — about ninety percent of the freshwater on Earth — and reaches thicknesses of up to 4,776 metres.<span class="lec-cite">(2)</span> That is nearly five kilometres of ice piled in one place. If the entire Antarctic ice sheet were to melt, global sea level would rise by approximately 58 metres.
+Antarctica is the inverse: a continent buried under ice, ringed by a circumpolar ocean. The Antarctic Ice Sheet contains roughly 26.5 million cubic kilometres of ice — about ninety percent of the freshwater on Earth — and reaches thicknesses of up to 4,776 metres.<span class="lec-ref">(<span class="lec-cite">2</span>)</span> That is nearly five kilometres of ice piled in one place. If the entire Antarctic ice sheet were to melt, global sea level would rise by approximately 58 metres.
 
 Antarctic sea ice behaves differently from its Arctic counterpart for the simple reason that there is no land to confine it. In the austral summer it shrinks to around three million square kilometres, hugging the coast; by the September peak it has expanded to roughly eighteen million square kilometres, doubling the apparent size of the continent. Average thickness is generally only one to two metres, half that of the Arctic, because most of the ice melts each year and reforms from scratch the following winter.
 
-<figure class="lec-info lec-info--thumbs"><div class="lec-info__thumbs"><div class="lec-info__thumb placeholder"><span>Sep 2018</span></div><div class="lec-info__thumb placeholder"><span>Feb 2019</span></div></div><div class="lec-info__panel"><span class="lec-info__title">Antarctica</span><div class="lec-info__calls"><span class="lec-info__call"><i>Land ice thickness</i><b>up to 4,776 m</b></span><span class="lec-info__call"><i>Sea ice thickness</i><b>up to 4 m</b></span></div><dl class="lec-info__stats"><div><dt>Land ice volume</dt><dd>26,500,000 km³</dd></div><div><dt>Sea ice volume</dt><dd>21,000 km³</dd></div><div><dt>Land ice area</dt><dd>14,000,000 km²</dd></div><div><dt>Sea ice area</dt><dd>10,500,000 km²</dd></div></dl></div><figcaption>Antarctica — land ice and sea ice volumes and thicknesses. <span class="lec-fig__src">NASA Scientific Visualization Studio, Henry Páll Wulff.</span></figcaption></figure>
+<figure class="lec-fig lec-info"><div class="lec-fig__img placeholder"></div><figcaption>Antarctica — land ice and sea ice volumes and thicknesses. <span class="lec-fig__src">NASA Scientific Visualization Studio, Henry Páll Wulff.</span></figcaption></figure>
 
 <figure class="lec-fig lec-fig--globes"><div class="lec-fig__globe placeholder"></div><div class="lec-fig__globe placeholder"></div><figcaption>The Arctic is an ocean surrounded by land. Antarctica is a continent surrounded by ocean. Almost everything else about the two systems follows from that single fact.</figcaption></figure>
 
@@ -70,7 +70,7 @@ In geological terms, the present polar ice sheets are not ancient. The Antarctic
 
 The Antarctic Ice Sheet is the largest single mass of ice on Earth. It covers around fourteen million square kilometres, contains 26.5 million cubic kilometres of ice, and accounts for approximately ninety percent of the world's freshwater. Its full melting — a hypothetical, not a forecast — would raise global sea level by 58 metres.
 
-The continent does not warm uniformly. The interior and East Antarctica have shown a moderate warming of roughly 0.1 ± 0.2 °C per decade since the late 1950s, much of which falls within the noise of natural variability. The Antarctic Peninsula, by contrast, is one of the most rapidly warming regions on the planet, with temperature increases exceeding 0.3 °C per decade across the same period.<span class="lec-cite">(3)</span> That asymmetry — a relatively stable East, a destabilising West and Peninsula — is a recurring theme in the science, and it shapes almost every projection of future ice loss.
+The continent does not warm uniformly. The interior and East Antarctica have shown a moderate warming of roughly 0.1 ± 0.2 °C per decade since the late 1950s, much of which falls within the noise of natural variability. The Antarctic Peninsula, by contrast, is one of the most rapidly warming regions on the planet, with temperature increases exceeding 0.3 °C per decade across the same period.<span class="lec-ref">(<span class="lec-cite">3</span>)</span> That asymmetry — a relatively stable East, a destabilising West and Peninsula — is a recurring theme in the science, and it shapes almost every projection of future ice loss.
 
 ### The Greenland Ice Sheet
 
@@ -78,7 +78,7 @@ The continent does not warm uniformly. The interior and East Antarctica have sho
 
 The Greenland Ice Sheet covers around eighty-two percent of Greenland's land surface — roughly 1.8 million square kilometres — and contains approximately 2.85 million cubic kilometres of ice. It is some 2,400 kilometres long from north to south and reaches 1,100 kilometres across at its widest, near 77°N. Mean elevation of the ice surface is 2,135 metres. The ice is generally more than two kilometres thick, exceeding three kilometres at its thickest point.
 
-Greenland's ice sheet is currently losing mass at a rate of roughly 240 cubic kilometres per year, a figure that has approximately tripled since the 1990s. If it were to melt entirely, sea level would rise by approximately 7.2 metres. The full melt is, again, not a forecast — it would take centuries at current rates — but the trajectory is unambiguous.<span class="lec-cite">(4)</span>
+Greenland's ice sheet is currently losing mass at a rate of roughly 240 cubic kilometres per year, a figure that has approximately tripled since the 1990s. If it were to melt entirely, sea level would rise by approximately 7.2 metres. The full melt is, again, not a forecast — it would take centuries at current rates — but the trajectory is unambiguous.<span class="lec-ref">(<span class="lec-cite">4</span>)</span>
 
 ### Ice caps
 
@@ -116,13 +116,13 @@ Basal sliding occurs only at temperate glaciers — those whose ice is everywher
 
 Outside the two ice sheets, the global glacierised area totals approximately 726,000 square kilometres, distributed unevenly across nineteen recognised regions. The largest concentrations are in the subantarctic and Antarctic peripheral glaciers (around 133,000 km²), the Canadian Arctic North (around 105,000 km²) and High Mountain Asia (around 63,000 km²). Roughly forty-four percent of the world's non-ice-sheet glacier area is in Arctic regions and a further eighteen percent in the Antarctic and subantarctic. The low latitudes — the tropics — contain only about 2,300 km² of glacier ice, and that small total is shrinking fast.
 
-<figure class="lec-fig lec-fig--wide"><div class="lec-fig__img placeholder"></div><figcaption>Global glacierised area outside the two ice sheets, by region. <span class="lec-fig__src">Morlighem et al. 2017.</span></figcaption></figure>
+<figure class="lec-fig"><div class="lec-fig__img placeholder"></div><figcaption>Global glacierised area outside the two ice sheets, by region. <span class="lec-fig__src">Morlighem et al. 2017.</span></figcaption></figure>
 
 ## Sea ice
 
 Sea ice is the more dynamic of the two systems. Land ice changes on the timescale of years and decades; sea ice changes on the timescale of hours and days. A floe that exists this morning may be a pressure ridge by evening if wind, current and the geometry of surrounding ice conspire against it. The vocabulary used to describe sea ice is correspondingly more elaborate, and it is standardised internationally through the World Meteorological Organization's sea-ice nomenclature.
 
-What follows is the WMO classification, which is the working language of every ice service, polar mariner and serious expedition operator.<span class="lec-cite">(5)</span>
+What follows is the WMO classification, which is the working language of every ice service, polar mariner and serious expedition operator.<span class="lec-ref">(<span class="lec-cite">5</span>)</span>
 
 ### How sea ice forms
 
@@ -210,7 +210,7 @@ An accumulation of fragments of floating ice, none more than two metres across. 
 
 ## Sea ice as habitat
 
-Sea ice is not simply a physical environment to be navigated. It is also a habitat, and one of the most productive on Earth in season.<span class="lec-cite">(6)</span>
+Sea ice is not simply a physical environment to be navigated. It is also a habitat, and one of the most productive on Earth in season.<span class="lec-ref">(<span class="lec-cite">6</span>)</span>
 
 The underside of multi-year sea ice supports communities of ice algae — specialised diatoms and other microalgae that grow within and beneath the ice itself, photosynthesising through the relatively translucent canopy above them. When the ice melts in spring, those algae are released into the water column along with a layer of fresh, nutrient-rich meltwater. The combination triggers blooms of phytoplankton on a scale that satellites can see from space.
 
