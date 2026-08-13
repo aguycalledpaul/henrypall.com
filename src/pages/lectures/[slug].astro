@@ -1,0 +1,177 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  const mods = import.meta.glob('../../lectures/*.md', { eager: true });
+  return Object.entries(mods).map(([path, mod]) => ({
+    params: { slug: path.split('/').pop().replace(/\.md$/, '') },
+    props: { mod },
+  }));
+}
+
+const { mod } = Astro.props;
+const fm = mod.frontmatter;
+const Content = mod.Content;
+
+const dateStr = new Date(fm.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<BaseLayout title={fm.title + ' — Lectures'} description={fm.excerpt} overlayHeader overlayDark={false}>
+  <button class="ds-toc" aria-label="Table of contents" type="button">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="8" y1="7" x2="20" y2="7"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="8" y1="17" x2="20" y2="17"/><circle cx="4" cy="7" r="0.9" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="0.9" fill="currentColor" stroke="none"/><circle cx="4" cy="17" r="0.9" fill="currentColor" stroke="none"/></svg>
+  </button>
+
+  <section class="lec-hero">
+    <div class="lec-wrap lec-hero__inner">
+      <div class="lec-hero__box">
+        <span class="tag lec-hero__tag">{fm.category}</span>
+        <h1 class="lec-hero__title">{fm.title}</h1>
+        {fm.subtitle && <p class="lec-hero__sub">{fm.subtitle}</p>}
+      </div>
+    </div>
+  </section>
+
+  <div class="lec-wrap">
+    <div class="lec-body">
+      <article class="lec-prose">
+        <Content />
+      </article>
+    </div>
+  </div>
+
+  <div class="ds-tocpop" id="tocPop" role="dialog" aria-label="Table of contents" hidden>
+    <p class="ds-tocpop__title">Contents</p>
+    <nav class="ds-toc__list" id="tocList"></nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .lec-wrap { position: relative; width: min(1102px, calc(100% - 2.5rem)); margin-inline: auto; }
+
+  /* floating TOC icon + popover (shared visual language with Dispatches) */
+  .ds-toc { position: fixed; left: 18px; top: 42%; z-index: 15; width: 44px; height: 44px; display: grid; place-items: center; background: #fff; border: 1px solid #e3e7e9; border-radius: 4px; box-shadow: 0 6px 20px rgba(17,41,46,0.10); color: var(--navy); cursor: pointer; }
+  .ds-toc:hover { border-color: var(--navy); }
+  .ds-toc.is-open { background: var(--navy); color: #fff; border-color: var(--navy); }
+  @media (max-width: 1180px) { .ds-toc { display: none; } }
+  .ds-tocpop { position: fixed; left: 70px; top: 42%; z-index: 16; width: 288px; max-height: 78vh; overflow-y: auto; background: #fff; border: 1px solid #e3e7e9; border-radius: 8px; box-shadow: 0 16px 44px rgba(17,41,46,0.16); padding: 16px 18px; scrollbar-width: thin; }
+  .ds-tocpop[hidden] { display: none; }
+  .ds-tocpop::before { content: ""; position: absolute; left: -7px; top: 46px; width: 12px; height: 12px; background: #fff; border-left: 1px solid #e3e7e9; border-bottom: 1px solid #e3e7e9; transform: rotate(45deg); }
+  .ds-tocpop__title { margin: 0 0 0.5rem; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #8b9498; }
+  @media (max-width: 1180px) { .ds-tocpop { display: none; } }
+  .ds-toc__list { display: flex; flex-direction: column; counter-reset: toc; }
+  .ds-toc__list a { counter-increment: toc; display: flex; gap: 10px; align-items: baseline; padding: 9px 2px; border-bottom: 1px solid #eef1f2; color: #2b3133; text-decoration: none; font-size: 12.5px; line-height: 1.35; }
+  .ds-toc__list a:last-child { border-bottom: 0; }
+  .ds-toc__list a:hover { color: var(--navy); }
+  .ds-toc__list a::before { content: counter(toc, decimal-leading-zero); color: #b45a2b; font-size: 10px; font-weight: 600; flex: 0 0 auto; }
+
+  /* ===== hero (grey full-bleed, navy title box at text-column width) ===== */
+  .lec-hero { position: relative; background: var(--placeholder); }
+  .lec-hero__inner { height: 893px; }
+  .lec-hero__box { position: absolute; left: 240px; right: 158px; bottom: 203px; background: var(--navy); color: #fff; padding: 22px 39px 24px; }
+  .lec-hero__tag { position: absolute; left: 22px; bottom: calc(100% + 9px); }
+  .lec-hero__title { margin: 0; color: #fff; font-size: clamp(1.8rem, 3.4vw, 40px); font-weight: 600; text-transform: uppercase; line-height: 1.12; letter-spacing: 0.01em; }
+  .lec-hero__sub { margin: 10px 0 0; color: #cdd6d9; font-size: 15px; font-weight: 300; }
+
+  /* ===== offset content column: body 944 (169–1113), prose 704 right-aligned (409–1113) ===== */
+  .lec-body { width: min(944px, 100%); padding: 60px 0 120px; }
+  .lec-prose { width: 704px; max-width: 100%; margin-left: auto; }
+
+  /* prose type */
+  .lec-prose :global(h2) { margin: 3rem 0 1rem; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; color: var(--navy); }
+  .lec-prose :global(h3) { margin: 2rem 0 0.7rem; font-size: 15px; font-weight: 400; font-style: italic; color: var(--navy); }
+  .lec-prose :global(p) { margin: 0 0 1.1rem; font-size: 13.5px; font-weight: 300; line-height: 1.68; color: #2b3133; }
+  .lec-prose :global(strong) { font-weight: 600; color: #1f2629; }
+  .lec-prose :global(.lec-standfirst) { font-style: italic; font-size: 15px; line-height: 1.62; color: #384042; margin-bottom: 1rem; }
+  .lec-prose :global(.lec-cite) { color: #c0392b; font-style: italic; margin-left: 1px; }
+
+  .lec-prose :global(.lec-rule) { width: 112px; height: 0; border: 0; border-top: 2px solid var(--navy); margin: 1.4rem 0 2.4rem; }
+  .lec-prose :global(.lec-rule--center) { margin: 2.6rem auto; border-top: 1px solid #c2ccd0; }
+  .lec-prose :global(.lec-coda) { text-align: center; font-style: italic; font-size: 15px; line-height: 1.6; color: #384042; margin: 2rem 0; }
+
+  /* figures */
+  .lec-prose :global(figure) { margin: 1.8rem 0; }
+  .lec-prose :global(.lec-fig__img), .lec-prose :global(.lec-fig__globe) { background: var(--placeholder); }
+  .lec-prose :global(.lec-fig__img) { width: 100%; aspect-ratio: 704 / 310; }
+  .lec-prose :global(figcaption) { margin-top: 10px; padding-left: 14px; border-left: 2px solid #11292E; font-style: italic; font-size: 11.5px; line-height: 1.5; color: #4a5457; }
+  .lec-prose :global(.lec-fig__src) { display: block; margin-top: 3px; font-style: normal; font-size: 10px; color: #8b9498; }
+
+  /* breakout wide figure: extend 240px left to reach content-left (169) */
+  .lec-prose :global(.lec-fig--wide) { width: calc(100% + 240px); margin-left: -240px; }
+  .lec-prose :global(.lec-fig--wide .lec-fig__img) { aspect-ratio: 944 / 425; }
+
+  /* rows: two / three / five up (float layout, cleared by figcaption) */
+  .lec-prose :global(.lec-fig--two)::after, .lec-prose :global(.lec-fig--three)::after, .lec-prose :global(.lec-fig--five)::after { content: ""; display: block; clear: both; }
+  .lec-prose :global(.lec-fig--two > .lec-fig__img) { width: calc((100% - 16px) / 2); float: left; aspect-ratio: 344 / 310; }
+  .lec-prose :global(.lec-fig--two > .lec-fig__img:nth-child(1)) { margin-right: 16px; }
+  .lec-prose :global(.lec-fig--three > .lec-fig__img) { width: calc((100% - 32px) / 3); float: left; margin-right: 16px; aspect-ratio: 224 / 310; }
+  .lec-prose :global(.lec-fig--three > .lec-fig__img:nth-child(3)) { margin-right: 0; }
+  .lec-prose :global(.lec-fig--five) { width: calc(100% + 240px); margin-left: -240px; }
+  .lec-prose :global(.lec-fig--five > .lec-fig__img) { width: calc((100% - 64px) / 5); float: left; margin-right: 16px; aspect-ratio: 178 / 310; }
+  .lec-prose :global(.lec-fig--five > .lec-fig__img:nth-child(5)) { margin-right: 0; }
+  .lec-prose :global(.lec-fig--two > figcaption), .lec-prose :global(.lec-fig--three > figcaption), .lec-prose :global(.lec-fig--five > figcaption) { clear: both; padding-top: 10px; }
+  /* row inside a side figure */
+  .lec-prose :global(.lec-fig__row--2) { display: flex; gap: 12px; }
+  .lec-prose :global(.lec-fig__row--2 > .lec-fig__img) { width: 100%; aspect-ratio: 1 / 1.15; }
+
+  /* text-beside-figure: figure floats right, text wraps left */
+  .lec-prose :global(.lec-fig--side) { float: right; width: 47%; margin: 6px 0 1.2rem 28px; }
+  .lec-prose :global(.lec-fig--side .lec-fig__img) { aspect-ratio: 4 / 3; }
+
+  /* twin-globe figure */
+  .lec-prose :global(.lec-fig--globes) { width: calc(100% + 240px); margin-left: -240px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .lec-prose :global(.lec-fig--globes .lec-fig__globe) { width: 300px; height: 300px; border-radius: 50%; }
+  .lec-prose :global(.lec-fig--globes-sm .lec-fig__globe) { width: 180px; height: 180px; }
+  .lec-prose :global(.lec-fig--globes figcaption) { flex: 1 0 100%; border-left: 2px solid #11292E; }
+
+  /* ===== infographic panels (The Arctic / Antarctica) ===== */
+  .lec-prose :global(.lec-info__panel) { position: relative; background: linear-gradient(160deg, #0c1f23, #16323a 60%, #1d4450); color: #fff; padding: 22px 26px 26px; min-height: 360px; overflow: hidden; }
+  .lec-prose :global(.lec-info__title) { display: block; font-size: 22px; font-weight: 300; letter-spacing: 0.04em; text-transform: uppercase; color: #eef3f4; margin-bottom: 1.4rem; }
+  .lec-prose :global(.lec-info__calls) { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 2rem; }
+  .lec-prose :global(.lec-info__call) { display: flex; flex-direction: column; }
+  .lec-prose :global(.lec-info__call i) { font-style: normal; font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: #9fb2b8; background: rgba(255,255,255,0.10); padding: 3px 7px; align-self: flex-start; }
+  .lec-prose :global(.lec-info__call b) { font-size: 20px; font-weight: 400; margin-top: 4px; }
+  .lec-prose :global(.lec-info__stats) { display: grid; grid-template-columns: 1fr; gap: 6px; margin: 0; max-width: 340px; }
+  .lec-prose :global(.lec-info__stats > div) { display: flex; align-items: center; gap: 12px; }
+  .lec-prose :global(.lec-info__stats dt) { flex: 0 0 92px; font-size: 8.5px; line-height: 1.15; text-transform: uppercase; letter-spacing: 0.05em; color: #9fb2b8; background: rgba(255,255,255,0.10); padding: 6px 8px; }
+  .lec-prose :global(.lec-info__stats dd) { margin: 0; font-size: 21px; font-weight: 300; color: #fff; }
+  .lec-prose :global(.lec-info--thumbs) { width: calc(100% + 240px); margin-left: -240px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .lec-prose :global(.lec-info--thumbs .lec-info__thumbs) { display: flex; flex-direction: column; gap: 12px; flex: 0 0 192px; }
+  .lec-prose :global(.lec-info--thumbs .lec-info__thumb) { width: 192px; height: 192px; position: relative; }
+  .lec-prose :global(.lec-info--thumbs .lec-info__thumb span) { position: absolute; top: 6px; left: 8px; font-size: 9px; color: #6a747a; }
+  .lec-prose :global(.lec-info--thumbs .lec-info__panel) { flex: 1 1 460px; }
+  .lec-prose :global(.lec-info--thumbs figcaption) { flex: 1 0 100%; }
+
+  @media (max-width: 1000px) {
+    .lec-hero__inner { height: 560px; }
+    .lec-hero__box { left: 0; right: 0; bottom: 40px; }
+    .lec-body { width: 100%; padding: 40px 0 80px; }
+    .lec-prose { width: 100%; }
+    .lec-prose :global(.lec-fig--wide), .lec-prose :global(.lec-fig--five), .lec-prose :global(.lec-fig--globes), .lec-prose :global(.lec-info--thumbs) { width: 100%; margin-left: 0; }
+    .lec-prose :global(.lec-fig--side) { float: none; width: 100%; margin: 1.2rem 0; }
+  }
+  @media (max-width: 560px) {
+    .lec-prose :global(.lec-fig--five > .lec-fig__img) { width: calc((100% - 16px) / 2); margin-bottom: 16px; }
+    .lec-prose :global(.lec-info__stats dd) { font-size: 17px; }
+  }
+</style>
+
+<script>
+  const tocList = document.getElementById('tocList');
+  const tocPop = document.getElementById('tocPop');
+  const tocBtn = document.querySelector('.ds-toc');
+  function closeToc() { if (tocPop) tocPop.hidden = true; if (tocBtn) tocBtn.classList.remove('is-open'); }
+  function toggleToc() { if (!tocPop) return; const open = tocPop.hidden; tocPop.hidden = !open; if (tocBtn) tocBtn.classList.toggle('is-open', open); }
+  if (tocList) {
+    document.querySelectorAll('.lec-prose h2').forEach((h) => {
+      if (!h.id) return;
+      const a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.textContent = h.textContent.replace(/\s+/g, ' ').trim();
+      a.addEventListener('click', (e) => { e.preventDefault(); closeToc(); const t = document.getElementById(h.id); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+      tocList.appendChild(a);
+    });
+  }
+  if (tocBtn) tocBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleToc(); });
+  document.addEventListener('click', (e) => { if (tocPop && !tocPop.hidden && !tocPop.contains(e.target) && !tocBtn.contains(e.target)) closeToc(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeToc(); });
+</script>
