@@ -150,13 +150,9 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
   </div>
 
   <!-- Table of contents modal -->
-  <div class="ds-modal" id="tocModal" hidden>
-    <div class="ds-modal__backdrop" data-close></div>
-    <div class="ds-modal__card ds-toc__card" role="dialog" aria-label="Table of contents">
-      <button class="ds-modal__x" data-close aria-label="Close">&times;</button>
-      <h3 class="ds-modal__title">Contents</h3>
-      <nav class="ds-toc__list" id="tocList"></nav>
-    </div>
+  <div class="ds-tocpop" id="tocPop" role="dialog" aria-label="Table of contents" hidden>
+    <p class="ds-tocpop__title">Contents</p>
+    <nav class="ds-toc__list" id="tocList"></nav>
   </div>
 
   <!-- Citation hover tooltip -->
@@ -167,6 +163,7 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
   .wrap { position: relative; width: min(1104px, calc(100% - 2.5rem)); margin-inline: auto; }
 
   .ds-toc { position: fixed; left: 18px; top: 42%; z-index: 15; width: 44px; height: 44px; display: grid; place-items: center; background: #fff; border: 1px solid #e3e7e9; border-radius: 4px; box-shadow: 0 6px 20px rgba(17,41,46,0.10); color: var(--navy); cursor: pointer; }
+  .ds-toc:hover { border-color: var(--navy); }
   @media (max-width: 1180px) { .ds-toc { display: none; } }
 
   .ds-hero { position: relative; background: var(--placeholder); }
@@ -186,16 +183,17 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
   .ds-prose :global(a) { color: #b45a2b; text-decoration: underline; }
   .ds-prose :global(blockquote) { margin: 1.8rem 0; padding: 0 0 0 22px; border-left: 2px solid #c2ccd0; font-style: italic; font-size: 14px; line-height: 1.6; color: #3a4245; }
   .ds-prose :global(blockquote p) { font-style: italic; color: #3a4245; }
+  .ds-prose :global(blockquote p:last-child) { font-style: normal; color: #5a6367; font-size: 12.5px; margin-top: 0.4rem; }
 
   /* inline figures */
   .ds-prose :global(.ds-fig) { margin: 1.8rem 0; }
   .ds-prose :global(.ds-fig__two) { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .ds-prose :global(.ds-fig__img) { width: 100%; aspect-ratio: 3 / 2; background: var(--placeholder); }
   .ds-prose :global(.ds-fig__img--tall) { aspect-ratio: 16 / 10; }
-  .ds-prose :global(.ds-fig figcaption) { margin-top: 10px; padding-left: 14px; border-left: 2px solid #c2ccd0; font-style: italic; font-size: 11.5px; line-height: 1.5; color: #4a5457; }
+  .ds-prose :global(.ds-fig figcaption) { margin-top: 10px; padding-left: 14px; border-left: 2px solid #11292E; font-style: italic; font-size: 11.5px; line-height: 1.5; color: #4a5457; }
 
   /* inline citation markers */
-  .ds-prose :global(a.ds-cite) { color: #c0392b; text-decoration: underline; font-weight: 500; cursor: pointer; white-space: nowrap; }
+  .ds-prose :global(a.ds-cite) { color: #c0392b; text-decoration: underline; font-weight: 400; font-style: italic; cursor: pointer; white-space: nowrap; }
   .ds-prose :global(a.ds-cite:hover) { color: #96271b; }
   .ds-prose :global(.ds-fig__src) { display: block; margin-top: 3px; font-style: normal; font-size: 10px; color: #8b9498; }
 
@@ -210,7 +208,7 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
   .ds-about__body a { color: #3a7ca5; text-decoration: none; word-break: break-word; }
 
   /* sidebar */
-  .ds-side { position: sticky; top: 24px; }
+  .ds-side { position: sticky; top: 24px; max-height: calc(100vh - 48px); overflow-y: auto; padding-right: 6px; scrollbar-width: thin; }
   .ds-side__actions { display: flex; gap: 8px; margin-bottom: 1.6rem; }
   .ds-actbtn { flex: 1; height: 40px; padding: 0 0.5rem; border: 0; background: var(--navy); color: #fff; font-family: inherit; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
   .ds-actbtn:hover { background: var(--navy-800); }
@@ -254,14 +252,18 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
   .ds-cite__text { font-size: 13px; line-height: 1.55; color: #2b3133; background: #f6f8f9; border: 1px solid #e3e7e9; border-radius: 4px; padding: 12px 14px; margin: 0 0 1rem; }
   .ds-cite__actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-  /* TOC modal */
-  .ds-toc__card { width: min(420px, calc(100% - 2rem)); }
-  .ds-toc__list { display: flex; flex-direction: column; }
-  .ds-toc__list a { counter-increment: toc; display: flex; gap: 12px; align-items: baseline; padding: 11px 4px; border-bottom: 1px solid #eef1f2; color: #2b3133; text-decoration: none; font-size: 13.5px; line-height: 1.4; }
+  /* TOC popover — anchored to the floating icon */
+  .ds-toc.is-open { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .ds-tocpop { position: fixed; left: 70px; top: 42%; z-index: 16; width: 288px; max-height: 78vh; overflow-y: auto; background: #fff; border: 1px solid #e3e7e9; border-radius: 8px; box-shadow: 0 16px 44px rgba(17,41,46,0.16); padding: 16px 18px; scrollbar-width: thin; }
+  .ds-tocpop[hidden] { display: none; }
+  .ds-tocpop::before { content: ""; position: absolute; left: -7px; top: 46px; width: 12px; height: 12px; background: #fff; border-left: 1px solid #e3e7e9; border-bottom: 1px solid #e3e7e9; transform: rotate(45deg); }
+  .ds-tocpop__title { margin: 0 0 0.5rem; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #8b9498; }
+  @media (max-width: 1180px) { .ds-tocpop { display: none; } }
+  .ds-toc__list { display: flex; flex-direction: column; counter-reset: toc; }
+  .ds-toc__list a { counter-increment: toc; display: flex; gap: 10px; align-items: baseline; padding: 9px 2px; border-bottom: 1px solid #eef1f2; color: #2b3133; text-decoration: none; font-size: 12.5px; line-height: 1.35; }
   .ds-toc__list a:last-child { border-bottom: 0; }
   .ds-toc__list a:hover { color: var(--navy); }
-  .ds-toc__list a::before { content: counter(toc, decimal-leading-zero); color: #b45a2b; font-size: 11px; font-weight: 600; flex: 0 0 auto; }
-  .ds-toc__list { counter-reset: toc; }
+  .ds-toc__list a::before { content: counter(toc, decimal-leading-zero); color: #b45a2b; font-size: 10px; font-weight: 600; flex: 0 0 auto; }
 
   /* citation reference highlight (when jumped to) */
   .ds-refs li.is-flash { animation: refflash 1.8s ease; }
@@ -276,7 +278,7 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
     .ds-hero__inner { height: 520px; }
     .ds-hero__box { padding: 28px 24px 30px; }
     .ds-grid { grid-template-columns: 1fr; row-gap: 3rem; }
-    .ds-side { position: static; }
+    .ds-side { position: static; max-height: none; overflow: visible; }
   }
 </style>
 
@@ -379,24 +381,35 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
     });
   });
 
-  // ----- Table of contents modal -----
+  // ----- Table of contents popover (anchored to the floating icon) -----
   const tocList = document.getElementById('tocList');
+  const tocPop = document.getElementById('tocPop');
+  const tocBtn = document.querySelector('.ds-toc');
+  function closeToc() { if (tocPop) tocPop.hidden = true; if (tocBtn) tocBtn.classList.remove('is-open'); }
+  function toggleToc() {
+    if (!tocPop) return;
+    const willOpen = tocPop.hidden;
+    tocPop.hidden = !willOpen;
+    if (tocBtn) tocBtn.classList.toggle('is-open', willOpen);
+  }
   if (tocList) {
-    const heads = document.querySelectorAll('.ds-prose h2');
-    heads.forEach((h) => {
+    document.querySelectorAll('.ds-prose h2').forEach((h) => {
       if (!h.id) return;
       const a = document.createElement('a');
       a.href = '#' + h.id;
       a.textContent = h.textContent.replace(/\s+/g, ' ').trim();
       a.addEventListener('click', (e) => {
         e.preventDefault();
-        closeModals();
+        closeToc();
         const target = document.getElementById(h.id);
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
       tocList.appendChild(a);
     });
   }
-  const tocBtn = document.querySelector('.ds-toc');
-  if (tocBtn) tocBtn.addEventListener('click', () => openModal('tocModal'));
+  if (tocBtn) tocBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleToc(); });
+  document.addEventListener('click', (e) => {
+    if (tocPop && !tocPop.hidden && !tocPop.contains(e.target) && !tocBtn.contains(e.target)) closeToc();
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeToc(); });
 </script>
