@@ -28,7 +28,8 @@ const { overlay = false, overlayDark = true } = Astro.props;
     <nav class="nav" aria-label="Primary">
       {nav.map((item) => {
         const path = item.href.replace(/\/$/, '');
-        const active = current === path;
+        // Home matches only its exact path; every other item also matches its sub-pages
+        const active = path === base ? current === base : (current === path || current.startsWith(path + '/'));
         return (
           <a href={item.href} class:list={['nav__link', { 'is-active': active }]}>
             <span class="nav__label">{item.label}</span>
