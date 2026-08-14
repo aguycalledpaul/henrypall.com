@@ -12,11 +12,13 @@ readingTime: "approx. 25 minutes"
 
 <hr class="lec-rule" />
 
+<figure class="lec-fig lec-fig--wide"><div class="lec-fig__img placeholder" style="--ar:944/425"></div><figcaption>The cryosphere — the frozen portions of Earth's surface — spans both poles and the high mountains between them. <span class="lec-fig__src">NASA, Public domain.</span></figcaption></figure>
+
 ## Two poles, two worlds
 
 Roughly ten percent of the Earth's surface is permanently covered by ice, and the great majority of that ice sits at the two ends of the planet. About ten percent of the global ice mass is in the Arctic, just under ninety percent is locked in Antarctica, and the small remainder is distributed across the high mountains of the world — the Himalaya, the Andes, the European Alps, the Southern Alps of New Zealand, the volcanoes of Iceland.
 
-<figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/352"></div><figcaption>World map showing distribution of permanent ice cover: Ice and glaciers cover a significant amount of Earth's land masses, especially in Greenland and Antarctica. <span class="lec-fig__src">NASA, Public domain.</span></figcaption></figure>
+<figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/352"></div><figcaption>World map showing distribution of permanent ice cover: ice and glaciers cover a significant amount of Earth's land masses, especially in Greenland and Antarctica. <span class="lec-fig__src">NASA, Public domain.</span></figcaption></figure>
 
 ### The Arctic: an ocean surrounded by land
 
@@ -46,17 +48,29 @@ Land ice forms from fresh water. Snow falls on a glacier or ice sheet, layer acc
 
 Both kinds of ice share one property that has outsized consequences: they are white, which means they have a high albedo. Roughly eighty percent of the sunlight that strikes intact sea ice is reflected back into space. When that ice melts and exposes the dark ocean beneath, the same surface absorbs around ninety percent of incoming sunlight instead. The water warms, which in turn melts more ice, which exposes more water, which absorbs more sunlight. This is a positive feedback — a self-amplifying loop — and it is one of the principal reasons that polar warming runs ahead of the global average, and one of the reasons climate projections in the Arctic in particular are so difficult to constrain.
 
-<figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/396"></div><figcaption>The two surviving ice sheets, on opposite ends of the planet, cover an area of 1.8 million km² in Greenland and 14 million km² in Antarctica. <span class="lec-fig__src">Henry Páll Wulff.</span></figcaption></figure>
-
 ## Land ice
+
+### Ice sheets, caps, glaciers and fields
 
 Land ice can be classified, with reasonable consistency, by size. The terminology is hierarchical: ice sheets are the largest, ice caps smaller, glaciers smaller still, and ice fields a special case constrained by terrain. By the strict definition — a mass of glacial ice greater than fifty thousand square kilometres — there are only two ice sheets on Earth at present: the Antarctic Ice Sheet and the Greenland Ice Sheet.
 
+<figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/396"></div><figcaption>The size hierarchy of land ice — ice sheet, ice cap, glacier and ice field. <span class="lec-fig__src">Henry Páll Wulff.</span></figcaption></figure>
+
+### The Antarctic Ice Sheet
+
 The Antarctic Ice Sheet is the largest single mass of ice on Earth: fourteen million square kilometres, 26.5 million cubic kilometres of ice, roughly ninety percent of the world's freshwater. The interior warms slowly, but the Antarctic Peninsula is one of the most rapidly warming regions on the planet, with temperature increases exceeding 0.3 °C per decade.<span class="lec-ref">(<span class="lec-cite">3</span>)</span>
 
-<figure class="lec-fig lec-fig--wide"><div class="lec-fig__img placeholder" style="--ar:944/425"></div><figcaption>Greenland maps showing (a) land topography and (b) ice bed thickness. <span class="lec-fig__src">Morlighem et al. 2017.</span></figcaption></figure>
+### The Greenland Ice Sheet
+
+<figure class="lec-fig lec-fig--floatright"><div class="lec-fig__img placeholder" style="--ar:393/300"></div><figcaption>Greenland — surface topography and the subglacial bed beneath the ice. <span class="lec-fig__src">Morlighem et al. 2017.</span></figcaption></figure>
 
 The Greenland Ice Sheet covers around eighty-two percent of Greenland's land surface — roughly 1.8 million square kilometres — and contains approximately 2.85 million cubic kilometres of ice. It is losing mass at a rate of roughly 240 cubic kilometres per year, a figure that has approximately tripled since the 1990s. If it were to melt entirely, sea level would rise by approximately 7.2 metres.<span class="lec-ref">(<span class="lec-cite">4</span>)</span>
+
+### Ice caps and ice fields
+
+An ice cap is a smaller dome of ice — under fifty thousand square kilometres — that spreads under its own weight more or less independently of the land beneath it. An ice field is the terrain-constrained case: ice that fills the valleys and basins of a mountain landscape rather than burying it, with the highest peaks emerging as nunataks above the surface.
+
+<figure class="lec-fig lec-fig--wide"><div class="lec-fig__img placeholder" style="--ar:944/425"></div><figcaption>Greenland maps showing (a) surface topography and (b) bed elevation beneath the ice sheet. <span class="lec-fig__src">Morlighem et al. 2017.</span></figcaption></figure>
 
 ### Glaciers
 
@@ -86,6 +100,8 @@ Outside the two ice sheets, the global glacierised area totals approximately 726
 
 Sea ice is the more dynamic of the two systems. Land ice changes on the timescale of years and decades; sea ice changes on the timescale of hours and days. The vocabulary used to describe it is correspondingly more elaborate, and it is standardised internationally through the World Meteorological Organization's sea-ice nomenclature.<span class="lec-ref">(<span class="lec-cite">5</span>)</span>
 
+### The onset of freezing
+
 Salt water freezes differently from fresh water. At an oceanic average salinity of 35 grams per litre, seawater freezes at −1.8 °C, and only the top layer needs to cool to its freezing point for ice to begin forming — which is why sea ice can form quickly across very large areas once conditions are right.
 
 <figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/310"></div><figcaption>Sea ice forming across a low-salinity surface layer. <span class="lec-fig__src">Henry Páll Wulff.</span></figcaption></figure>
@@ -96,9 +112,13 @@ The first stage in sea-ice formation is a population of needle-like ice crystals
 
 <figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/310"></div><figcaption>New ice — frazil, grease, slush, and shuga. <span class="lec-fig__src">Morlighem et al. 2017.</span></figcaption></figure>
 
-### Nilas, ice rind and young ice
+### Nilas and ice rind
 
-Once new ice consolidates into a continuous sheet, it becomes nilas: a thin, elastic crust that bends visibly with the swell. Young ice is the next developmental stage, divided into grey ice and grey-white ice.
+Once new ice consolidates into a continuous sheet, it becomes nilas: a thin, elastic crust that bends visibly with the swell, subdivided into dark nilas and lighter nilas as it thickens. In lower-salinity water the equivalent brittle crust is called ice rind.
+
+### Young ice
+
+Young ice is the next developmental stage, a firmer sheet divided into grey ice and grey-white ice as it approaches thirty centimetres in thickness.
 
 <figure class="lec-fig lec-fig--5up"><div class="lec-fig__img placeholder" style="--ar:178/310"></div><div class="lec-fig__img placeholder" style="--ar:178/310"></div><div class="lec-fig__img placeholder" style="--ar:178/310"></div><div class="lec-fig__img placeholder" style="--ar:178/310"></div><div class="lec-fig__img placeholder" style="--ar:178/310"></div><figcaption>From left to right: dark nilas, light nilas and ice rind; grey ice and grey-white ice. <span class="lec-fig__src">Morlighem et al. 2017.</span></figcaption></figure>
 
@@ -122,21 +142,37 @@ Fast ice (or landfast ice) is sea ice that is anchored — attached to the shore
 
 ## Forms of floating ice
 
-Within the pack itself, the WMO classification distinguishes a number of specific forms by size, shape and origin. Learning to use them precisely is one of the practical things that separates a polar guide from a polar tourist.
+### Pancake ice
 
-Pancake ice is predominantly circular pieces of new ice, thirty centimetres to three metres across, with characteristic raised rims caused by the pieces striking against each other on the swell. It can cover very large areas of the Southern Ocean in autumn, and it is one of the most distinctive sights in early-season polar travel.
+Within the pack itself, the WMO classification distinguishes a number of specific forms by size, shape and origin. Learning to use them precisely is one of the practical things that separates a polar guide from a polar tourist. Pancake ice is predominantly circular pieces of new ice, thirty centimetres to three metres across, with characteristic raised rims caused by the pieces striking against each other on the swell.
 
 <figure class="lec-fig"><div class="lec-fig__img placeholder" style="--ar:704/310"></div><figcaption>Pancake ice — predominantly circular floes with raised rims. <span class="lec-fig__src">Morlighem et al. 2017.</span></figcaption></figure>
 
-### Cakes, floes and floebergs
+### Ice cakes
 
-An ice cake is a relatively flat piece of sea ice less than twenty metres across; an ice floe is twenty metres or more, and floes are the principal building blocks of the pack. A floeberg is a large piece of compounded sea ice, composed entirely of sea ice — distinguishing it from a true iceberg, which is calved from glacier ice and originates on land.
+An ice cake is a relatively flat piece of sea ice less than twenty metres across — the smallest of the named floating fragments that still holds together as a single piece.
+
+### Ice floes
+
+An ice floe is twenty metres or more across, and floes are the principal building blocks of the pack, classified by size from small floes of a few tens of metres up to giant floes more than ten kilometres across.
+
+### Floebergs
+
+A floeberg is a large piece of compounded sea ice, composed entirely of sea ice — distinguishing it from a true iceberg, which is calved from glacier ice and originates on land.
 
 <figure class="lec-fig lec-fig--3up"><div class="lec-fig__img placeholder" style="--ar:222/310"></div><div class="lec-fig__img placeholder" style="--ar:222/310"></div><div class="lec-fig__img placeholder" style="--ar:249/310"></div><figcaption>Ice cake, ice floe, and floeberg. <span class="lec-fig__src">Morlighem et al. 2017.</span></figcaption></figure>
 
-### Breccia, floebits and brash
+### Ice breccia
 
-Ice breccia is pieces of sea ice from different stages of development, frozen together into a single composite mass — the cryospheric equivalent of a geological breccia, and the feature that gives this lecture half of its title. A floebit is a small piece of compounded sea ice; brash is an accumulation of fragments none more than two metres across, essentially the wreckage of other types of ice.
+Ice breccia is pieces of sea ice from different stages of development, frozen together into a single composite mass — the cryospheric equivalent of a geological breccia, and the feature that gives this lecture half of its title.
+
+### Floebits
+
+A floebit is a small piece of compounded sea ice, larger than brash but smaller than a floeberg, often the residue of a floeberg that has begun to break apart.
+
+### Brash ice
+
+Brash is an accumulation of fragments none more than two metres across, essentially the wreckage of other types of ice — the rubble left where floes have ground against one another and broken up.
 
 <figure class="lec-fig lec-fig--3up"><div class="lec-fig__img placeholder" style="--ar:222/310"></div><div class="lec-fig__img placeholder" style="--ar:222/310"></div><div class="lec-fig__img placeholder" style="--ar:249/310"></div><figcaption>Ice breccia, floebit, and brash ice. <span class="lec-fig__src">Morlighem et al. 2017.</span></figcaption></figure>
 
