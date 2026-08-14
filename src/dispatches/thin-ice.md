@@ -1,4 +1,5 @@
 ---
+slug: "thin-ice"
 title: "Thin Ice: The Arctic Sea Ice Maximum of 2026 and the World That Depends on It"
 category: "Cryosphere"
 date: 2026-04-08
@@ -42,13 +43,13 @@ references:
   - text: 'For polar bears and sea ice dependency, see Péter K. Molnár et al., "Fasting Season Length Sets Temporal Limits for Global Polar Bear Persistence," Nature Climate Change 10 (2020): 732–738.'
     url: "https://doi.org/10.1038/s41558-020-0818-9"
   - text: 'For recent reporting on NSIDC funding pressures and their implications for the sea ice record, see coverage in Science and Nature from 2025–2026.'
-  - text: 'The Last Ice Area concept is developed in Kristin Laidre et al., "Biological Implications of Arctic Sea Ice Loss," in ICES Journal of Marine Science, and by WWF''s Last Ice Area project (Accessed April 8, 2026).'
+  - text: 'The Last Ice Area concept is developed in Kristin Laidre et al., "Biological Implications of Arctic Sea Ice Loss," in ICES Journal of Marine Science, and by WWF's Last Ice Area project (Accessed April 8, 2026).'
     url: "https://www.wwf.ca/lasticearea/"
   - text: 'NSIDC, Sea Ice Index.'
 figures:
   - caption: "Arctic sea ice at its 2026 maximum, March 15, 2026. The orange line marks the 1981–2010 median maximum. The gap between the two is 1.36 million km²."
     source: "NSIDC / NASA Earth Observatory"
-  - caption: "[Left] The thin needles of frazil ice, the most fragile first sign of a cooling sea. [Right] Grease ice: the ocean's first acknowledgement that winter has arrived. The dull, matte surface is a thin suspension of frazil crystals, tens of thousands of them per litre."
+  - caption: "[Left] The thin needles of frazil ice, the most fragile first sign of a cooling sea. [Right] Grease ice: the ocean's first acknowledgement that winter has arrrived. The dull, matte surface is a thin suspension of frazil crystals, tens of thousands of them per litre."
     source: "Henry Páll Wulff, Pia Harboure"
   - caption: "Pancake ice in the marginal ice zone. Wave energy prevents the frazil from consolidating into a continuous sheet, producing circular discs with raised rims from repeated collisions."
     source: "Morganne Monsreit, Studio Ponant"
@@ -89,7 +90,7 @@ The surface becomes dull. The wave crests lose their definition. The glinting, r
 
 That beginning — molecule by molecule, crystal by crystal, until 14 or 15 million square kilometres of ocean are covered — is the Arctic sea ice maximum. It is the largest seasonal physical transformation on the surface of the Earth. It drives ocean circulation, structures whole food webs, defines the operational envelope for every ship that works in polar waters, and underwrites the cultural and subsistence lives of Inuit communities from Greenland to Alaska. It is not merely a number. But this year, the number tells a story.
 
-On March 15, 2026, the Arctic sea ice maximum was recorded at 14.29 million square kilometres. The National Snow and Ice Data Center confirmed the figure: statistically tied with 2025 for the lowest maximum in the 48-year satellite record.<a class="ds-cite" data-ref="1" href="#ref-1">(1)</a> The previous record before that had stood since March 7, 2017, when the ice reached only 14.42 million square kilometres and shocked climate scientists at the time. Within a decade, that shock had become a floor. The 2026 maximum fell 1.36 million square kilometres below the 1981–2010 average — an area, as the NSIDC put it, roughly equivalent to twice the size of Texas.<a class="ds-cite" data-ref="2" href="#ref-2">(2)</a>
+On March 15, 2026, the Arctic sea ice maximum was recorded at 14.29 million square kilometres. The National Snow and Ice Data Center confirmed the figure: statistically tied with 2025 for the lowest maximum in the 48-year satellite record. <a class="ds-cite" data-ref="1" href="#ref-1">(1)</a> The previous record before that had stood since March 7, 2017, when the ice reached only 14.42 million square kilometres and shocked climate scientists at the time. Within a decade, that shock had become a floor. The 2026 maximum fell 1.36 million square kilometres below the 1981–2010 average — an area, as the NSIDC put it, roughly equivalent to twice the size of Texas.<a class="ds-cite" data-ref="2" href="#ref-2">(2)</a>
 
 This is what that area looked like: ocean surface, exposed to the Arctic winter, absorbing heat, exchanging gases with the atmosphere, responding to storms — where, in a historical average year, it would have been sealed under ice.
 
@@ -105,7 +106,7 @@ Fresh water freezes at 0°C. Seawater, loaded with dissolved salts at roughly 35
 >
 > — Ice in Practice, Chapter 6 (Henry Páll Wulff, manuscript in preparation)<a class="ds-cite" data-ref="3" href="#ref-3">(3)</a>
 
-<figure class="ds-fig"><div class="ds-fig__two"><div class="ds-fig__img placeholder"></div><div class="ds-fig__img placeholder"></div></div><figcaption>[Left] The thin needles of frazil ice, the most fragile first sign of a cooling sea. [Right] Grease ice: the ocean's first acknowledgement that winter has arrived. The dull, matte surface is a thin suspension of frazil crystals, tens of thousands of them per litre. <span class="ds-fig__src">Henry Páll Wulff, Pia Harboure</span></figcaption></figure>
+<figure class="ds-fig"><div class="ds-fig__two"><div class="ds-fig__img placeholder"></div><div class="ds-fig__img placeholder"></div></div><figcaption>[Left] The thin needles of frazil ice, the most fragile first sign of a cooling sea. [Right] Grease ice: the ocean's first acknowledgement that winter has arrrived. The dull, matte surface is a thin suspension of frazil crystals, tens of thousands of them per litre. <span class="ds-fig__src">Henry Páll Wulff, Pia Harboure</span></figcaption></figure>
 
 As freezing continues, the grease consolidates into nilas — a thin, elastic sheet, almost black when less than five centimetres thick because the dark water beneath shows through. In areas of wave action, which is the norm in the open Southern Ocean and common at the margins of the Arctic, the story takes a different path: the frazil aggregates not into a continuous sheet but into circular discs, typically 30 centimetres to three metres across, with raised rims from repeated collisions. Pancake ice. One of the most visually extraordinary features of the polar ocean, and one of the most reliable indicators that the marginal ice zone is in active formation.
 
