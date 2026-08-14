@@ -1,0 +1,147 @@
+# Pages CMS configuration — https://pagescms.org
+#
+# HOW TO USE
+#   1. Go to https://app.pagescms.org and sign in with GitHub.
+#   2. Grant access to the `aguycalledpaul/henrypall.com` repository.
+#   3. The collections below appear as an editing UI.
+#   Saving in the CMS writes a commit to `main`, which triggers the site
+#   rebuild + FTP deploy automatically (usually live within ~1 minute).
+#
+# Images uploaded in the CMS are stored in `public/uploads` and served
+# from `/beta/uploads/...`.
+
+media:
+  input: public/uploads
+  output: /beta/uploads
+  extensions: [jpg, jpeg, png, gif, webp, svg, avif]
+
+content:
+  # ===================== NEWSLETTERS =====================
+  - name: nl-journal
+    label: "Newsletter · Journal"
+    type: collection
+    path: src/newsletters/journal
+    filename: "{fields.date}.md"
+    view:
+      fields: [title, date]
+      sort: [date]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: date, label: "Date (also the file name)", type: date, required: true }
+      - { name: displayDate, label: "Display date", type: string, description: "How the date reads on the page, e.g. July 31, 2026" }
+      - { name: title, label: Title, type: string, required: true }
+      - { name: cover, label: Header image, type: image }
+      - { name: excerpt, label: Excerpt, type: text }
+      - { name: list, label: List, type: string, default: journal, description: "Keep as 'journal'" }
+      - { name: body, label: Content, type: rich-text }
+
+  - name: nl-ice-in-practice
+    label: "Newsletter · Ice in Practice"
+    type: collection
+    path: src/newsletters/ice-in-practice
+    filename: "{fields.date}.md"
+    view:
+      fields: [title, date]
+      sort: [date]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: date, label: "Date (also the file name)", type: date, required: true }
+      - { name: displayDate, label: "Display date", type: string, description: "e.g. July 20, 2026" }
+      - { name: title, label: Title, type: string, required: true }
+      - { name: cover, label: Header image, type: image }
+      - { name: excerpt, label: Excerpt, type: text }
+      - { name: list, label: List, type: string, default: ice-in-practice, description: "Keep as 'ice-in-practice'" }
+      - { name: body, label: Content, type: rich-text }
+
+  - name: nl-narrating-the-poles
+    label: "Newsletter · Narrating the Poles"
+    type: collection
+    path: src/newsletters/narrating-the-poles
+    filename: "{fields.date}.md"
+    view:
+      fields: [title, date]
+      sort: [date]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: date, label: "Date (also the file name)", type: date, required: true }
+      - { name: displayDate, label: "Display date", type: string, description: "e.g. July 30, 2026" }
+      - { name: title, label: Title, type: string, required: true }
+      - { name: cover, label: Header image, type: image }
+      - { name: excerpt, label: Excerpt, type: text }
+      - { name: list, label: List, type: string, default: narrating-the-poles, description: "Keep as 'narrating-the-poles'" }
+      - { name: body, label: Content, type: rich-text }
+
+  # ===================== DISPATCHES =====================
+  - name: dispatches
+    label: Dispatches
+    type: collection
+    path: src/dispatches
+    filename: "{fields.slug}.md"
+    view:
+      fields: [title, category, date, featured]
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: slug, label: "URL slug", type: string, required: true, description: "Short file name, e.g. thin-ice → /beta/dispatches/thin-ice. Don't change it after publishing." }
+      - { name: title, label: Title, type: string, required: true }
+      - { name: category, label: Category, type: string }
+      - { name: date, label: Date, type: date, required: true }
+      - { name: excerpt, label: Excerpt, type: text }
+      - { name: cover, label: Cover image, type: image }
+      - { name: featured, label: Featured, type: boolean, default: false }
+      - { name: readingTime, label: Reading time, type: string, description: "e.g. approx. 20 minutes" }
+      - { name: doi, label: DOI, type: string }
+      - { name: pdf, label: PDF path, type: string, description: "e.g. /pdfs/thin-ice.pdf" }
+      - name: references
+        label: References
+        type: object
+        list: true
+        fields:
+          - { name: text, label: Citation, type: text, required: true }
+          - { name: url, label: URL, type: string }
+      - name: figures
+        label: Figure captions
+        type: object
+        list: true
+        fields:
+          - { name: caption, label: Caption, type: text }
+          - { name: source, label: Source / credit, type: string }
+      - name: resources
+        label: Further resources
+        type: object
+        list: true
+        fields:
+          - { name: text, label: Label, type: string, required: true }
+          - { name: url, label: URL, type: string }
+      - { name: body, label: Content (Markdown / HTML), type: code, options: { language: markdown } }
+
+  # ===================== LECTURES =====================
+  - name: lectures
+    label: Lectures
+    type: collection
+    path: src/lectures
+    filename: "{fields.slug}.md"
+    view:
+      fields: [title, category, date]
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: slug, label: "URL slug", type: string, required: true, description: "Short file name, e.g. pancakes-breccia-neve. Don't change it after publishing." }
+      - { name: title, label: Title, type: string, required: true }
+      - { name: subtitle, label: Subtitle, type: string }
+      - { name: category, label: Category, type: string }
+      - { name: date, label: Date, type: date, required: true }
+      - { name: excerpt, label: Excerpt, type: text }
+      - { name: cover, label: Cover image, type: image }
+      - { name: readingTime, label: Reading time, type: string }
+      - { name: body, label: Content (Markdown / HTML), type: code, options: { language: markdown } }
