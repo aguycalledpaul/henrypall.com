@@ -106,6 +106,9 @@ const Content = mod.Content;
   /* right-floated inset (Picture 4 inset, 298×236) */
   .lec-prose :global(.lec-fig--inset) { float: right; width: 298px; margin: 4px 0 12px 24px; }
 
+  /* split: subsection text left, picture right (Subsection 3 + Picture 6, 393 wide) */
+  .lec-prose :global(.lec-fig--floatright) { float: right; width: 393px; max-width: 55%; margin: 4px 0 12px 24px; }
+
   /* multi-up rows with exact Figma column ratios (all cells 310 tall) */
   .lec-prose :global(.lec-fig--2up) { display: grid; grid-template-columns: 338fr 350fr; gap: 16px; }
   .lec-prose :global(.lec-fig--3up) { display: grid; grid-template-columns: 222fr 222fr 249fr; gap: 6px; }
@@ -124,7 +127,7 @@ const Content = mod.Content;
     .lec-body { width: 100%; padding: 40px 0 80px; }
     .lec-prose { width: 100%; }
     .lec-prose :global(.lec-fig--wide), .lec-prose :global(.lec-fig--5up), .lec-prose :global(.lec-fig--withillus) { width: 100%; margin-left: 0; }
-    .lec-prose :global(.lec-fig--inset) { float: none; width: 100%; margin: 1.2rem 0; }
+    .lec-prose :global(.lec-fig--inset), .lec-prose :global(.lec-fig--floatright) { float: none; width: 100%; max-width: 100%; margin: 1.2rem 0; }
     .lec-prose :global(.lec-fig--quote) { width: 100%; }
   }
   @media (max-width: 560px) {
