@@ -1,4 +1,5 @@
 ---
+slug: "pancakes-breccia-neve"
 title: "Pancakes, Breccia & Névé"
 subtitle: "A brief introduction to ice"
 category: "Cryosphere"
