@@ -65,7 +65,10 @@ try {
 
 const eps = slots.map((s, i) => {
   const it = items[i] || {};
-  return { ...s, ...it, video: vmap[epNum(it.title)] || '', extra: i >= 6 };
+  const num = epNum(it.title);
+  // prefer the feed's enclosure; otherwise derive the stable direct-MP3 URL from the episode number
+  const audio = it.audio || (num ? `https://curiouslypolar.com/media/cp${num}.mp3` : '');
+  return { ...s, ...it, audio, video: vmap[num] || '', extra: i >= 6 };
 });
 
 const team = [
@@ -190,6 +193,7 @@ const gallery = [
 
   </div>
 </BaseLayout>
+
 <style>
   .pod { position: relative; overflow-x: clip; padding-bottom: 4rem; }
   .pwrap { position: relative; width: min(1122px, calc(100% - 3rem)); margin-inline: auto; }
