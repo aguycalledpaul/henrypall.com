@@ -16,6 +16,77 @@ media:
   extensions: [jpg, jpeg, png, gif, webp, svg, avif]
 
 content:
+  # ===================== PAGES (static page content) =====================
+  - name: page-home
+    label: "Page · Home"
+    type: file
+    path: src/content/home.json
+    format: json
+    fields:
+      - name: hero
+        label: Hero carousel
+        type: object
+        list: true
+        fields:
+          - { name: category, label: Category, type: string }
+          - { name: date, label: Date, type: string }
+          - { name: title, label: Title, type: string }
+          - { name: excerpt, label: Excerpt, type: text }
+          - { name: image, label: Image, type: image }
+          - { name: link, label: Link, type: string }
+      - name: newsletter
+        label: Newsletter block
+        type: object
+        fields:
+          - { name: title, label: Title, type: string }
+          - { name: subtitle, label: Subtitle, type: text }
+          - { name: buttonLabel, label: Button label, type: string }
+      - name: categories
+        label: Category tiles
+        type: object
+        list: true
+        fields:
+          - { name: name, label: Name, type: string }
+          - { name: image, label: Image, type: image }
+          - { name: link, label: Link, type: string }
+      - name: about
+        label: About teaser
+        type: object
+        fields:
+          - { name: title, label: Title, type: string }
+          - { name: text, label: Text, type: text }
+          - { name: image, label: Image, type: image }
+          - { name: ctaLink, label: Button link, type: string }
+      - name: fieldNotes
+        label: Field Notes teaser
+        type: object
+        fields:
+          - { name: watermark, label: Watermark word, type: string }
+          - { name: quote, label: Quote, type: text }
+          - name: notes
+            label: Note cards
+            type: object
+            list: true
+            fields:
+              - { name: title, label: Title, type: string }
+              - { name: date, label: Date, type: string }
+              - { name: image, label: Image, type: image }
+              - { name: link, label: Link, type: string }
+      - name: lectures
+        label: Lectures teaser
+        type: object
+        fields:
+          - { name: label, label: Label, type: string }
+          - name: items
+            label: Lecture cards
+            type: object
+            list: true
+            fields:
+              - { name: category, label: Category, type: string }
+              - { name: title, label: Title, type: string }
+              - { name: image, label: Image, type: image }
+              - { name: link, label: Link, type: string }
+
   # ===================== NEWSLETTERS =====================
   - name: nl-journal
     label: "Newsletter · Journal"
