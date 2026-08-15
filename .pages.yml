@@ -149,6 +149,50 @@ content:
           - { name: label, label: "Label (HTML allowed)", type: string }
           - { name: joinLabel, label: Button label, type: string }
 
+  - name: page-curiously-polar
+    label: "Page · Curiously Polar"
+    type: file
+    path: src/content/curiously-polar.json
+    format: json
+    fields:
+      - name: hero
+        label: Hero
+        type: object
+        fields:
+          - { name: backgroundImage, label: Background image, type: image }
+          - { name: backgroundFocus, label: Background focus, type: select, options: { values: [center, top, bottom, left, right] }, default: center }
+          - { name: eyebrow, label: Eyebrow, type: string }
+          - { name: line1, label: Headline line 1, type: string }
+          - { name: line2, label: Headline line 2, type: string }
+          - name: buttons
+            label: Buttons
+            type: object
+            list: true
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: link, label: Link, type: string }
+      - name: middle
+        label: Quote & motto
+        type: object
+        fields:
+          - { name: image, label: Image, type: image }
+          - { name: focus, label: Focus (which part of the image to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
+          - { name: quote, label: Quote, type: text }
+          - { name: moreLabel, label: "Read-more button (first word bold)", type: string }
+          - { name: moreLink, label: Read-more link, type: string }
+          - { name: motto, label: "Motto (HTML: use <br /> for line breaks)", type: text }
+          - { name: mottoAuthor, label: Motto author, type: string }
+      - name: newsletter
+        label: Newsletter block
+        type: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, type: string }
+          - { name: titleLine1, label: "Title line 1 (HTML: <span class=\"cpnews__hl\">…</span> highlights)", type: string }
+          - { name: titleLine2, label: Title line 2, type: string }
+          - { name: titleLine3, label: "Title line 3 (HTML highlights allowed)", type: string }
+          - { name: sub, label: Subtitle, type: text }
+          - { name: joinLabel, label: Button label, type: string }
+
   # ===================== NEWSLETTERS =====================
   - name: nl-journal
     label: "Newsletter · Journal"
