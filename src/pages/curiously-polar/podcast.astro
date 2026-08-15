@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import podcast from '../../content/podcast.json';
 
-// Body copy is placeholder in the Figma (lorem) — kept as placeholder until real copy is supplied via the CMS.
-const intro1 = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
-const intro2 = `Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.`;
-const bodyA = `At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.`;
-const bodyB = `Quisque mattis porta ipsum, id blandit nunc fringilla et. Mauris a nulla a ligula sollicitudin feugiat. Vivamus mattis commodo dictum. Vivamus auctor lorem a urna facilisis facilisis. Praesent faucibus erat dui, eu vulputate mauris accumsan eget. Duis maximus interdum nulla eu tristique. Sed tempus nisi felis, non ultrices justo efficitur ac. Nunc eu feugiat nisi, eu cursus dolor.`;
+const { story, team: teamContent, gallery: galleryContent } = podcast;
+// Inline background-image with a focus (center/top/bottom/left/right) crop anchor.
+const bg = (img, focus) => (img ? `background-image:url('${img}');background-size:cover;background-position:${focus || 'center'};` : undefined);
+const { intro1, intro2, bodyA, bodyB } = story;
 
 // ---- Episodes: pulled from the Curiously Polar podcast RSS feed at build time ----
 const FEED = 'https://curiouslypolar.com/curiouslypolar/mp3';
@@ -22,17 +22,17 @@ const slots = [
   { l: '0%',     t: '972px' }, { l: '28.07%', t: '972px' },
 ];
 
-const epNum = (s) => { const m = (s || '').match(/\b(\d{3})\b/); return m ? m[1] : ''; };
+const epNum = (s) => { const m = (s || "").match(/\b(\d{3})\b/); return m ? m[1] : ""; };
 
 let items = [];
 try {
   const res = await fetch(FEED, { headers: { 'User-Agent': 'henrypall.com build' } });
   if (res.ok) {
     const xml = await res.text();
-    const chImg = (xml.match(/<itunes:image[^>]*href="([^"]+)"/) || [])[1] || '';
+    const chImg = (xml.match(/<itunes:image[^>]*href="([^"]+)"/) || [])[1] || "";
     const parts = xml.split('<item>').slice(1, 11);
     items = parts.map((it) => {
-      const pick = (re) => { const m = it.match(re); return m ? (m[1] || '').trim() : ''; };
+      const pick = (re) => { const m = it.match(re); return m ? (m[1] || "").trim() : ""; };
       return {
         title: pick(/<title>\s*(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?\s*<\/title>/),
         audio: pick(/<enclosure[^>]*url="([^"]+)"/),
@@ -44,7 +44,7 @@ try {
 
 if (!items.length) {
   items = [168, 167, 166, 165, 164, 163, 162, 161, 160, 159].map((n) => ({
-    title: 'Curiously Polar #' + n, audio: '',
+    title: 'Curiously Polar #' + n, audio: "",
     cover: 'https://curiouslypolar.com/media/cp' + n + '.jpg',
   }));
 }
@@ -67,23 +67,23 @@ const eps = slots.map((s, i) => {
   const it = items[i] || {};
   const num = epNum(it.title);
   // prefer the feed's enclosure; otherwise derive the stable direct-MP3 URL from the episode number
-  const audio = it.audio || (num ? `https://curiouslypolar.com/media/cp${num}.mp3` : '');
-  return { ...s, ...it, audio, video: vmap[num] || '', extra: i >= 6 };
+  const audio = it.audio || (num ? `https://curiouslypolar.com/media/cp${num}.mp3` : "");
+  return { ...s, ...it, audio, video: vmap[num] || "", extra: i >= 6 };
 });
 
-const team = [
-  { name: 'Chris Marquardt',  l: '29.77%' },
-  { name: 'Mario Acquarone',  l: '54.01%' },
-  { name: 'Henry Páll Wulff', l: '78.52%' },
-];
+// Team card positions (Figma) merged with editable name/photo content by index.
+const teamPos = ['29.77%', '54.01%', '78.52%'];
+const team = teamContent.members.map((m, i) => ({ ...m, l: teamPos[i] }));
 
-const gallery = [
+// Gallery slot positions (Figma) merged with editable photos by index.
+const galPos = [
   { l: '64.00%', t: '41px',  w: '37.25%', ar: '418 / 255' },
   { l: '64.44%', t: '337px', w: '14.08%', ar: '1 / 1' },
   { l: '81.73%', t: '337px', w: '18.54%', ar: '208 / 294' },
   { l: '64.44%', t: '536px', w: '14.08%', ar: '158 / 257' },
   { l: '81.73%', t: '672px', w: '18.54%', ar: '208 / 121' },
 ];
+const gallery = galPos.map((g, i) => ({ ...g, ...(galleryContent[i] || {}) }));
 ---
 
 <BaseLayout title="Curiously Polar — Podcast" description="Curiously Polar — narrating the poles, sharing curiosity. Episodes, the team, and the story behind the podcast.">
@@ -95,8 +95,8 @@ const gallery = [
         <div class="canvas canvas--story">
           <span class="wm wm--podcast" aria-hidden="true">PODCAST</span>
           <div class="story__shadow" aria-hidden="true"></div>
-          <div class="story__hero placeholder" role="img" aria-label="Curiously Polar hero portrait"></div>
-          <h1 class="story__headline">Narrating the poles,<br />sharing curiosity</h1>
+          <div class="story__hero placeholder" style={bg(story.heroImage, story.heroFocus)} role="img" aria-label="Curiously Polar hero portrait"></div>
+          <h1 class="story__headline" set:html={story.headline}></h1>
           <span class="story__rule" aria-hidden="true"></span>
           <div class="story__intro"><p>{intro1}</p><p>{intro2}</p></div>
           <div class="story__body2"><p>{bodyA}</p><p class="is-last">{bodyB}</p></div>
@@ -110,10 +110,10 @@ const gallery = [
         <div class="canvas canvas--team">
           <span class="wm wm--team" aria-hidden="true">THE TEAM</span>
           <span class="team__line" aria-hidden="true"></span>
-          <blockquote class="team__quote">Do not mind anything that anyone tells you about anyone else. Judge everyone and everything for yourself.</blockquote>
+          <blockquote class="team__quote">{teamContent.quote}</blockquote>
           {team.map((m) => (
             <figure class="team__card" style={`left:${m.l}`}>
-              <div class="team__pic placeholder" role="img" aria-label={m.name}></div>
+              <div class="team__pic placeholder" style={bg(m.image, m.focus)} role="img" aria-label={m.name}></div>
               <figcaption class="team__name">{m.name}</figcaption>
             </figure>
           ))}
@@ -146,7 +146,7 @@ const gallery = [
           <button class="ep-more" id="epMore" type="button">Load More</button>
 
           {gallery.map((g) => (
-            <div class="gal placeholder" style={`left:${g.l};top:${g.t};width:${g.w};aspect-ratio:${g.ar}`} role="img" aria-label="Gallery photo"></div>
+            <div class="gal placeholder" style={`left:${g.l};top:${g.t};width:${g.w};aspect-ratio:${g.ar};${bg(g.image, g.focus) || ""}`} role="img" aria-label="Gallery photo"></div>
           ))}
         </div>
       </div>
@@ -350,8 +350,8 @@ const gallery = [
         const a = b.dataset.audio;
         if (!a) return;
         if (audio.getAttribute('src') !== a) audio.src = a;
-        thumb.style.backgroundImage = b.dataset.cover ? `url('${b.dataset.cover}')` : '';
-        epEl.textContent = b.dataset.title || '';
+        thumb.style.backgroundImage = b.dataset.cover ? `url('${b.dataset.cover}')` : "";
+        epEl.textContent = b.dataset.title || "";
         player.classList.add('is-open');
         player.setAttribute('aria-hidden', 'false');
         audio.play();
@@ -378,7 +378,7 @@ const gallery = [
         : `https://www.youtube-nocookie.com/embed/videoseries?list=${YT_UPLOADS}&autoplay=1`;
       lb.classList.add('is-open'); lb.setAttribute('aria-hidden', 'false');
     }
-    function closeLB() { lbframe.src = ''; lb.classList.remove('is-open'); lb.setAttribute('aria-hidden', 'true'); }
+    function closeLB() { lbframe.src = ""; lb.classList.remove('is-open'); lb.setAttribute('aria-hidden', 'true'); }
     document.querySelectorAll('.ep__act--watch').forEach((b) => {
       b.addEventListener('click', () => openLB(b.dataset.video));
     });
