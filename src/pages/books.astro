@@ -1,24 +1,24 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import books from '../content/books.json';
 
-const base = import.meta.env.BASE_URL.replace(/\/+$/, ''); // "/beta"
-
-const desc = `Ice in Practice is Henry’s first book, a field guide for the people who work where the ice does — polar expedition guides, field operations professionals, and students of the cryosphere. In it, Henry shows that the guides and operators who make the best decisions on glaciers, sea ice, and tidewater termini all share the same habit of mind — and it’s not the one most training programmes teach. He calls this approach Observe → Understand → Decide → Communicate, and it provides a framework that turns a crevasse field or a calving face from a hazard to be feared into a landscape that can be read.`;
-
-const bodyA = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum molestie augue nec mauris posuere aliquam. Fusce velit magna, auctor at fringilla vitae, sodales vel dui. Curabitur dictum posuere semper. Donec et posuere nibh. Proin a sem sit amet neque molestie egestas eget sit amet risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent a mauris est. Vivamus tincidunt feugiat interdum. Fusce sit amet velit pretium, condimentum magna ac, dictum odio. Duis quam enim, tempus non leo eu, posuere tincidunt sem. Duis nec metus consectetur turpis sagittis fermentum. Proin in vestibulum turpis. In volutpat nibh et augue tristique, nec venenatis libero euismod. Nunc mattis, libero eu vulputate eleifend, arcu enim malesuada nibh, vel rutrum tortor libero eu nisi. Vivamus eu ultrices nibh, eu faucibus massa. Curabitur volutpat accumsan eleifend. Aliquam vestibulum consequat lectus eget consequat.`;
-const bodyB = `Aenean placerat ligula in sodales blandit. Nullam ac vehicula sem. Suspendisse eget pellentesque est. Nulla et ligula a lacus ultricies rutrum. Morbi id sodales augue. Curabitur et dui dapibus, mollis diam nec, auctor neque. Pellentesque consequat sodales tellus vel molestie. Fusce nec turpis id sem hendrerit tempus sit amet a purus. Integer vehicula massa id ex luctus convallis. Nam tincidunt, nisi vitae hendrerit lacinia, ligula odio facilisis augue, vel laoreet leo nunc quis lectus. Vestibulum scelerisque ultrices ipsum, quis mattis orci malesuada in. Etiam enim leo, consectetur eget auctor eget, blandit eget erat. Nullam et libero laoreet, tincidunt erat at, ullamcorper urna. Praesent blandit posuere orci, vel pellentesque purus imperdiet sit amet. Integer bibendum ut dolor lacinia ultrices. Suspendisse metus ante, pellentesque non fermentum at, porttitor mollis elit.`;
+const { hero, actions, intro, copy1, feature, kicker, copy2, newsletter } = books;
+// Inline background-image with a focus (center/top/bottom/left/right) crop anchor.
+const bg = (img, focus) => (img ? `background-image:url('${img}');background-size:cover;background-position:${focus || 'center'};` : undefined);
+// Split a button label so the first word is bold (matches the "| **Read** Sample" style).
+const splitLabel = (s) => { const t = String(s); const i = t.indexOf(' '); const first = i < 0 ? t : t.slice(0, i); const rest = i < 0 ? t.slice(t.length) : t.slice(i + 1); return { first, rest }; };
 ---
 
 <BaseLayout title="Books — Henry Páll Wulff" overlayHeader overlayDark={false}>
   <!-- ================= FEATURED BOOK — full-bleed grey hero ================= -->
   <section class="bkhero">
     <div class="wrap bkhero__inner">
-      <div class="bkhero__cover placeholder" aria-label="Ice in Practice — book cover"></div>
+      <div class="bkhero__cover" style={bg(hero.coverImage, hero.coverFocus)} role="img" aria-label={hero.title + ' — book cover'}></div>
       <article class="bkhero__card">
-        <h1 class="bkhero__title">Ice in Practice</h1>
-        <p class="bkhero__sub">A Field Guide to Understanding and Working in the Cryosphere</p>
-        <p class="bkhero__desc">{desc}</p>
-        <p class="bkhero__desc bkhero__desc--last">And it all starts with learning to read the ice.</p>
+        <h1 class="bkhero__title">{hero.title}</h1>
+        <p class="bkhero__sub">{hero.subtitle}</p>
+        <p class="bkhero__desc">{hero.desc}</p>
+        <p class="bkhero__desc bkhero__desc--last">{hero.lastLine}</p>
       </article>
     </div>
   </section>
@@ -26,50 +26,52 @@ const bodyB = `Aenean placerat ligula in sodales blandit. Nullam ac vehicula sem
   <!-- action bar (full-bleed navy) -->
   <div class="bkactions">
     <div class="wrap bkactions__inner">
-      <a class="bkbtn" href="#"><span class="bkbtn__bar">|</span> <b>Read</b> Sample</a>
-      <a class="bkbtn" href="#"><span class="bkbtn__bar">|</span> <b>Pre</b> Order</a>
+      {actions.map((a) => {
+        const { first, rest } = splitLabel(a.label);
+        return (
+          <a class="bkbtn" href={a.link}><span class="bkbtn__bar">|</span> <b>{first}</b> {rest}</a>
+        );
+      })}
     </div>
   </div>
 
   <!-- ================= INTRODUCTION — image + overlapping quote ================= -->
   <section class="wrap bkintro">
-    <div class="bkintro__img placeholder"></div>
-    <blockquote class="bkintro__quote">
-      The ice is changing faster than the people who work on it can be trained. <i>Ice in Practice</i> is a field guide for reading a cryosphere in transition — for guides, operators, and students whose decisions depend on understanding what the ice is about to do, not what it used to do.
-    </blockquote>
+    <div class="bkintro__img" style={bg(intro.image, intro.focus)}></div>
+    <blockquote class="bkintro__quote" set:html={intro.quote}></blockquote>
   </section>
 
   <!-- two-column body -->
   <section class="wrap bkcopy">
-    <p>{bodyA}</p>
-    <p>{bodyB}</p>
+    <p>{copy1.colA}</p>
+    <p>{copy1.colB}</p>
   </section>
 
   <!-- ================= SECOND FEATURE — image + navy title card ================= -->
   <section class="wrap bktag">
-    <div class="bktag__img placeholder"></div>
+    <div class="bktag__img" style={bg(feature.image, feature.focus)}></div>
     <div class="bktag__card">
-      <h2 class="bktag__title">The new supremacist survivalists are far from impregnable.</h2>
+      <h2 class="bktag__title">{feature.title}</h2>
     </div>
   </section>
 
   <section class="wrap">
-    <p class="bkkicker">Description Headline</p>
+    <p class="bkkicker">{kicker}</p>
   </section>
 
   <section class="wrap bkcopy bkcopy--2">
-    <p>{bodyA}</p>
-    <p>{bodyB}</p>
+    <p>{copy2.colA}</p>
+    <p>{copy2.colB}</p>
   </section>
 
   <!-- ================= NEWSLETTER SIGN-UP (content-width navy bar) ================= -->
   <section class="wrap">
     <div class="bknews">
-      <p class="bknews__label">Receive updates on <i>Ice in Practice</i></p>
+      <p class="bknews__label" set:html={newsletter.label}></p>
       <form class="bknews__form" onsubmit="return false">
         <input type="text" name="cm-name" placeholder="Your Name" aria-label="Your Name" />
         <input type="email" name="cm-email" placeholder="Your Email" aria-label="Your Email" />
-        <button class="bknews__join" type="submit">Join Now</button>
+        <button class="bknews__join" type="submit">{newsletter.joinLabel}</button>
       </form>
     </div>
   </section>
