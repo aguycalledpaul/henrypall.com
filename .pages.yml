@@ -92,6 +92,63 @@ content:
               - { name: focus, label: Focus (which part of the image to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
               - { name: link, label: Link, type: string }
 
+  - name: page-books
+    label: "Page · Books"
+    type: file
+    path: src/content/books.json
+    format: json
+    fields:
+      - name: hero
+        label: Featured book (hero)
+        type: object
+        fields:
+          - { name: coverImage, label: Cover image, type: image }
+          - { name: coverFocus, label: Cover focus (which part to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
+          - { name: title, label: Title, type: string }
+          - { name: subtitle, label: Subtitle, type: string }
+          - { name: desc, label: Description, type: text }
+          - { name: lastLine, label: Closing line, type: string }
+      - name: actions
+        label: Action buttons
+        type: object
+        list: true
+        fields:
+          - { name: label, label: Label (first word is bold), type: string }
+          - { name: link, label: Link, type: string }
+      - name: intro
+        label: Introduction
+        type: object
+        fields:
+          - { name: image, label: Image, type: image }
+          - { name: focus, label: Focus (which part of the image to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
+          - { name: quote, label: "Quote (HTML allowed, e.g. <i>...</i>)", type: text }
+      - name: copy1
+        label: Body text (first block, two columns)
+        type: object
+        fields:
+          - { name: colA, label: Left column, type: text }
+          - { name: colB, label: Right column, type: text }
+      - name: feature
+        label: Second feature
+        type: object
+        fields:
+          - { name: image, label: Image, type: image }
+          - { name: focus, label: Focus (which part of the image to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
+          - { name: title, label: Title, type: string }
+      - { name: kicker, label: Kicker headline, type: string }
+      - name: copy2
+        label: Body text (second block, two columns)
+        type: object
+        fields:
+          - { name: colA, label: Left column, type: text }
+          - { name: colB, label: Right column, type: text }
+      - name: newsletter
+        label: Newsletter bar
+        type: object
+        fields:
+          - { name: label, label: "Label (HTML allowed)", type: string }
+          - { name: joinLabel, label: Button label, type: string }
+
   # ===================== NEWSLETTERS =====================
   - name: nl-journal
     label: "Newsletter · Journal"
