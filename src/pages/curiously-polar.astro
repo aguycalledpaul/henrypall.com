@@ -1,8 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import cp from '../content/curiously-polar.json';
 
-const base = import.meta.env.BASE_URL.replace(/\/+$/, ''); // "/beta"
+const base = import.meta.env.BASE_URL.replace(/\/+$/, ""); // "/beta"
 const FEED = 'https://curiouslypolar.com/curiouslypolar/mp3';
+
+const { hero, middle, newsletter } = cp;
+// Inline background-image with a focus (center/top/bottom/left/right) crop anchor.
+const bg = (img, focus) => (img ? `background-image:url('${img}');background-size:cover;background-position:${focus || 'center'};` : undefined);
+// Split a button label so the first word is bold (matches the "| **Read** More" style).
+const splitLabel = (s) => { const t = String(s); const i = t.indexOf(' '); const first = i < 0 ? t : t.slice(0, i); const rest = i < 0 ? t.slice(t.length) : t.slice(i + 1); return { first, rest }; };
+const more = splitLabel(middle.moreLabel);
 
 // --- Latest episode, pulled from the podcast RSS feed at build time. ---
 // Falls back to the last-known episode if the feed can't be reached during the build.
@@ -19,8 +27,8 @@ try {
     const xml = await res.text();
     const chTitle = xml.match(/<channel>[\s\S]*?<title>\s*(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?\s*<\/title>/);
     const chImg = xml.match(/<itunes:image[^>]*href="([^"]+)"/);
-    const item = xml.split('<item>')[1] || '';
-    const pick = (re) => { const m = item.match(re); return m ? (m[1] || '').trim() : ''; };
+    const item = xml.split('<item>')[1] || "";
+    const pick = (re) => { const m = item.match(re); return m ? (m[1] || "").trim() : ""; };
     const title = pick(/<title>\s*(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?\s*<\/title>/);
     const audio = pick(/<enclosure[^>]*url="([^"]+)"/);
     const cover = pick(/<itunes:image[^>]*href="([^"]+)"/);
@@ -38,16 +46,17 @@ try {
 <BaseLayout overlayHeader>
   <!-- ============ TOP THIRD — HERO ============ -->
   <section class="cphero">
-    <div class="cphero__bg"></div>
+    <div class="cphero__bg" style={bg(hero.backgroundImage, hero.backgroundFocus)}></div>
     <div class="cphero__scrim"></div>
 
     <div class="cphero__body">
-      <p class="cphero__eyebrow">Curiously Polar</p>
-      <p class="cphero__line">Let’s explore together</p>
-      <p class="cphero__line">the magnificent polar regions</p>
+      <p class="cphero__eyebrow">{hero.eyebrow}</p>
+      <p class="cphero__line">{hero.line1}</p>
+      <p class="cphero__line">{hero.line2}</p>
       <div class="cphero__actions">
-        <a class="cpbtn" href={base + '/curiously-polar/podcast'}>The Podcast</a>
-        <a class="cpbtn" href="#cpnews">Monthly Email</a>
+        {hero.buttons.map((b) => (
+          <a class="cpbtn" href={b.link}>{b.label}</a>
+        ))}
       </div>
     </div>
 
@@ -85,19 +94,19 @@ try {
   <!-- ============ MIDDLE THIRD — PODCAST / QUOTES ============ -->
   <section class="cpmid">
     <div class="wrap cpmid__inner">
-      <div class="cpmid__img placeholder"></div>
+      <div class="cpmid__img" style={bg(middle.image, middle.focus)}></div>
 
       <blockquote class="cpmid__quote">
-        <p class="cpmid__qtext">It’s our very own curiosity that’s our key driver. We want to learn, understand, and share about the most remote, most fragile ecosystems on our planet.</p>
-        <a class="cpmid__more" href={base + '/curiously-polar/podcast'}><span class="cpmid__bar">|</span> <b>Read</b> More</a>
+        <p class="cpmid__qtext">{middle.quote}</p>
+        <a class="cpmid__more" href={middle.moreLink}><span class="cpmid__bar">|</span> <b>{more.first}</b> {more.rest}</a>
       </blockquote>
 
       <figure class="cpmotto">
         <span class="cpmotto__mark cpmotto__mark--open">“</span>
         <span class="cpmotto__line cpmotto__line--1"></span>
-        <blockquote class="cpmotto__text">In the end, we will conserve only what we love,<br />we will love only what we understand,<br />and we will understand only what we are taught.</blockquote>
+        <blockquote class="cpmotto__text" set:html={middle.motto}></blockquote>
         <span class="cpmotto__line cpmotto__line--2"></span>
-        <figcaption>Baba Dioum</figcaption>
+        <figcaption>{middle.mottoAuthor}</figcaption>
         <span class="cpmotto__mark cpmotto__mark--close">“</span>
       </figure>
     </div>
@@ -107,17 +116,17 @@ try {
   <section class="cpnews-outer" id="cpnews">
     <div class="wrap cpnews">
       <div class="cpnews__block">
-        <p class="cpnews__eyebrow"><span>Narrating the Poles</span></p>
+        <p class="cpnews__eyebrow"><span>{newsletter.eyebrow}</span></p>
         <h2 class="cpnews__title">
-          <span class="cpnews__l cpnews__l1"><span class="cpnews__hl">Sign up</span> for your</span>
-          <span class="cpnews__l cpnews__l2">monthly dose</span>
-          <span class="cpnews__l cpnews__l3">of <span class="cpnews__hl">polar curiosity</span></span>
+          <span class="cpnews__l cpnews__l1" set:html={newsletter.titleLine1}></span>
+          <span class="cpnews__l cpnews__l2" set:html={newsletter.titleLine2}></span>
+          <span class="cpnews__l cpnews__l3" set:html={newsletter.titleLine3}></span>
         </h2>
-        <p class="cpnews__sub">Stay up to date with our monthly reminders of how awesome, precious and fun the polar regions are.</p>
+        <p class="cpnews__sub">{newsletter.sub}</p>
         <form class="cpnews__form" action="#" method="post" onsubmit="return false">
           <input type="text" name="cm-name" placeholder="Your Name" aria-label="Your Name" />
           <input type="email" name="cm-email" placeholder="Your Email" aria-label="Your Email" />
-          <button class="cpnews__join" type="submit">Join Now</button>
+          <button class="cpnews__join" type="submit">{newsletter.joinLabel}</button>
         </form>
       </div>
     </div>
@@ -135,7 +144,7 @@ try {
     padding: 8rem 1.5rem 7rem; text-align: center; overflow: hidden;
   }
   /* grey placeholder image plate — same grey as every other placeholder */
-  .cphero__bg { position: absolute; inset: 0; background: var(--placeholder); z-index: 0; }
+  .cphero__bg { position: absolute; inset: 0; background: var(--placeholder); background-size: cover; background-position: center; z-index: 0; }
   /* neutral grey darkening (NOT navy) so white text stays legible without tinting the plate green */
   .cphero__scrim {
     position: absolute; inset: 0; z-index: 1;
@@ -200,7 +209,7 @@ try {
   }
   .cpmid__qtext { position: relative; margin: 0; font-size: 16px; font-weight: 300; font-style: italic; line-height: 1.72; color: #1a2a2f; }
   /* vertical rule spans EXACTLY the height of the quote text, offset 31px to its left */
-  .cpmid__qtext::before { content: ''; position: absolute; left: -31px; top: 0; bottom: 0; width: 2px; background: var(--navy); }
+  .cpmid__qtext::before { content: ""; position: absolute; left: -31px; top: 0; bottom: 0; width: 2px; background: var(--navy); }
   .cpmid__more { display: inline-block; margin-top: 20px; width: 128px; height: 40px; line-height: 40px; text-align: center; background: var(--navy); color: #fff; font-size: 14px; white-space: nowrap; }
   .cpmid__more:hover { background: var(--navy-800); }
   .cpmid__bar { font-weight: 300; }
@@ -237,7 +246,7 @@ try {
   /* eyebrow: centred label over a continuous full-width rule, white knock-out behind the text */
   .cpnews__eyebrow { position: relative; isolation: isolate; text-align: center; margin: 0 0 18px; }
   /* continuous full-width rule — text sits ~3px above it */
-  .cpnews__eyebrow::before { content: ''; position: absolute; left: 0; right: 0; top: calc(50% + 3px); height: 1px; background: rgba(17,41,46,0.55); z-index: 0; }
+  .cpnews__eyebrow::before { content: ""; position: absolute; left: 0; right: 0; top: calc(50% + 3px); height: 1px; background: rgba(17,41,46,0.55); z-index: 0; }
   .cpnews__eyebrow span {
     position: relative; padding: 0 2px;
     text-transform: uppercase; letter-spacing: 0.22em; font-size: 12px; color: #11292E;
@@ -245,7 +254,7 @@ try {
   /* white rectangle sits BEHIND both the rule and the text (interrupts neither):
      offset 3px left / 2px beyond text right, 6px down from the top, reaching 3px below the rule */
   .cpnews__eyebrow span::before {
-    content: ''; position: absolute; z-index: -1; left: -3px; right: -2px; top: 6px; bottom: -6px; background: #fff;
+    content: ""; position: absolute; z-index: -1; left: -3px; right: -2px; top: 6px; bottom: -6px; background: #fff;
   }
 
   /* staggered headline, 50px SemiBold, indents from Figma */
@@ -257,7 +266,7 @@ try {
   /* white highlight bars behind the words (under "Sign up" and "polar curiosity") */
   .cpnews__hl { position: relative; z-index: 0; }
   .cpnews__hl::before {
-    content: ''; position: absolute; left: -0.1em; right: -0.1em; bottom: 0.12em; height: 0.3em;
+    content: ""; position: absolute; left: -0.1em; right: -0.1em; bottom: 0.12em; height: 0.3em;
     background: #fff; z-index: -1;
   }
 
