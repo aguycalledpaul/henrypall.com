@@ -1,32 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import home from '../content/home.json';
 
-const dispatches = [
-  { category: 'Cryosphere', date: 'April 8, 2026', title: 'Thin Ice: The Arctic Sea Ice Maximum of 2026 and the World That Depends On It', excerpt: 'On March 15, the Arctic sea ice reached its 2026 maximum: 14.29 million km², the lowest in the 48-year satellite record. An area twice the size of Texas that never froze. The ice is telling its story.' },
-  { category: 'Leadership', date: 'March 21, 2026', title: 'The Briefing Before the Landing: What Expedition Leaders Can Teach Corporate Managers', excerpt: 'Decisions made at sea level, far from support, reveal a discipline of communication and trust that boardrooms rarely have to practice. Here is what the ice teaches about leading under pressure.' },
-  { category: 'Changing Poles', date: 'February 15, 2026', title: 'Scramble for the North Pole: Continental Shelf Claims, Geopolitics and the Future of the Arctic Council', excerpt: 'Three nations claim the same seabed. As the Arctic thaws, the pressure to draw new lines on an old map is quietly reshaping the politics of the far north.' },
-  { category: 'Cryosphere', date: 'January 30, 2026', title: 'The Colour of Ice: What Blue, White, Green and Black Tell Us About a Glacier’s Life', excerpt: 'Ice is never simply white. Its hues are a diary of pressure, age and origin — a language you can learn to read from the deck of a ship or the foot of a calving face.' },
-  { category: 'Geopolitics', date: 'January 9, 2026', title: 'Russia’s Arctic Silence: What Happens to Circumpolar Science When Half the Arctic Is Off-Limits', excerpt: 'When cooperation freezes, the data freezes with it. The gaps left in the record have consequences that reach far beyond any single border.' },
-];
-
-const categories = ['Cryosphere', 'Leadership', 'Changing Poles'];
-
-const notes = [
-  { title: 'The greatest thing in the world is to know how to belong to oneself', date: 'December 12, 2025' },
-  { title: 'Snow that never falls: the physics and poetry of diamond dust', date: 'November 30, 2025' },
-  { title: 'The weight of the whistle: personal responsibility on the ice', date: 'November 17, 2025' },
-  { title: 'What Shackleton got wrong about the mythology of heroic leadership', date: 'November 2, 2025' },
-  { title: 'Sea ice dialects: how Inuit and Sámi encode centuries of knowledge', date: 'October 21, 2025' },
-  { title: 'Permafrost’s long goodbye: when the ground stops being permanent', date: 'October 5, 2025' },
-];
-
-const lectures = [
-  { category: 'Cryosphere', title: 'The greatest thing in the world is to know to belong to oneself' },
-  { category: 'Geopolitics', title: 'Reading a warming Arctic: politics, science and the new maps' },
-  { category: 'History', title: 'Triumph and defeat: what the age of exploration still teaches us' },
-  { category: 'Foundations', title: 'How ice works: a field primer for guides and operators' },
-  { category: 'Oceanography', title: 'Currents beneath the ice: the ocean that shapes the poles' },
-];
+const { hero, newsletter, categories, about, fieldNotes, lectures } = home;
+// Returns an inline background-image style when an image path is set, else undefined.
+const bg = (img) => (img ? `background-image:url('${img}');background-size:cover;background-position:center;` : undefined);
 ---
 
 <BaseLayout>
@@ -34,15 +12,15 @@ const lectures = [
   <section class="hero" data-carousel>
     <div class="wrap hero__inner">
       <div class="hero__viewport" data-scroll>
-        {dispatches.map((d) => (
+        {hero.map((d) => (
           <div class="hero__slide">
             <span class="hero__date">{d.date}</span>
-            <div class="hero__media placeholder"></div>
+            <div class="hero__media" class:list={[{ placeholder: !d.image }]} style={bg(d.image)}></div>
             <article class="hero__card">
               <span class="tag hero__tag">{d.category}</span>
               <h2 class="hero__title">{d.title}</h2>
               <p class="hero__excerpt">{d.excerpt}</p>
-              <a class="readmore readmore--light" href="#"><b>Read</b> More</a>
+              <a class="readmore readmore--light" href={d.link}><b>Read</b> More</a>
             </article>
           </div>
         ))}
@@ -57,22 +35,22 @@ const lectures = [
   <!-- ============ NEWSLETTER SIGNUP ============ -->
   <section class="container">
     <div class="signup">
-      <h2 class="signup__title">Subscribe to my journal</h2>
+      <h2 class="signup__title">{newsletter.title}</h2>
       <span class="dash"></span>
-      <p class="signup__sub">Get more content from the polar regions, inspiration, tips and exclusive offers sent straight to your inbox.</p>
+      <p class="signup__sub">{newsletter.subtitle}</p>
       <form class="signup__form" onsubmit="return false">
         <input type="email" placeholder="Your email address" aria-label="Your email address" />
       </form>
-      <button class="signup__btn" type="submit">Subscribe</button>
+      <button class="signup__btn" type="submit">{newsletter.buttonLabel}</button>
     </div>
   </section>
 
   <!-- ============ CATEGORY TEASERS ============ -->
   <section class="tiles container">
     {categories.map((c) => (
-      <a class="tile" href="#">
-        <span class="placeholder tile__img"></span>
-        <span class="tag tile__tag">{c}</span>
+      <a class="tile" href={c.link}>
+        <span class="tile__img" class:list={[{ placeholder: !c.image }]} style={bg(c.image)}></span>
+        <span class="tag tile__tag">{c.name}</span>
       </a>
     ))}
   </section>
@@ -83,32 +61,32 @@ const lectures = [
       <span class="about__wm">ABOUT</span>
       <div class="about__media">
         <span class="about__shadow"></span>
-        <span class="about__img"></span>
+        <span class="about__img" style={bg(about.image)}></span>
       </div>
-      <h2 class="about__title">Love has no age no limit and no death.</h2>
+      <h2 class="about__title">{about.title}</h2>
       <span class="about__rule"></span>
-      <p class="about__text">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      <a class="readmore about__cta" href="#"><b>Read</b> More</a>
+      <p class="about__text">{about.text}</p>
+      <a class="readmore about__cta" href={about.ctaLink}><b>Read</b> More</a>
     </div>
   </section>
 
   <!-- ============ FIELD NOTES TEASER ============ -->
   <section class="fieldnotes" data-carousel>
     <div class="wrap fieldnotes__inner">
-      <span class="watermark fieldnotes__wm">Field Notes</span>
-      <blockquote class="fieldnotes__quote">Do not mind anything that anyone tells you about anyone else. Judge everyone and everything for yourself.</blockquote>
+      <span class="watermark fieldnotes__wm">{fieldNotes.watermark}</span>
+      <blockquote class="fieldnotes__quote">{fieldNotes.quote}</blockquote>
       <div class="fieldnotes__nav nav-arrows">
         <button class="arrow" data-arrow="prev" aria-label="Previous notes">&larr;</button>
         <button class="arrow" data-arrow="next" aria-label="Next notes">&rarr;</button>
       </div>
       <div class="fieldnotes__viewport" data-scroll>
         <div class="fieldnotes__track">
-          {notes.map((n) => (
-            <article class="note">
-              <span class="note__img"></span>
+          {fieldNotes.notes.map((n) => (
+            <a class="note" href={n.link}>
+              <span class="note__img" style={bg(n.image)}></span>
               <h3 class="note__title">{n.title}</h3>
               <span class="note__date">{n.date}</span>
-            </article>
+            </a>
           ))}
         </div>
       </div>
@@ -119,19 +97,19 @@ const lectures = [
   <section class="lectures" data-carousel>
     <div class="wrap lectures__inner">
       <div class="lectures__viewport" data-scroll>
-        {lectures.map((l) => (
+        {lectures.items.map((l) => (
           <div class="lectures__slide">
-            <div class="lectures__media placeholder"></div>
+            <div class="lectures__media" class:list={[{ placeholder: !l.image }]} style={bg(l.image)}></div>
             <article class="lectures__card">
               <span class="lectures__tag">{l.category}</span>
               <h3 class="lectures__title">{l.title}</h3>
-              <a class="readmore" href="#"><b>Read</b> More</a>
+              <a class="readmore" href={l.link}><b>Read</b> More</a>
             </article>
           </div>
         ))}
       </div>
       <span class="lectures__line"></span>
-      <span class="lectures__label">Lectures</span>
+      <span class="lectures__label">{lectures.label}</span>
       <div class="lectures__nav nav-arrows">
         <button class="arrow" data-arrow="prev" aria-label="Previous lecture">&larr;</button>
         <button class="arrow" data-arrow="next" aria-label="Next lecture">&rarr;</button>
@@ -223,7 +201,7 @@ const lectures = [
   }
   .about__media { position: absolute; left: 32px; top: 28px; z-index: 1; width: 44.39%; aspect-ratio: 1 / 1; }
   .about__shadow { position: absolute; left: -32px; top: 29px; width: 100%; height: 100%; background: var(--navy); z-index: 0; }
-  .about__img { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; background: var(--placeholder); z-index: 1; }
+  .about__img { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; background: var(--placeholder); background-size: cover; background-position: center; z-index: 1; }
   .about__title {
     position: absolute; z-index: 2;
     left: calc(39.13% + 32px); top: 73px; width: 46.97%; margin: 0;
@@ -246,8 +224,8 @@ const lectures = [
   .fieldnotes__nav { position: absolute; z-index: 2; left: 24.6%; top: 256px; flex-direction: column; gap: 6px; }
   .fieldnotes__viewport { position: relative; z-index: 1; margin-left: 32.8%; padding-top: 5.5rem; }
   .fieldnotes__track { display: flex; gap: 18px; }
-  .note { flex: 0 0 calc((100% - 36px) / 3); scroll-snap-align: start; }
-  .note__img { display: block; aspect-ratio: 1 / 1; background: var(--placeholder); margin-bottom: 1rem; }
+  .note { flex: 0 0 calc((100% - 36px) / 3); scroll-snap-align: start; color: inherit; }
+  .note__img { display: block; aspect-ratio: 1 / 1; background: var(--placeholder); background-size: cover; background-position: center; margin-bottom: 1rem; }
   .note__title { font-size: 0.82rem; font-weight: 600; text-transform: uppercase; line-height: 1.4; margin-bottom: 0.6rem; letter-spacing: 0.02em; }
   .note__date { font-size: 0.76rem; color: var(--muted); }
 
