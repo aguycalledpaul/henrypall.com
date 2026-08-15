@@ -193,6 +193,43 @@ content:
           - { name: sub, label: Subtitle, type: text }
           - { name: joinLabel, label: Button label, type: string }
 
+  - name: page-podcast
+    label: "Page · Podcast"
+    type: file
+    path: src/content/podcast.json
+    format: json
+    fields:
+      - name: story
+        label: Podcast story
+        type: object
+        fields:
+          - { name: heroImage, label: Hero image, type: image }
+          - { name: heroFocus, label: Hero focus (which part to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
+          - { name: headline, label: "Headline (HTML: use <br /> for line breaks)", type: string }
+          - { name: intro1, label: Intro paragraph 1, type: text }
+          - { name: intro2, label: Intro paragraph 2, type: text }
+          - { name: bodyA, label: Body paragraph 1, type: text }
+          - { name: bodyB, label: Body paragraph 2, type: text }
+      - name: team
+        label: The team
+        type: object
+        fields:
+          - { name: quote, label: Quote, type: text }
+          - name: members
+            label: Team members
+            type: object
+            list: true
+            fields:
+              - { name: name, label: Name, type: string }
+              - { name: image, label: Photo, type: image }
+              - { name: focus, label: Focus (which part of the photo to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
+      - name: gallery
+        label: Gallery photos
+        type: object
+        list: true
+        fields:
+          - { name: image, label: Photo, type: image }
+          - { name: focus, label: Focus (which part of the photo to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
   # ===================== NEWSLETTERS =====================
   - name: nl-journal
     label: "Newsletter · Journal"
