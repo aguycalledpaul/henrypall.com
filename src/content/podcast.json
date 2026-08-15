@@ -1,0 +1,26 @@
+{
+  "story": {
+    "heroImage": "",
+    "heroFocus": "center",
+    "headline": "Narrating the poles,<br />sharing curiosity",
+    "intro1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "intro2": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
+    "bodyA": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.",
+    "bodyB": "Quisque mattis porta ipsum, id blandit nunc fringilla et. Mauris a nulla a ligula sollicitudin feugiat. Vivamus mattis commodo dictum. Vivamus auctor lorem a urna facilisis facilisis. Praesent faucibus erat dui, eu vulputate mauris accumsan eget. Duis maximus interdum nulla eu tristique. Sed tempus nisi felis, non ultrices justo efficitur ac. Nunc eu feugiat nisi, eu cursus dolor."
+  },
+  "team": {
+    "quote": "Do not mind anything that anyone tells you about anyone else. Judge everyone and everything for yourself.",
+    "members": [
+      { "name": "Chris Marquardt", "image": "", "focus": "center" },
+      { "name": "Mario Acquarone", "image": "", "focus": "center" },
+      { "name": "Henry Páll Wulff", "image": "", "focus": "center" }
+    ]
+  },
+  "gallery": [
+    { "image": "", "focus": "center" },
+    { "image": "", "focus": "center" },
+    { "image": "", "focus": "center" },
+    { "image": "", "focus": "center" },
+    { "image": "", "focus": "center" }
+  ]
+}
