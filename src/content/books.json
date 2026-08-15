@@ -1,0 +1,37 @@
+{
+  "hero": {
+    "coverImage": "",
+    "coverFocus": "center",
+    "title": "Ice in Practice",
+    "subtitle": "A Field Guide to Understanding and Working in the Cryosphere",
+    "desc": "Ice in Practice is Henry’s first book, a field guide for the people who work where the ice does — polar expedition guides, field operations professionals, and students of the cryosphere. In it, Henry shows that the guides and operators who make the best decisions on glaciers, sea ice, and tidewater termini all share the same habit of mind — and it’s not the one most training programmes teach. He calls this approach Observe → Understand → Decide → Communicate, and it provides a framework that turns a crevasse field or a calving face from a hazard to be feared into a landscape that can be read.",
+    "lastLine": "And it all starts with learning to read the ice."
+  },
+  "actions": [
+    { "label": "Read Sample", "link": "#" },
+    { "label": "Pre Order", "link": "#" }
+  ],
+  "intro": {
+    "image": "",
+    "focus": "center",
+    "quote": "The ice is changing faster than the people who work on it can be trained. <i>Ice in Practice</i> is a field guide for reading a cryosphere in transition — for guides, operators, and students whose decisions depend on understanding what the ice is about to do, not what it used to do."
+  },
+  "copy1": {
+    "colA": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum molestie augue nec mauris posuere aliquam. Fusce velit magna, auctor at fringilla vitae, sodales vel dui. Curabitur dictum posuere semper. Donec et posuere nibh. Proin a sem sit amet neque molestie egestas eget sit amet risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent a mauris est. Vivamus tincidunt feugiat interdum. Fusce sit amet velit pretium, condimentum magna ac, dictum odio. Duis quam enim, tempus non leo eu, posuere tincidunt sem. Duis nec metus consectetur turpis sagittis fermentum. Proin in vestibulum turpis. In volutpat nibh et augue tristique, nec venenatis libero euismod. Nunc mattis, libero eu vulputate eleifend, arcu enim malesuada nibh, vel rutrum tortor libero eu nisi. Vivamus eu ultrices nibh, eu faucibus massa. Curabitur volutpat accumsan eleifend. Aliquam vestibulum consequat lectus eget consequat.",
+    "colB": "Aenean placerat ligula in sodales blandit. Nullam ac vehicula sem. Suspendisse eget pellentesque est. Nulla et ligula a lacus ultricies rutrum. Morbi id sodales augue. Curabitur et dui dapibus, mollis diam nec, auctor neque. Pellentesque consequat sodales tellus vel molestie. Fusce nec turpis id sem hendrerit tempus sit amet a purus. Integer vehicula massa id ex luctus convallis. Nam tincidunt, nisi vitae hendrerit lacinia, ligula odio facilisis augue, vel laoreet leo nunc quis lectus. Vestibulum scelerisque ultrices ipsum, quis mattis orci malesuada in. Etiam enim leo, consectetur eget auctor eget, blandit eget erat. Nullam et libero laoreet, tincidunt erat at, ullamcorper urna. Praesent blandit posuere orci, vel pellentesque purus imperdiet sit amet. Integer bibendum ut dolor lacinia ultrices. Suspendisse metus ante, pellentesque non fermentum at, porttitor mollis elit."
+  },
+  "feature": {
+    "image": "",
+    "focus": "center",
+    "title": "The new supremacist survivalists are far from impregnable."
+  },
+  "kicker": "Description Headline",
+  "copy2": {
+    "colA": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum molestie augue nec mauris posuere aliquam. Fusce velit magna, auctor at fringilla vitae, sodales vel dui. Curabitur dictum posuere semper. Donec et posuere nibh. Proin a sem sit amet neque molestie egestas eget sit amet risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent a mauris est. Vivamus tincidunt feugiat interdum. Fusce sit amet velit pretium, condimentum magna ac, dictum odio. Duis quam enim, tempus non leo eu, posuere tincidunt sem. Duis nec metus consectetur turpis sagittis fermentum. Proin in vestibulum turpis.",
+    "colB": "Aenean placerat ligula in sodales blandit. Nullam ac vehicula sem. Suspendisse eget pellentesque est. Nulla et ligula a lacus ultricies rutrum. Morbi id sodales augue. Curabitur et dui dapibus, mollis diam nec, auctor neque. Pellentesque consequat sodales tellus vel molestie. Fusce nec turpis id sem hendrerit tempus sit amet a purus. Integer vehicula massa id ex luctus convallis. Nam tincidunt, nisi vitae hendrerit lacinia, ligula odio facilisis augue, vel laoreet leo nunc quis lectus."
+  },
+  "newsletter": {
+    "label": "Receive updates on <i>Ice in Practice</i>",
+    "joinLabel": "Join Now"
+  }
+}
