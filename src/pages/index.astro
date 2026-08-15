@@ -4,7 +4,7 @@ import home from '../content/home.json';
 
 const { hero, newsletter, categories, about, fieldNotes, lectures } = home;
 // Returns an inline background-image style when an image path is set, else undefined.
-const bg = (img) => (img ? `background-image:url('${img}');background-size:cover;background-position:center;` : undefined);
+const bg = (img, focus) => (img ? `background-image:url('${img}');background-size:cover;background-position:${focus || 'center'};` : undefined);
 ---
 
 <BaseLayout>
@@ -15,7 +15,7 @@ const bg = (img) => (img ? `background-image:url('${img}');background-size:cover
         {hero.map((d) => (
           <div class="hero__slide">
             <span class="hero__date">{d.date}</span>
-            <div class="hero__media" class:list={[{ placeholder: !d.image }]} style={bg(d.image)}></div>
+            <div class="hero__media" class:list={[{ placeholder: !d.image }]} style={bg(d.image, d.focus)}></div>
             <article class="hero__card">
               <span class="tag hero__tag">{d.category}</span>
               <h2 class="hero__title">{d.title}</h2>
@@ -49,7 +49,7 @@ const bg = (img) => (img ? `background-image:url('${img}');background-size:cover
   <section class="tiles container">
     {categories.map((c) => (
       <a class="tile" href={c.link}>
-        <span class="tile__img" class:list={[{ placeholder: !c.image }]} style={bg(c.image)}></span>
+        <span class="tile__img" class:list={[{ placeholder: !c.image }]} style={bg(c.image, c.focus)}></span>
         <span class="tag tile__tag">{c.name}</span>
       </a>
     ))}
@@ -61,7 +61,7 @@ const bg = (img) => (img ? `background-image:url('${img}');background-size:cover
       <span class="about__wm">ABOUT</span>
       <div class="about__media">
         <span class="about__shadow"></span>
-        <span class="about__img" style={bg(about.image)}></span>
+        <span class="about__img" style={bg(about.image, about.focus)}></span>
       </div>
       <h2 class="about__title">{about.title}</h2>
       <span class="about__rule"></span>
@@ -83,7 +83,7 @@ const bg = (img) => (img ? `background-image:url('${img}');background-size:cover
         <div class="fieldnotes__track">
           {fieldNotes.notes.map((n) => (
             <a class="note" href={n.link}>
-              <span class="note__img" style={bg(n.image)}></span>
+              <span class="note__img" style={bg(n.image, n.focus)}></span>
               <h3 class="note__title">{n.title}</h3>
               <span class="note__date">{n.date}</span>
             </a>
@@ -99,7 +99,7 @@ const bg = (img) => (img ? `background-image:url('${img}');background-size:cover
       <div class="lectures__viewport" data-scroll>
         {lectures.items.map((l) => (
           <div class="lectures__slide">
-            <div class="lectures__media" class:list={[{ placeholder: !l.image }]} style={bg(l.image)}></div>
+            <div class="lectures__media" class:list={[{ placeholder: !l.image }]} style={bg(l.image, l.focus)}></div>
             <article class="lectures__card">
               <span class="lectures__tag">{l.category}</span>
               <h3 class="lectures__title">{l.title}</h3>
