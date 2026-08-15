@@ -33,6 +33,7 @@ content:
           - { name: title, label: Title, type: string }
           - { name: excerpt, label: Excerpt, type: text }
           - { name: image, label: Image, type: image }
+          - { name: focus, label: Focus (which part of the image to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
           - { name: link, label: Link, type: string }
       - name: newsletter
         label: Newsletter block
@@ -48,6 +49,7 @@ content:
         fields:
           - { name: name, label: Name, type: string }
           - { name: image, label: Image, type: image }
+          - { name: focus, label: Focus (which part of the image to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
           - { name: link, label: Link, type: string }
       - name: about
         label: About teaser
@@ -56,6 +58,7 @@ content:
           - { name: title, label: Title, type: string }
           - { name: text, label: Text, type: text }
           - { name: image, label: Image, type: image }
+          - { name: focus, label: Focus (which part of the image to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
           - { name: ctaLink, label: Button link, type: string }
       - name: fieldNotes
         label: Field Notes teaser
@@ -71,6 +74,7 @@ content:
               - { name: title, label: Title, type: string }
               - { name: date, label: Date, type: string }
               - { name: image, label: Image, type: image }
+              - { name: focus, label: Focus (which part of the image to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
               - { name: link, label: Link, type: string }
       - name: lectures
         label: Lectures teaser
@@ -85,6 +89,7 @@ content:
               - { name: category, label: Category, type: string }
               - { name: title, label: Title, type: string }
               - { name: image, label: Image, type: image }
+              - { name: focus, label: Focus (which part of the image to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
               - { name: link, label: Link, type: string }
 
   # ===================== NEWSLETTERS =====================
