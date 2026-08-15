@@ -1,0 +1,47 @@
+{
+  "hero": [
+    { "category": "Cryosphere", "date": "April 8, 2026", "title": "Thin Ice: The Arctic Sea Ice Maximum of 2026 and the World That Depends On It", "excerpt": "On March 15, the Arctic sea ice reached its 2026 maximum: 14.29 million km², the lowest in the 48-year satellite record. An area twice the size of Texas that never froze. The ice is telling its story.", "image": "", "link": "/beta/dispatches/thin-ice" },
+    { "category": "Leadership", "date": "March 21, 2026", "title": "The Briefing Before the Landing: What Expedition Leaders Can Teach Corporate Managers", "excerpt": "Decisions made at sea level, far from support, reveal a discipline of communication and trust that boardrooms rarely have to practice. Here is what the ice teaches about leading under pressure.", "image": "", "link": "#" },
+    { "category": "Changing Poles", "date": "February 15, 2026", "title": "Scramble for the North Pole: Continental Shelf Claims, Geopolitics and the Future of the Arctic Council", "excerpt": "Three nations claim the same seabed. As the Arctic thaws, the pressure to draw new lines on an old map is quietly reshaping the politics of the far north.", "image": "", "link": "#" },
+    { "category": "Cryosphere", "date": "January 30, 2026", "title": "The Colour of Ice: What Blue, White, Green and Black Tell Us About a Glacier’s Life", "excerpt": "Ice is never simply white. Its hues are a diary of pressure, age and origin — a language you can learn to read from the deck of a ship or the foot of a calving face.", "image": "", "link": "#" },
+    { "category": "Geopolitics", "date": "January 9, 2026", "title": "Russia’s Arctic Silence: What Happens to Circumpolar Science When Half the Arctic Is Off-Limits", "excerpt": "When cooperation freezes, the data freezes with it. The gaps left in the record have consequences that reach far beyond any single border.", "image": "", "link": "#" }
+  ],
+  "newsletter": {
+    "title": "Subscribe to my journal",
+    "subtitle": "Get more content from the polar regions, inspiration, tips and exclusive offers sent straight to your inbox.",
+    "buttonLabel": "Subscribe"
+  },
+  "categories": [
+    { "name": "Cryosphere", "image": "", "link": "#" },
+    { "name": "Leadership", "image": "", "link": "#" },
+    { "name": "Changing Poles", "image": "", "link": "#" }
+  ],
+  "about": {
+    "title": "Love has no age no limit and no death.",
+    "text": "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "image": "",
+    "ctaLink": "#"
+  },
+  "fieldNotes": {
+    "watermark": "Field Notes",
+    "quote": "Do not mind anything that anyone tells you about anyone else. Judge everyone and everything for yourself.",
+    "notes": [
+      { "title": "The greatest thing in the world is to know how to belong to oneself", "date": "December 12, 2025", "image": "", "link": "#" },
+      { "title": "Snow that never falls: the physics and poetry of diamond dust", "date": "November 30, 2025", "image": "", "link": "#" },
+      { "title": "The weight of the whistle: personal responsibility on the ice", "date": "November 17, 2025", "image": "", "link": "#" },
+      { "title": "What Shackleton got wrong about the mythology of heroic leadership", "date": "November 2, 2025", "image": "", "link": "#" },
+      { "title": "Sea ice dialects: how Inuit and Sámi encode centuries of knowledge", "date": "October 21, 2025", "image": "", "link": "#" },
+      { "title": "Permafrost’s long goodbye: when the ground stops being permanent", "date": "October 5, 2025", "image": "", "link": "#" }
+    ]
+  },
+  "lectures": {
+    "label": "Lectures",
+    "items": [
+      { "category": "Cryosphere", "title": "The greatest thing in the world is to know to belong to oneself", "image": "", "link": "#" },
+      { "category": "Geopolitics", "title": "Reading a warming Arctic: politics, science and the new maps", "image": "", "link": "#" },
+      { "category": "History", "title": "Triumph and defeat: what the age of exploration still teaches us", "image": "", "link": "#" },
+      { "category": "Foundations", "title": "How ice works: a field primer for guides and operators", "image": "", "link": "#" },
+      { "category": "Oceanography", "title": "Currents beneath the ice: the ocean that shapes the poles", "image": "", "link": "#" }
+    ]
+  }
+}
