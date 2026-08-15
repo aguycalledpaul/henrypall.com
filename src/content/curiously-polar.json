@@ -1,0 +1,30 @@
+{
+  "hero": {
+    "backgroundImage": "",
+    "backgroundFocus": "center",
+    "eyebrow": "Curiously Polar",
+    "line1": "Let’s explore together",
+    "line2": "the magnificent polar regions",
+    "buttons": [
+      { "label": "The Podcast", "link": "/beta/curiously-polar/podcast" },
+      { "label": "Monthly Email", "link": "#cpnews" }
+    ]
+  },
+  "middle": {
+    "image": "",
+    "focus": "center",
+    "quote": "It’s our very own curiosity that’s our key driver. We want to learn, understand, and share about the most remote, most fragile ecosystems on our planet.",
+    "moreLabel": "Read More",
+    "moreLink": "/beta/curiously-polar/podcast",
+    "motto": "In the end, we will conserve only what we love,<br />we will love only what we understand,<br />and we will understand only what we are taught.",
+    "mottoAuthor": "Baba Dioum"
+  },
+  "newsletter": {
+    "eyebrow": "Narrating the Poles",
+    "titleLine1": "<span class=\"cpnews__hl\">Sign up</span> for your",
+    "titleLine2": "monthly dose",
+    "titleLine3": "of <span class=\"cpnews__hl\">polar curiosity</span>",
+    "sub": "Stay up to date with our monthly reminders of how awesome, precious and fun the polar regions are.",
+    "joinLabel": "Join Now"
+  }
+}
