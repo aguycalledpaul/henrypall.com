@@ -1,31 +1,34 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import nl from '../content/newsletter.json';
 
-const base = import.meta.env.BASE_URL.replace(/\/+$/, ''); // "/beta"
+const base = import.meta.env.BASE_URL.replace(/\/+$/, ""); // "/beta"
+const { journalForm, bookForm, band } = nl;
+// Inline background-image with a focus (center/top/bottom/left/right) crop anchor.
+const bg = (img, focus) => (img ? `background-image:url('${img}');background-size:cover;background-position:${focus || 'center'};` : undefined);
 
 // Editions live in src/newsletters/<list>/<YYYY-MM-DD>.md — drop a new dated file
 // into a folder (or add one via the CMS) and it appears here automatically, newest first.
-const THUMB_POS = ['28.96%', '53.06%', '77.41%']; // Figma thumbnail x-positions in the bottom band
-
 function loadEditions(globbed) {
   return Object.entries(globbed)
     .map(([path, mod]) => {
-      const slug = path.split('/').pop().replace(/\.md$/, '');
+      const slug = path.split('/').pop().replace(/\.md$/, "");
       const fm = (mod && mod.frontmatter) || {};
       return {
         iso: fm.date || slug,
         date: fm.displayDate || slug,
         title: fm.title || 'Untitled edition',
-        cover: fm.cover || '',
+        cover: fm.cover || "",
       };
     })
     .sort((a, b) => (a.iso < b.iso ? 1 : -1));
 }
 
-const journal = loadEditions(import.meta.glob('../newsletters/journal/*.md', { eager: true })).slice(0, 3);
-const cpNews = loadEditions(import.meta.glob('../newsletters/narrating-the-poles/*.md', { eager: true }))
-  .slice(0, 3)
-  .map((n, i) => ({ ...n, l: THUMB_POS[i] }));
+// All editions load; the Journal list reveals three more per click, and the
+// Narrating-the-Poles catalogue is paged three-at-a-time by the arrows.
+const journal = loadEditions(import.meta.glob('../newsletters/journal/*.md', { eager: true }));
+const cpNews = loadEditions(import.meta.glob('../newsletters/narrating-the-poles/*.md', { eager: true }));
+const JOURNAL_INITIAL = 3;
 ---
 
 <BaseLayout title="Newsletter — Henry Páll Wulff" description="Subscribe to Henry Páll Wulff's journal and the Curiously Polar monthly newsletter — content from the polar regions, inspiration, tips and exclusive offers.">
@@ -34,9 +37,9 @@ const cpNews = loadEditions(import.meta.glob('../newsletters/narrating-the-poles
     <!-- ============ TOP: journal cards (left) + signup forms (right) ============ -->
     <section class="nlwrap nl-top">
       <div class="nl-left">
-        {journal.map((j) => (
-          <article class="nlcard">
-            <div class="nlcard__img placeholder" role="img" aria-label="Journal header image"></div>
+        {journal.map((j, i) => (
+          <article class="nlcard" hidden={i >= JOURNAL_INITIAL}>
+            <div class="nlcard__img placeholder" style={bg(j.cover, 'center')} role="img" aria-label="Journal header image"></div>
             <div class="nlcard__foot">
               <div class="nlcard__meta">
                 <p class="nlcard__date">{j.date}</p>
@@ -46,27 +49,27 @@ const cpNews = loadEditions(import.meta.glob('../newsletters/narrating-the-poles
             </div>
           </article>
         ))}
-        <a class="nl-more" href="#">Load More</a>
+        <button class="nl-more" type="button" data-loadmore="journal">Load More</button>
       </div>
 
       <aside class="nl-right">
         <!-- Journal subscribe -->
         <form class="nlform" onsubmit="return false" action="#" method="post">
-          <h2 class="nlform__title">Subscribe<br />to my Journal</h2>
+          <h2 class="nlform__title" set:html={journalForm.title}></h2>
           <span class="nlform__rule" aria-hidden="true"></span>
-          <p class="nlform__text">Get more content from the polar regions, inspiration, tips and exclusive offers sent straight to your inbox.</p>
+          <p class="nlform__text">{journalForm.text}</p>
           <input type="email" name="cm-email" placeholder="Your email address" aria-label="Your email address" />
-          <button class="nlform__btn" type="submit">Subscribe</button>
+          <button class="nlform__btn" type="submit">{journalForm.button}</button>
         </form>
 
         <!-- Book update subscribe -->
         <form class="nlform nlform--book" onsubmit="return false" action="#" method="post">
-          <div class="nlform__cover placeholder" role="img" aria-label="Ice in Practice — book cover"></div>
+          <div class="nlform__cover placeholder" style={bg(bookForm.coverImage, bookForm.coverFocus)} role="img" aria-label="Ice in Practice — book cover"></div>
           <span class="nlform__rule" aria-hidden="true"></span>
-          <p class="nlform__cta">Receive updates on my book <i>Ice in Practice</i></p>
+          <p class="nlform__cta" set:html={bookForm.cta}></p>
           <input type="text" name="cm-name" placeholder="Your Name" aria-label="Your Name" />
           <input type="email" name="cm-email" placeholder="Your Email" aria-label="Your Email" />
-          <button class="nlform__btn nlform__btn--solid" type="submit">Join Now</button>
+          <button class="nlform__btn nlform__btn--solid" type="submit">{bookForm.button}</button>
         </form>
       </aside>
     </section>
@@ -74,32 +77,38 @@ const cpNews = loadEditions(import.meta.glob('../newsletters/narrating-the-poles
     <!-- ============ BOTTOM: Narrating the Poles / Curiously Polar newsletter ============ -->
     <section class="nlwrap nl-band">
       <span class="nl-band__wm" aria-hidden="true">CURIOUSLY POLAR</span>
-      <span class="nl-band__label">Narrating the Poles</span>
+      <span class="nl-band__label">{band.label}</span>
       <span class="nl-band__hrule" aria-hidden="true"></span>
       <span class="nl-band__vrule" aria-hidden="true"></span>
 
       <!-- monthly dose signup -->
       <form class="nl-dose" onsubmit="return false" action="#" method="post">
-        <div class="nl-dose__logo placeholder" role="img" aria-label="Curiously Polar"></div>
-        <p class="nl-dose__title">Sign up<br />for your<br />monthly dose<br />of polar<br />curiosity</p>
-        <p class="nl-dose__text">Stay up to date with our monthly reminders of how awesome, precious and fun the polar regions are.</p>
+        <div class="nl-dose__logo" style={bg(band.logo, 'center')} role="img" aria-label="Curiously Polar"></div>
+        <p class="nl-dose__title" set:html={band.title}></p>
+        <p class="nl-dose__text">{band.text}</p>
         <input type="text" name="cm-name" placeholder="Your Name" aria-label="Your Name" />
         <input type="email" name="cm-email" placeholder="Your Email" aria-label="Your Email" />
-        <button class="nl-dose__btn" type="submit">Join Now</button>
+        <button class="nl-dose__btn" type="submit">{band.button}</button>
       </form>
 
       <!-- carousel arrows -->
-      <button class="nl-arrow nl-arrow--prev" type="button" aria-label="Previous">&rarr;</button>
-      <button class="nl-arrow nl-arrow--next" type="button" aria-label="Next">&rarr;</button>
+      <button class="nl-arrow nl-arrow--prev" type="button" aria-label="Previous newsletters">&rarr;</button>
+      <button class="nl-arrow nl-arrow--next" type="button" aria-label="Next newsletters">&rarr;</button>
 
-      <!-- three newsletter thumbnails -->
-      {cpNews.map((n) => (
-        <article class="nl-thumb" style={`left:${n.l}`}>
-          <div class="nl-thumb__img placeholder" role="img" aria-label="Newsletter thumbnail"></div>
-          <h3 class="nl-thumb__title">{n.title}</h3>
-          <p class="nl-thumb__date">{n.date}</p>
-        </article>
-      ))}
+      <!-- newsletter catalogue (paged three at a time) -->
+      <div class="nl-cat">
+        <div class="nl-cat__view">
+          <div class="nl-cat__track">
+            {cpNews.map((n) => (
+              <article class="nl-thumb">
+                <div class="nl-thumb__img placeholder" style={bg(n.cover, 'center')} role="img" aria-label="Newsletter thumbnail"></div>
+                <h3 class="nl-thumb__title">{n.title}</h3>
+                <p class="nl-thumb__date">{n.date}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
 
   </div>
@@ -116,7 +125,7 @@ const cpNews = loadEditions(import.meta.glob('../newsletters/narrating-the-poles
 
   /* journal card */
   .nlcard { background: #fff; box-shadow: 4px 4px 4px rgba(0,0,0,0.25); padding: 20px; }
-  .nlcard__img { width: 100%; aspect-ratio: 683 / 200; }
+  .nlcard__img { width: 100%; aspect-ratio: 683 / 200; background-size: cover; background-position: center; }
   .nlcard__foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-top: 10px; }
   .nlcard__meta { min-width: 0; }
   .nlcard__date { margin: 0; font-size: 12px; font-weight: 500; color: rgba(0,0,0,0.5); }
@@ -128,14 +137,14 @@ const cpNews = loadEditions(import.meta.glob('../newsletters/narrating-the-poles
 
   .nl-more {
     align-self: center; margin-top: 4px; width: 135px; height: 30px; display: grid; place-items: center;
-    background: var(--navy); border: 1px solid #fff; color: #fff;
+    background: var(--navy); border: 1px solid #fff; color: #fff; cursor: pointer; font-family: inherit;
     font-size: 12px; font-weight: 500; letter-spacing: 0.03em; text-transform: uppercase;
   }
   .nl-more:hover { background: var(--navy-800); }
 
   /* signup forms (navy cards) */
   .nlform { background: var(--navy); color: #fff; text-align: center; padding: 34px 20px 30px; }
-  .nlform__title { margin: 0; font-size: 22px; font-weight: 500; line-height: 30px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .nlform__title { margin: 0; color: #fff; font-size: 22px; font-weight: 500; line-height: 30px; letter-spacing: 0.1em; text-transform: uppercase; }
   .nlform__rule { display: block; width: 20px; height: 2px; background: #fff; margin: 16px auto; }
   .nlform__text { margin: 0 0 20px; font-size: 12px; font-weight: 300; line-height: 1.5; }
   .nlform input {
@@ -153,8 +162,9 @@ const cpNews = loadEditions(import.meta.glob('../newsletters/narrating-the-poles
   }
   .nlform__btn--solid:hover { background: rgba(255,255,255,0.12); opacity: 1; }
   .nlform--book { padding-top: 26px; }
-  .nlform__cover { width: 203px; max-width: 70%; aspect-ratio: 203 / 305; margin: 0 auto 4px; }
+  .nlform__cover { width: 203px; max-width: 70%; aspect-ratio: 203 / 305; margin: 0 auto 4px; background-size: cover; background-position: center; }
   .nlform__cta { margin: 0 0 18px; font-size: 14px; font-weight: 300; line-height: 1.5; }
+  .nlform__cta i { font-style: italic; }
 
   /* ===================== BOTTOM BAND ===================== */
   .nl-band { margin-top: 96px; height: 536px; }
@@ -163,11 +173,12 @@ const cpNews = loadEditions(import.meta.glob('../newsletters/narrating-the-poles
     font-size: clamp(60px, 13vw, 120px); color: #f5f5f5; white-space: nowrap; line-height: 1;
     pointer-events: none; user-select: none; z-index: 0;
   }
+  /* label sits over the watermark with no knock-out rectangle (matches Figma) */
   .nl-band__label {
-    position: absolute; top: 29px; left: 20px; z-index: 3; background: var(--paper); padding-right: 14px;
+    position: absolute; top: 29px; left: 20px; z-index: 3;
     font-size: 18px; font-weight: 400; letter-spacing: 0.3em; color: #000; text-transform: uppercase; white-space: nowrap;
   }
-  .nl-band__hrule { position: absolute; top: 53px; left: 22px; right: 0; height: 1px; background: rgba(17,41,46,0.35); z-index: 1; }
+  .nl-band__hrule { position: absolute; top: 53px; left: 250px; right: 0; height: 1px; background: rgba(17,41,46,0.35); z-index: 1; }
   .nl-band__vrule { position: absolute; top: 52px; left: 22px; width: 1px; height: 108px; background: rgba(17,41,46,0.35); z-index: 1; }
 
   /* monthly-dose form */
@@ -175,7 +186,7 @@ const cpNews = loadEditions(import.meta.glob('../newsletters/narrating-the-poles
     position: absolute; top: 72px; left: 4.52%; width: 18.95%; z-index: 2;
     background: var(--navy); color: #fff; text-align: center; padding: 0 18px 22px;
   }
-  .nl-dose__logo { width: 67px; height: 67px; margin: -33px auto 12px; background: var(--placeholder); border: 3px solid var(--paper); }
+  .nl-dose__logo { width: 72px; height: 72px; margin: -36px auto 12px; background-color: var(--navy); background-size: cover; background-position: center; border: 3px solid var(--paper); border-radius: 50%; }
   .nl-dose__title { margin: 0 0 16px; font-size: 20px; font-weight: 600; line-height: 22px; text-transform: uppercase; }
   .nl-dose__text { margin: 0 0 20px; font-size: 12px; font-weight: 400; line-height: 1.5; }
   .nl-dose input {
@@ -192,15 +203,19 @@ const cpNews = loadEditions(import.meta.glob('../newsletters/narrating-the-poles
   /* carousel arrows */
   .nl-arrow {
     position: absolute; top: 99px; width: 40px; height: 40px; display: grid; place-items: center;
-    background: var(--navy); border: 0; color: #fff; font-size: 20px; cursor: pointer;
+    background: var(--navy); border: 0; color: #fff; font-size: 20px; cursor: pointer; z-index: 4;
+    transition: opacity 0.2s ease;
   }
   .nl-arrow:hover { background: var(--navy-800); }
   .nl-arrow--prev { left: 29.05%; transform: scaleX(-1); }  /* flip the → into a ← */
   .nl-arrow--next { left: 33.48%; }
 
-  /* newsletter thumbnails */
-  .nl-thumb { position: absolute; top: 165px; width: 22.59%; }
-  .nl-thumb__img { width: 100%; aspect-ratio: 1 / 1; }
+  /* newsletter catalogue carousel — three thumbnails visible, paged by the arrows */
+  .nl-cat { position: absolute; top: 165px; left: 28.96%; right: 0; z-index: 1; }
+  .nl-cat__view { overflow: hidden; }
+  .nl-cat__track { display: flex; gap: 20px; transition: transform 0.35s ease; will-change: transform; }
+  .nl-thumb { flex: 0 0 calc((100% - 40px) / 3); }
+  .nl-thumb__img { width: 100%; aspect-ratio: 1 / 1; background-size: cover; background-position: center; }
   .nl-thumb__title { margin: 14px 0 0; font-size: 18px; font-weight: 500; line-height: 24px; letter-spacing: -0.9px; color: rgba(0,0,0,0.65); text-transform: uppercase; }
   .nl-thumb__date { margin: 8px 0 0; font-size: 12px; font-weight: 300; color: rgba(0,0,0,0.65); }
 
@@ -212,10 +227,49 @@ const cpNews = loadEditions(import.meta.glob('../newsletters/narrating-the-poles
 
     .nl-band { height: auto; }
     .nl-band__wm { position: static; display: block; margin-bottom: -0.3em; }
-    .nl-band__label { position: static; display: inline-block; margin: 0 0 6px; background: none; padding: 0; }
+    .nl-band__label { position: static; display: inline-block; margin: 0 0 6px; padding: 0; }
     .nl-band__hrule, .nl-band__vrule, .nl-arrow { display: none; }
     .nl-dose { position: static; width: 100%; max-width: 320px; margin: 0 auto 2.5rem; padding-top: 40px; }
     .nl-dose__logo { margin-top: 0; }
-    .nl-thumb { position: static; width: 100%; max-width: 360px; margin: 0 auto 2rem; }
+    .nl-cat { position: static; }
+    .nl-cat__view { overflow: visible; }
+    .nl-cat__track { flex-direction: column; gap: 2rem; transform: none !important; }
+    .nl-thumb { flex: 1 1 auto; width: 100%; max-width: 360px; margin: 0 auto; }
   }
 </style>
+
+<script>
+  // Journal list: reveal three more editions per click, hide the button when exhausted.
+  (function () {
+    const btn = document.querySelector('[data-loadmore="journal"]');
+    if (!btn) return;
+    const cards = () => Array.from(document.querySelectorAll('.nlcard'));
+    const anyHidden = () => cards().some((el) => el.hidden);
+    if (!anyHidden()) { btn.hidden = true; return; }
+    btn.addEventListener('click', () => {
+      cards().filter((el) => el.hidden).slice(0, 3).forEach((el) => { el.hidden = false; });
+      if (!anyHidden()) btn.hidden = true;
+    });
+  })();
+
+  // Narrating-the-Poles catalogue: page three thumbnails at a time with the arrows.
+  (function () {
+    const track = document.querySelector('.nl-cat__track');
+    if (!track) return;
+    const thumbs = Array.from(track.children);
+    const prev = document.querySelector('.nl-arrow--prev');
+    const next = document.querySelector('.nl-arrow--next');
+    let start = 0;
+    const maxStart = () => Math.max(0, thumbs.length - 3);
+    const unit = () => { const t = thumbs[0]; return t ? t.getBoundingClientRect().width + 20 : 0; };
+    const render = () => {
+      track.style.transform = `translateX(${-start * unit()}px)`;
+      if (prev) prev.style.opacity = start <= 0 ? '0.4' : '1';
+      if (next) next.style.opacity = start >= maxStart() ? '0.4' : '1';
+    };
+    prev && prev.addEventListener('click', () => { start = Math.max(0, start - 3); render(); });
+    next && next.addEventListener('click', () => { start = Math.min(maxStart(), start + 3); render(); });
+    window.addEventListener('resize', render);
+    render();
+  })();
+</script>
