@@ -230,6 +230,37 @@ content:
         fields:
           - { name: image, label: Photo, type: image }
           - { name: focus, label: Focus (which part of the photo to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
+  - name: page-newsletter
+    label: "Page · Newsletter"
+    type: file
+    path: src/content/newsletter.json
+    format: json
+    fields:
+      - name: journalForm
+        label: "Journal signup form"
+        type: object
+        fields:
+          - { name: title, label: "Title (HTML: use <br /> for line breaks)", type: string }
+          - { name: text, label: Text, type: text }
+          - { name: button, label: Button label, type: string }
+      - name: bookForm
+        label: "Book-update signup form"
+        type: object
+        fields:
+          - { name: coverImage, label: Book cover image, type: image }
+          - { name: coverFocus, label: Cover focus, type: select, options: { values: [center, top, bottom, left, right] }, default: center }
+          - { name: cta, label: "Call to action (HTML allowed, e.g. <i>...</i>)", type: string }
+          - { name: button, label: Button label, type: string }
+      - name: band
+        label: "Curiously Polar band"
+        type: object
+        fields:
+          - { name: label, label: Section label, type: string }
+          - { name: logo, label: Logo image, type: image }
+          - { name: title, label: "Title (HTML: use <br /> for line breaks)", type: string }
+          - { name: text, label: Text, type: text }
+          - { name: button, label: Button label, type: string }
+
   # ===================== NEWSLETTERS =====================
   - name: nl-journal
     label: "Newsletter · Journal"
