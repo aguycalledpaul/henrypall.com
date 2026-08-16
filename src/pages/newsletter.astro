@@ -246,10 +246,10 @@ const JOURNAL_INITIAL = 3;
     if (!btn) return;
     const cards = () => Array.from(document.querySelectorAll('.nlcard'));
     const anyHidden = () => cards().some((el) => el.hidden);
-    if (!anyHidden()) { btn.hidden = true; return; }
+    if (!anyHidden()) { btn.style.display = "none"; return; }
     btn.addEventListener('click', () => {
       cards().filter((el) => el.hidden).slice(0, 3).forEach((el) => { el.hidden = false; });
-      if (!anyHidden()) btn.hidden = true;
+      if (!anyHidden()) btn.style.display = "none";
     });
   })();
 
