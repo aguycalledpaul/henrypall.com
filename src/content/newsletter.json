@@ -1,0 +1,20 @@
+{
+  "journalForm": {
+    "title": "Subscribe<br />to my Journal",
+    "text": "Get more content from the polar regions, inspiration, tips and exclusive offers sent straight to your inbox.",
+    "button": "Subscribe"
+  },
+  "bookForm": {
+    "coverImage": "",
+    "coverFocus": "center",
+    "cta": "Receive updates on my book <i>Ice in Practice</i>",
+    "button": "Join Now"
+  },
+  "band": {
+    "label": "Narrating the Poles",
+    "logo": "/beta/uploads/curiously-polar-logo.png",
+    "title": "Sign up<br />for your<br />monthly dose<br />of polar<br />curiosity",
+    "text": "Stay up to date with our monthly reminders of how awesome, precious and fun the polar regions are.",
+    "button": "Join Now"
+  }
+}
