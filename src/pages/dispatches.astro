@@ -1,14 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import dispatchesPage from '../content/dispatches.json';
+
+const { intro, featured } = dispatchesPage;
+// Inline background-image with a focus (center/top/bottom/left/right) crop anchor.
+const bg = (img, focus) => (img ? `background-image:url('${img}');background-size:cover;background-position:${focus || 'center'};` : undefined);
 
 const EXCERPT = 'On March 15, the Arctic sea ice reached its 2026 maximum: 14.29 million km², the lowest in the 48-year satellite record. An area twice the size of Texas that never froze. The ice is telling its story.';
-
-const featured = {
-  category: 'Cryosphere',
-  date: 'April 8, 2026',
-  title: 'Thin Ice: The Arctic Sea Ice Maximum of 2026 and the World That Depends on It',
-  excerpt: EXCERPT,
-};
 
 // Newest first — the button reveals three more per click.
 const latest = [
@@ -73,16 +71,22 @@ const COL_INITIAL = 7;
 ---
 
 <BaseLayout>
+  <!-- ============ INTRO ============ -->
+  <section class="wrap listing-intro">
+    <h1 class="listing-intro__heading">{intro.heading}</h1>
+    <p class="listing-intro__text">{intro.text}</p>
+  </section>
+
   <!-- ============ FEATURED DISPATCH ============ -->
   <section class="featured">
     <div class="wrap featured__inner">
       <span class="featured__date">{featured.date}</span>
-      <div class="featured__media placeholder"></div>
+      <div class="featured__media placeholder" style={bg(featured.image, featured.focus)}></div>
       <article class="featured__card">
         <span class="tag featured__tag">{featured.category}</span>
-        <h1 class="featured__title">{featured.title}</h1>
+        <h2 class="featured__title">{featured.title}</h2>
         <p class="featured__excerpt">{featured.excerpt}</p>
-        <a class="readmore readmore--light" href="#"><b>Read</b> More</a>
+        <a class="readmore readmore--light" href={featured.link}><b>Read</b> More</a>
       </article>
     </div>
   </section>
@@ -138,8 +142,14 @@ const COL_INITIAL = 7;
   .readmore b { font-weight: 600; }
   .readmore--light { color: #fff; }
 
+  /* ---------- INTRO (editable heading + lead paragraph) ---------- */
+  .listing-intro { padding-top: 70px; padding-bottom: 6px; }
+  .listing-intro__heading { margin: 0 0 0.7rem; font-size: clamp(2rem, 4.2vw, 44px); font-weight: 600; text-transform: uppercase; letter-spacing: 0.01em; line-height: 1.1; color: var(--navy); }
+  .listing-intro__text { margin: 0; max-width: 68ch; font-size: 15px; font-weight: 300; line-height: 1.7; color: #3a4245; }
+
   /* ---------- FEATURED (image 1046×500 @+4.81%; card 700×250 @right, 24px below image) ---------- */
-  .featured { padding-top: 70px; padding-bottom: 93px; }
+  .featured { padding-top: 34px; padding-bottom: 93px; }
+  .featured__media { background-size: cover; background-position: center; }
   .featured__inner { position: relative; }
   .featured__media { width: 93.23%; margin-left: 4.81%; aspect-ratio: 1046 / 500; }
   .featured__date {
