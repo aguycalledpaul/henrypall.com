@@ -261,6 +261,73 @@ content:
           - { name: text, label: Text, type: text }
           - { name: button, label: Button label, type: string }
 
+  - name: page-dispatches
+    label: "Page · Dispatches (intro + featured)"
+    type: file
+    path: src/content/dispatches.json
+    format: json
+    fields:
+      - name: intro
+        label: Intro
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - { name: text, label: Text, type: text }
+      - name: featured
+        label: Featured dispatch
+        type: object
+        fields:
+          - { name: category, label: Category, type: string }
+          - { name: date, label: Date, type: string }
+          - { name: title, label: Title, type: string }
+          - { name: excerpt, label: Excerpt, type: text }
+          - { name: image, label: Image, type: image }
+          - { name: focus, label: Focus (which part of the image to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
+          - { name: link, label: Link, type: string }
+  - name: page-field-notes
+    label: "Page · Field Notes (intro + featured)"
+    type: file
+    path: src/content/field-notes.json
+    format: json
+    fields:
+      - name: intro
+        label: Intro
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - { name: text, label: Text, type: text }
+      - name: featured
+        label: Latest field note
+        type: object
+        fields:
+          - { name: date, label: Date, type: string }
+          - { name: location, label: Location, type: string }
+          - { name: title, label: Title, type: string }
+          - { name: image, label: Image, type: image }
+          - { name: focus, label: Focus (which part of the image to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
+          - { name: link, label: Link, type: string }
+  - name: page-lectures
+    label: "Page · Lectures (intro + featured)"
+    type: file
+    path: src/content/lectures.json
+    format: json
+    fields:
+      - name: intro
+        label: Intro
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - { name: text, label: Text, type: text }
+      - name: featured
+        label: Featured lecture
+        type: object
+        fields:
+          - { name: category, label: Category, type: string }
+          - { name: title, label: Title, type: string }
+          - { name: excerpt, label: Excerpt, type: text }
+          - { name: image, label: Image, type: image }
+          - { name: focus, label: Focus (which part of the image to keep in view), type: select, options: { values: [center, top, bottom, left, right] }, default: center }
+          - { name: link, label: Link, type: string }
   # ===================== NEWSLETTERS =====================
   - name: nl-journal
     label: "Newsletter · Journal"
