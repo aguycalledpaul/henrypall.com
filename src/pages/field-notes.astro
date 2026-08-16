@@ -1,17 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import fieldNotesPage from '../content/field-notes.json';
+
+const { intro, featured: latest } = fieldNotesPage;
+// Inline background-image with a focus (center/top/bottom/left/right) crop anchor.
+const bg = (img, focus) => (img ? `background-image:url('${img}');background-size:cover;background-position:${focus || 'center'};` : undefined);
 
 const P1 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum molestie augue nec mauris posuere aliquam. Fusce velit magna, auctor at fringilla vitae, sodales vel dui. Curabitur dictum posuere semper. Donec et posuere nibh. Proin a sem sit amet neque molestie egestas eget sit amet risus.';
 const P2 = 'Duis quam enim, tempus non leo eu, posuere tincidunt sem. Duis nec metus consectetur turpis sagittis fermentum. Proin in vestibulum turpis. In volutpat nibh et augue tristique, nec venenatis libero euismod. Nunc mattis, libero eu vulputate eleifend, arcu enim malesuada nibh, vel rutrum tortor libero eu nisi.';
 const P3 = 'Nam auctor ligula a erat semper, ultricies rutrum sapien consectetur. Integer congue dui non leo hendrerit, et convallis metus scelerisque. Fusce consectetur mi eu justo accumsan porttitor. Morbi mattis pulvinar nisl at convallis. Vestibulum in sagittis dolor, in fermentum ipsum. Donec finibus, tellus vel porttitor fringilla, felis urna dignissim est.';
 const P4 = 'Aenean placerat ligula in sodales blandit. Nullam ac vehicula sem. Suspendisse eget pellentesque est. Nulla et ligula a lacus ultricies rutrum. Morbi id sodales augue. Curabitur et dui dapibus, mollis diam nec, auctor neque. Pellentesque consequat sodales tellus vel molestie. Fusce nec turpis id sem hendrerit tempus sit amet a purus.';
 const P5 = 'Nullam eget vehicula turpis, aliquam mattis metus. Mauris sit amet interdum massa, efficitur tincidunt elit. Integer id eros ac justo fringilla imperdiet et vitae mi. Mauris hendrerit commodo purus, eu viverra elit molestie quis. Nulla tempus nulla ante, quis gravida ligula ultrices ut.';
-
-const latest = {
-  date: 'December 12, 2025',
-  location: 'Transylvania, Romania',
-  title: 'The greatest thing in the world is to know how to belong to oneself',
-};
 
 const listings = [
   { date: 'November 30, 2025', location: 'Ushuaia, Argentina', title: 'Love has no age no limit and no death.' },
@@ -48,10 +47,16 @@ const RECORDS_INITIAL = 4;
 ---
 
 <BaseLayout>
+  <!-- ============ INTRO ============ -->
+  <section class="wrap listing-intro">
+    <h1 class="listing-intro__heading">{intro.heading}</h1>
+    <p class="listing-intro__text">{intro.text}</p>
+  </section>
+
   <!-- ============ LATEST FIELD NOTE ============ -->
   <section class="fnhero">
     <div class="wrap fnhero__inner">
-      <div class="fnhero__media placeholder"></div>
+      <div class="fnhero__media placeholder" style={bg(latest.image, latest.focus)}></div>
       <span class="fnhero__line"></span>
       <span class="fnhero__label">Field Notes</span>
       <article class="fnhero__card">
@@ -59,14 +64,14 @@ const RECORDS_INITIAL = 4;
         <h2 class="fnhero__title">{latest.title}</h2>
         <em class="fnhero__loc">{latest.location}</em>
       </article>
-      <a class="fnhero__btn" href="#"><span class="fnhero__bar">|</span> <b>Read</b> More</a>
+      <a class="fnhero__btn" href={latest.link}><span class="fnhero__bar">|</span> <b>Read</b> More</a>
     </div>
   </section>
 
   <!-- ============ FIELD NOTES LIST ============ -->
   <section class="fnlist">
     <div class="wrap fnlist__inner">
-      <h1 class="fnlist__wm">Field Notes</h1>
+      <span class="fnlist__wm" aria-hidden="true">Field Notes</span>
       <div class="fnlist__items">
         {listings.map((n, i) => (
           <article class="fni" hidden={i >= LISTINGS_INITIAL}>
@@ -141,10 +146,15 @@ const RECORDS_INITIAL = 4;
   .readmore { font-size: 0.85rem; color: var(--navy); border-left: 2px solid currentColor; padding-left: 8px; white-space: nowrap; }
   .readmore b { font-weight: 600; }
 
+  /* ---------- INTRO (editable heading + lead paragraph) ---------- */
+  .listing-intro { padding-top: 70px; padding-bottom: 6px; }
+  .listing-intro__heading { margin: 0 0 0.7rem; font-size: clamp(2rem, 4.2vw, 44px); font-weight: 600; text-transform: uppercase; letter-spacing: 0.01em; line-height: 1.1; color: var(--navy); }
+  .listing-intro__text { margin: 0; max-width: 68ch; font-size: 15px; font-weight: 300; line-height: 1.7; color: #3a4245; }
+
   /* ---------- LATEST FIELD NOTE ---------- */
-  .fnhero { padding-top: 70px; padding-bottom: 4.5rem; }
+  .fnhero { padding-top: 34px; padding-bottom: 4.5rem; }
   .fnhero__inner { position: relative; }
-  .fnhero__media { width: 67.29%; aspect-ratio: 755 / 600; background: var(--placeholder); }
+  .fnhero__media { width: 67.29%; aspect-ratio: 755 / 600; background: var(--placeholder); background-size: cover; background-position: center; }
   .fnhero__line { position: absolute; left: 70.41%; top: 8.33%; width: 2px; height: 84.33%; background: var(--navy); z-index: 1; }
   .fnhero__label {
     position: absolute; left: calc(70.41% + 8px); bottom: 7.34%; z-index: 1;
