@@ -1,14 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import lecturesPage from '../content/lectures.json';
+
+const { intro, featured: hero } = lecturesPage;
+// Inline background-image with a focus (center/top/bottom/left/right) crop anchor.
+const bg = (img, focus) => (img ? `background-image:url('${img}');background-size:cover;background-position:${focus || 'center'};` : undefined);
 
 const EXC = 'On March 15, the Arctic sea ice reached its 2026 maximum: 14.29 million km², the lowest in the 48-year satellite record. An area twice the size of Texas that never froze. The ice is telling its story.';
-
-// The featured lecture (full-width hero row).
-const hero = {
-  category: 'Cryosphere',
-  title: 'Thin Ice: The Arctic Sea Ice Maximum of 2026 and the World That Depends on It',
-  excerpt: EXC,
-};
 
 // Grid rows. Each card carries its Figma cell width (w) + row image height (h)
 // so the flex layout reproduces the exact proportions and equal row heights.
@@ -35,15 +33,21 @@ const rows = [
 
 <BaseLayout>
   <div class="lectures">
+    <!-- ===== INTRO ===== -->
+    <section class="wrap listing-intro">
+      <h1 class="listing-intro__heading">{intro.heading}</h1>
+      <p class="listing-intro__text">{intro.text}</p>
+    </section>
+
     <!-- ===== HERO (full-width featured lecture) ===== -->
     <section class="wrap lechero">
       <div class="lechero__inner">
-        <div class="lechero__media placeholder"></div>
+        <div class="lechero__media placeholder" style={bg(hero.image, hero.focus)}></div>
         <article class="lechero__card">
           <span class="tag lechero__chip">{hero.category}</span>
-          <h1 class="lechero__title">{hero.title}</h1>
+          <h2 class="lechero__title">{hero.title}</h2>
           <p class="lechero__excerpt">{hero.excerpt}</p>
-          <a class="readmore readmore--light lechero__more" href="#"><b>Read</b> More</a>
+          <a class="readmore readmore--light lechero__more" href={hero.link}><b>Read</b> More</a>
         </article>
       </div>
     </section>
@@ -75,10 +79,15 @@ const rows = [
 
   .lectures { padding-top: 70px; padding-bottom: 2rem; }
 
+  /* ---------- INTRO (editable heading + lead paragraph) ---------- */
+  .listing-intro { padding-bottom: 40px; }
+  .listing-intro__heading { margin: 0 0 0.7rem; font-size: clamp(2rem, 4.2vw, 44px); font-weight: 600; text-transform: uppercase; letter-spacing: 0.01em; line-height: 1.1; color: var(--navy); }
+  .listing-intro__text { margin: 0; max-width: 68ch; font-size: 15px; font-weight: 300; line-height: 1.7; color: #3a4245; }
+
   /* ---------- HERO (image full width; navy card on the right, 24px below image) ---------- */
   .lechero { padding-bottom: 44px; }
   .lechero__inner { position: relative; }
-  .lechero__media { width: 100%; aspect-ratio: 1091 / 500; background: var(--placeholder); }
+  .lechero__media { width: 100%; aspect-ratio: 1091 / 500; background: var(--placeholder); background-size: cover; background-position: center; }
   .lechero__card {
     position: absolute; right: 0; bottom: -24px; width: 62.39%;
     background: var(--navy); color: #fff; padding: 21px 29px 16px;
