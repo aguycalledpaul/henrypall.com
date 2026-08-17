@@ -68,13 +68,16 @@ const splitLabel = (s) => { const t = String(s); const i = t.indexOf(' '); const
   <section class="wrap">
     <div class="bknews">
       <p class="bknews__label" set:html={newsletter.label}></p>
-      <form class="bknews__form" onsubmit="return false">
+      <form class="bknews__form js-cm-form" id="cmBooksForm" action="https://www.createsend.com/t/subscribeerror?description=" method="post" data-id="92D4C54F0FEC16E5ADC2B1904DE9ED1A354918EB2542B3BE9FA6A8E02AF6B09FD0E2E595B082C39FE763EE17851730807FBC21F9757152E83FC8E1C055ED0B15">
         <input type="text" name="cm-name" placeholder="Your Name" aria-label="Your Name" />
-        <input type="email" name="cm-email" placeholder="Your Email" aria-label="Your Email" />
+        <input type="email" class="js-cm-email-input" name="cm-thuubt-thuubt" placeholder="Your Email" aria-label="Your Email" required />
         <button class="bknews__join" type="submit">{newsletter.joinLabel}</button>
       </form>
     </div>
   </section>
+
+  <!-- Campaign Monitor subscribe logic (handles validation, reCAPTCHA + AJAX submit) -->
+  <script is:inline src="https://js.createsend1.com/javascript/copypastesubscribeformlogic.js"></script>
 </BaseLayout>
 
 <style>
