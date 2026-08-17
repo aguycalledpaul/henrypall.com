@@ -1,6 +1,14 @@
 ---
-const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
 const year = new Date().getFullYear();
+
+// Active-page detection — mirrors the header: exact match, or any sub-page.
+const current = Astro.url.pathname.replace(/\/$/, "");
+const isActive = (href) => {
+  const p = href.replace(/\/$/, "");
+  return current === p || current.startsWith(p + '/');
+};
+
 const columns = [
   {
     heading: 'Explore',
@@ -37,82 +45,101 @@ const columns = [
       <span class="footer-logo">
         <img class="footer-logo__sig" src={base + '/logo-mark.png'} alt="Henry Páll Wulff" width="560" height="429" />
       </span>
+
       <p class="footer-legal">
-        ©{year} Henry Páll Wulff | henrypall.com
-      </p>
-      <p class="footer-legal footer-legal--links">
-        <a href={base + '/privacy-policy'}>Privacy Policy</a>
-        <a href={base + '/terms-and-conditions'}>Terms &amp; Conditions</a>
+        <span class="footer-copy">©{year} Henry Páll Wulff | henrypall.com</span>
+        <span class="footer-tertiary">
+          <a class="footer-tlink" href={base + '/privacy-policy'}>Privacy Policy</a>
+          <a class="footer-tlink" href={base + '/terms-and-conditions'}>Terms &amp; Conditions</a>
+        </span>
       </p>
     </div>
 
-    <div class="footer-cols">
+    <nav class="footer-nav" aria-label="Secondary">
       {columns.map((col) => (
         <div class="footer-col">
           <h4 class="footer-heading">{col.heading}</h4>
           <ul>
             {col.links.map((l) => (
-              <li><a href={l.href}>{l.label}</a></li>
+              <li>
+                <a href={l.href} class:list={['footer-link', { 'is-active': isActive(l.href) }]}>{l.label}</a>
+              </li>
             ))}
           </ul>
         </div>
       ))}
-    </div>
+    </nav>
   </div>
 </footer>
 
 <style>
-  .site-footer {
-    background: var(--navy);
-    color: #cfd6da;
-    margin-top: 4rem;
-  }
+  .site-footer { background: var(--navy); color: #fff; margin-top: 4rem; }
+
+  /* Figma footer band: logo top-left, legal row pinned bottom-left, nav top-right */
   .footer-inner {
     display: flex;
-    flex-wrap: wrap;
-    gap: 3rem;
     justify-content: space-between;
-    padding-top: 3.5rem;
-    padding-bottom: 3.5rem;
+    align-items: flex-start;
+    gap: 3rem;
+    min-height: 194px;
+    padding-top: 16px;
+    padding-bottom: 34px;
   }
-  .footer-brand { max-width: 320px; }
+
+  /* ---------- Brand (left) — logo on top, legal line at the bottom ---------- */
+  .footer-brand { align-self: stretch; display: flex; flex-direction: column; }
   .footer-logo {
     position: relative;
-    width: 104px; height: 104px;
+    width: 100px; height: 100px;
     display: grid; place-items: center;
-    margin-bottom: 1.5rem;
   }
   .footer-logo::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border: 1.5px solid rgba(255, 255, 255, 0.9);
+    content: "";
+    position: absolute; inset: 7px;
+    border: 1.5px solid #fff;
     pointer-events: none;
   }
-  .footer-logo__sig { position: relative; width: 76px; height: auto; }
-  .footer-legal { font-size: 0.78rem; color: #9fb0b8; margin: 0.35rem 0; }
-  .footer-legal--links { display: flex; gap: 1.25rem; margin-top: 0.75rem; }
-  .footer-legal--links a:hover { color: #fff; }
+  .footer-logo__sig { position: relative; width: 64px; height: auto; }
 
-  .footer-cols {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(120px, 1fr));
-    gap: 2.5rem;
+  /* legal row: copyright + tertiary links on one baseline, near the bottom */
+  .footer-legal {
+    margin: 0; margin-top: auto; padding-top: 34px;
+    display: flex; align-items: baseline; flex-wrap: wrap;
+    font-size: 8px; line-height: 1; color: #fff;
   }
+  .footer-copy { font-weight: 400; white-space: nowrap; }
+  .footer-tertiary { display: flex; gap: 30px; margin-left: 37px; }
+  .footer-tlink { font-weight: 600; white-space: nowrap; }
+  .footer-tlink:hover { opacity: 0.7; }
+
+  /* ---------- Secondary navigation (right) — three columns ---------- */
+  .footer-nav { display: flex; gap: 53px; margin-top: 16px; }
   .footer-heading {
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    font-size: 0.72rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
+    margin: 0 0 13px;
+    font-size: 8px; font-weight: 600; line-height: 14px;
+    text-transform: uppercase; letter-spacing: 0.08em; color: #fff;
   }
   .footer-col ul { list-style: none; margin: 0; padding: 0; }
-  .footer-col li { margin-bottom: 0.6rem; }
-  .footer-col a { font-size: 0.85rem; color: #b9c4c9; }
-  .footer-col a:hover { color: #fff; }
+  .footer-col li { margin-bottom: 8px; }
+  .footer-col li:last-child { margin-bottom: 0; }
+  .footer-link {
+    display: inline-block;
+    font-size: 12px; line-height: 14px;
+    font-weight: 300;            /* Poppins Light */
+    text-transform: uppercase; letter-spacing: 0.04em; color: #fff;
+  }
+  .footer-link:hover { opacity: 0.7; }
+  .footer-link.is-active { font-weight: 500; }   /* Poppins Medium — current page */
 
-  @media (max-width: 640px) {
-    .footer-cols { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 2rem; }
+  /* ---------- Responsive ---------- */
+  @media (max-width: 780px) {
+    .footer-inner { flex-direction: column; gap: 2.5rem; min-height: 0; }
+    .footer-brand { align-self: auto; }
+    .footer-legal { margin-top: 1.5rem; padding-top: 0; }
+    .footer-nav { margin-top: 0; gap: 2.5rem; flex-wrap: wrap; }
+  }
+  @media (max-width: 420px) {
+    .footer-legal { flex-direction: column; gap: 0.6rem; }
+    .footer-tertiary { margin-left: 0; }
   }
 </style>
