@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, ""); // "/beta"
+---
+
+<BaseLayout title="Something went wrong — Henry Páll Wulff" description="An unexpected error occurred on our end.">
+  <section class="err">
+    <p class="err__code">500<span class="err__dot">.</span></p>
+    <h1 class="err__title">Something <em>cracked</em> beneath the surface</h1>
+    <p class="err__text">
+      An unexpected error broke the ice on our end. Give it a moment and try
+      again — the ground should hold shortly.
+    </p>
+    <div class="err__actions">
+      <a class="err__btn err__btn--solid" href={`${base}/`}>Back home</a>
+      <a class="err__btn" href="." data-reload>Try again</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+  document.querySelector('[data-reload]')?.addEventListener('click', function (e) {
+    e.preventDefault();
+    location.reload();
+  });
+</script>
+
+<style>
+  .err {
+    min-height: 74vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 6rem 1.5rem 7rem;
+  }
+  .err__code {
+    margin: 0; font-weight: 700; line-height: 0.85;
+    font-size: clamp(6rem, 22vw, 230px); letter-spacing: -0.03em; color: var(--navy);
+  }
+  .err__dot { color: var(--navy); }
+  .err__title {
+    margin: 1.6rem 0 0; max-width: 20ch;
+    font-size: clamp(1.5rem, 4vw, 2.6rem); font-weight: 600; line-height: 1.15;
+    text-transform: uppercase; letter-spacing: 0.01em; color: var(--navy);
+  }
+  .err__title em {
+    font-family: 'Port Lligat Slab', Georgia, serif;
+    font-style: italic; font-weight: 400; text-transform: none;
+  }
+  .err__text {
+    margin: 1.3rem auto 0; max-width: 52ch;
+    font-size: 15px; font-weight: 300; line-height: 1.7; color: #3a4245;
+  }
+  .err__actions {
+    margin-top: 2.4rem; display: flex; gap: 1rem;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .err__btn {
+    display: inline-block; padding: 0.85rem 1.9rem; border-radius: 999px;
+    border: 1px solid var(--navy); color: var(--navy); background: transparent;
+    font-family: inherit; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.02em;
+    cursor: pointer; transition: background 0.18s ease, color 0.18s ease;
+  }
+  .err__btn:hover { background: var(--navy); color: #fff; }
+  .err__btn--solid { background: var(--navy); color: #fff; }
+  .err__btn--solid:hover { background: var(--navy-800); }
+</style>
