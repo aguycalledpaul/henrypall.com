@@ -54,22 +54,22 @@ const JOURNAL_INITIAL = 3;
       </div>
 
       <aside class="nl-right">
-        <!-- Journal subscribe -->
-        <form class="nlform" onsubmit="return false" action="#" method="post">
+        <!-- Journal subscribe (Campaign Monitor: My Journal) -->
+        <form class="nlform js-cm-form" id="cmJournalForm" action="https://www.createsend.com/t/subscribeerror?description=" method="post" data-id="92D4C54F0FEC16E5ADC2B1904DE9ED1AFB013783227276130AEAF1216C1AB2B1C2AD29C8D0E847B8DF7308490E51B226230EF136DCD984D58F7C1AACA25E127D">
           <h2 class="nlform__title" set:html={journalForm.title}></h2>
           <span class="nlform__rule" aria-hidden="true"></span>
           <p class="nlform__text">{journalForm.text}</p>
-          <input type="email" name="cm-email" placeholder="Your email address" aria-label="Your email address" />
+          <input type="email" class="js-cm-email-input" name="cm-thuuot-thuuot" placeholder="Your email address" aria-label="Your email address" required />
           <button class="nlform__btn" type="submit">{journalForm.button}</button>
         </form>
 
-        <!-- Book update subscribe -->
-        <form class="nlform nlform--book" onsubmit="return false" action="#" method="post">
+        <!-- Book update subscribe (Campaign Monitor: Ice in Practice - Updates) -->
+        <form class="nlform nlform--book js-cm-form" id="cmBookForm" action="https://www.createsend.com/t/subscribeerror?description=" method="post" data-id="92D4C54F0FEC16E5ADC2B1904DE9ED1A354918EB2542B3BE9FA6A8E02AF6B09FD0E2E595B082C39FE763EE17851730807FBC21F9757152E83FC8E1C055ED0B15">
           <div class="nlform__cover placeholder" style={bg(bookForm.coverImage, bookForm.coverFocus)} role="img" aria-label="Ice in Practice — book cover"></div>
           <span class="nlform__rule" aria-hidden="true"></span>
           <p class="nlform__cta" set:html={bookForm.cta}></p>
           <input type="text" name="cm-name" placeholder="Your Name" aria-label="Your Name" />
-          <input type="email" name="cm-email" placeholder="Your Email" aria-label="Your Email" />
+          <input type="email" class="js-cm-email-input" name="cm-thuubt-thuubt" placeholder="Your Email" aria-label="Your Email" required />
           <button class="nlform__btn nlform__btn--solid" type="submit">{bookForm.button}</button>
         </form>
       </aside>
@@ -82,14 +82,14 @@ const JOURNAL_INITIAL = 3;
       <span class="nl-band__hrule" aria-hidden="true"></span>
       <span class="nl-band__vrule" aria-hidden="true"></span>
 
-      <!-- monthly dose signup -->
-      <form class="nl-dose" onsubmit="return false" action="#" method="post">
+      <!-- monthly dose signup (Campaign Monitor: Narrating the Poles) -->
+      <form class="nl-dose js-cm-form" id="cmDoseForm" action="https://www.createsend.com/t/subscribeerror?description=" method="post" data-id="92D4C54F0FEC16E5ADC2B1904DE9ED1A952B4877A90092B7430992D94F28E3AD93944E5BDDBAB309FEAA3658E04C8AD602B88A64653C2C478AA799876B453950">
         <div class="nl-dose__card">
           <div class="nl-dose__logo" style={bg(band.logo || CP_LOGO, 'center')} role="img" aria-label="Curiously Polar"></div>
           <p class="nl-dose__title" set:html={band.title}></p>
           <p class="nl-dose__text">{band.text}</p>
           <input type="text" name="cm-name" placeholder="Your Name" aria-label="Your Name" />
-          <input type="email" name="cm-email" placeholder="Your Email" aria-label="Your Email" />
+          <input type="email" class="js-cm-email-input" name="cm-thuubl-thuubl" placeholder="Your Email" aria-label="Your Email" required />
         </div>
         <button class="nl-dose__btn" type="submit">{band.button}</button>
       </form>
@@ -115,6 +115,9 @@ const JOURNAL_INITIAL = 3;
     </section>
 
   </div>
+
+  <!-- Campaign Monitor subscribe logic (handles validation, reCAPTCHA + AJAX submit) -->
+  <script is:inline src="https://js.createsend1.com/javascript/copypastesubscribeformlogic.js"></script>
 </BaseLayout>
 
 <style>
