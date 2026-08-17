@@ -123,14 +123,17 @@ try {
           <span class="cpnews__l cpnews__l3" set:html={newsletter.titleLine3}></span>
         </h2>
         <p class="cpnews__sub">{newsletter.sub}</p>
-        <form class="cpnews__form" action="#" method="post" onsubmit="return false">
+        <form class="cpnews__form js-cm-form" id="cmCpForm" action="https://www.createsend.com/t/subscribeerror?description=" method="post" data-id="92D4C54F0FEC16E5ADC2B1904DE9ED1A952B4877A90092B7430992D94F28E3AD93944E5BDDBAB309FEAA3658E04C8AD602B88A64653C2C478AA799876B453950">
           <input type="text" name="cm-name" placeholder="Your Name" aria-label="Your Name" />
-          <input type="email" name="cm-email" placeholder="Your Email" aria-label="Your Email" />
+          <input type="email" class="js-cm-email-input" name="cm-thuubl-thuubl" placeholder="Your Email" aria-label="Your Email" required />
           <button class="cpnews__join" type="submit">{newsletter.joinLabel}</button>
         </form>
       </div>
     </div>
   </section>
+
+  <!-- Campaign Monitor subscribe logic (handles validation, reCAPTCHA + AJAX submit) -->
+  <script is:inline src="https://js.createsend1.com/javascript/copypastesubscribeformlogic.js"></script>
 </BaseLayout>
 
 <style>
