@@ -1,12 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const base = import.meta.env.BASE_URL.replace(/\/+$/, ''); // "/beta"
+const base = import.meta.env.BASE_URL.replace(/\/+$/, ""); // "/beta"
 
 export function getStaticPaths() {
   const mods = import.meta.glob('../../dispatches/*.md', { eager: true });
   return Object.entries(mods).map(([path, mod]) => ({
-    params: { slug: path.split('/').pop().replace(/\.md$/, '') },
+    params: { slug: path.split('/').pop().replace(/\.md$/, "") },
     props: { mod },
   }));
 }
@@ -20,7 +20,7 @@ const year = new Date(fm.date).getFullYear();
 const references = fm.references || [];
 const figures = fm.figures || [];
 const resources = fm.resources || [];
-const citation = `Henry Páll Wulff, "${fm.title}," Dispatches, ${dateStr}.${fm.doi ? ' ' + fm.doi : ''}`;
+const citation = `Henry Páll Wulff, "${fm.title}," Dispatches, ${dateStr}.${fm.doi ? ' ' + fm.doi : ""}`;
 const pdfUrl = fm.pdf ? base + fm.pdf : null;
 ---
 
@@ -35,6 +35,7 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
         <span class="tag ds-hero__tag">{fm.category}</span>
         <span class="ds-hero__date">{dateStr}</span>
         <h1 class="ds-hero__title">{fm.title}</h1>
+        <p class="ds-hero__by">By <a href={base + '/about'}>Henry Páll Wulff</a></p>
       </div>
     </div>
   </section>
@@ -163,7 +164,6 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
   .wrap { position: relative; width: min(1104px, calc(100% - 2.5rem)); margin-inline: auto; }
 
   .ds-toc { position: fixed; left: 18px; top: 42%; z-index: 15; width: 44px; height: 44px; display: grid; place-items: center; background: #fff; border: 1px solid #e3e7e9; border-radius: 4px; box-shadow: 0 6px 20px rgba(17,41,46,0.10); color: var(--navy); cursor: pointer; }
-  .ds-toc:hover { border-color: var(--navy); }
   @media (max-width: 1180px) { .ds-toc { display: none; } }
 
   .ds-hero { position: relative; background: var(--placeholder); }
@@ -172,6 +172,9 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
   .ds-hero__tag { position: absolute; left: 0; bottom: calc(100% + 2px); }
   .ds-hero__date { display: block; font-size: 14px; font-weight: 500; margin-bottom: 1rem; }
   .ds-hero__title { margin: 0; color: #fff; font-size: clamp(2rem, 4vw, 50px); font-weight: 600; text-transform: uppercase; line-height: 1.12; letter-spacing: 0.01em; }
+  .ds-hero__by { margin: 12px 0 0; font-size: 13px; font-weight: 300; letter-spacing: 0.04em; color: #cfd6da; }
+  .ds-hero__by a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
+  .ds-hero__by a:hover { opacity: 0.75; }
 
   .ds-grid { display: grid; grid-template-columns: 61.5% 30.4%; column-gap: 8.1%; padding: 44px 0 90px; align-items: start; }
   .ds-reading { margin: 0 0 2rem; font-style: italic; font-size: 13px; color: #5a6367; }
@@ -278,11 +281,11 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
     .ds-hero__inner { height: 520px; }
     .ds-hero__box { padding: 28px 24px 30px; }
     .ds-grid { grid-template-columns: 1fr; row-gap: 3rem; }
-    .ds-side { position: static; max-height: none; overflow: visible; }
+    .ds-side { position: static; }
   }
 </style>
 
-<script define:vars={{ shareTitle: fm.title, citationText: citation, doi: fm.doi || '', year, dateStr }}>
+<script define:vars={{ shareTitle: fm.title, citationText: citation, doi: fm.doi || "", year, dateStr }}>
   // ----- Sidebar tabs -----
   document.querySelectorAll('.ds-tab').forEach((tab) => {
     tab.addEventListener('click', () => {
@@ -326,13 +329,13 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
   });
   const ris = [
     'TY  - GEN', 'AU  - Wulff, Henry Páll', 'TI  - ' + shareTitle, 'T2  - Dispatches',
-    'PY  - ' + year, 'DA  - ' + dateStr, doi ? 'DO  - ' + doi.replace('https://doi.org/', '') : '',
+    'PY  - ' + year, 'DA  - ' + dateStr, doi ? 'DO  - ' + doi.replace('https://doi.org/', "") : "",
     'UR  - ' + url, 'ER  - ',
   ].filter(Boolean).join('\n');
   const bib = [
     '@article{wulff' + year + ',', '  author  = {Wulff, Henry Páll},', '  title   = {' + shareTitle + '},',
     '  journal = {Dispatches},', '  year    = {' + year + '},',
-    doi ? '  doi     = {' + doi.replace('https://doi.org/', '') + '},' : '', '  url     = {' + url + '}', '}',
+    doi ? '  doi     = {' + doi.replace('https://doi.org/', "") + '},' : "", '  url     = {' + url + '}', '}',
   ].filter(Boolean).join('\n');
   const dlRis = document.getElementById('dlRis');
   const dlBib = document.getElementById('dlBib');
@@ -347,7 +350,7 @@ const pdfUrl = fm.pdf ? base + fm.pdf : null;
   const tip = document.getElementById('citeTip');
   function refTextFor(n) {
     const li = document.getElementById('ref-' + n);
-    return li ? (li.getAttribute('data-reftext') || li.textContent.trim()) : '';
+    return li ? (li.getAttribute('data-reftext') || li.textContent.trim()) : "";
   }
   function positionTip(e) {
     const pad = 14;
