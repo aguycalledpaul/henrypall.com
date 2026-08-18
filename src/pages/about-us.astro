@@ -1,0 +1,21 @@
+---
+// Redirect the old theme-demo URL (/about-us) to the new /about page.
+// NOTE: this covers the beta build. At go-live, add a server-side 301 in .htaccess
+// (ErrorDocument-style) so /about-us/ on the domain root also lands on /about.
+const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
+const target = base + '/about';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting to About — Henry Páll Wulff</title>
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={target} />
+  </head>
+  <body>
+    <p>This page has moved to <a href={target}>About</a>.</p>
+    <script is:inline set:html={`location.replace(${JSON.stringify(target)});`}></script>
+  </body>
+</html>
