@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 export function getStaticPaths() {
   const mods = import.meta.glob('../../lectures/*.md', { eager: true });
   return Object.entries(mods).map(([path, mod]) => ({
-    params: { slug: path.split('/').pop().replace(/\.md$/, '') },
+    params: { slug: path.split('/').pop().replace(/\.md$/, "") },
     props: { mod },
   }));
 }
@@ -12,6 +12,7 @@ export function getStaticPaths() {
 const { mod } = Astro.props;
 const fm = mod.frontmatter;
 const Content = mod.Content;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
 ---
 
 <BaseLayout title={fm.title + ' — Lectures'} description={fm.excerpt} overlayHeader overlayDark={false}>
@@ -25,6 +26,7 @@ const Content = mod.Content;
         <span class="lec-hero__cat">{fm.category}</span>
         <h1 class="lec-hero__title">{fm.title}</h1>
         {fm.subtitle && <p class="lec-hero__sub">{fm.subtitle}</p>}
+        <p class="lec-hero__by">By <a href={base + '/about'}>Henry Páll Wulff</a></p>
       </div>
     </div>
   </section>
@@ -70,6 +72,9 @@ const Content = mod.Content;
   .lec-hero__cat { position: absolute; left: 0; bottom: calc(100% + 1px); width: 129px; height: 36px; display: flex; align-items: center; padding-left: 22px; box-sizing: border-box; background: #11292e; color: #fff; font-size: 14px; font-weight: 300; letter-spacing: 0.02em; text-transform: uppercase; }
   .lec-hero__title { margin: 0; color: #fff; font-family: 'Poppins', sans-serif; font-size: clamp(28px, 3.4vw, 40px); font-weight: 500; text-transform: uppercase; line-height: 1.125; letter-spacing: 0; }
   .lec-hero__sub { margin: 11px 0 0; color: #fff; font-size: 14px; font-weight: 300; }
+  .lec-hero__by { margin: 11px 0 0; color: #cfd6da; font-size: 13px; font-weight: 300; letter-spacing: 0.04em; }
+  .lec-hero__by a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
+  .lec-hero__by a:hover { opacity: 0.75; }
 
   /* ===== offset column: body 944 (169–1113), prose 704 right-aligned (409–1113) ===== */
   .lec-body { width: min(944px, 100%); padding: 56px 0 120px; }
