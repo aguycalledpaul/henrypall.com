@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import fieldNotesPage from '../content/field-notes.json';
+import { fieldNotes as listings } from '../data/field-notes.js';
 
 const { intro, featured: latest } = fieldNotesPage;
 // Inline background-image with a focus (center/top/bottom/left/right) crop anchor.
@@ -12,15 +13,6 @@ const P3 = 'Nam auctor ligula a erat semper, ultricies rutrum sapien consectetur
 const P4 = 'Aenean placerat ligula in sodales blandit. Nullam ac vehicula sem. Suspendisse eget pellentesque est. Nulla et ligula a lacus ultricies rutrum. Morbi id sodales augue. Curabitur et dui dapibus, mollis diam nec, auctor neque. Pellentesque consequat sodales tellus vel molestie. Fusce nec turpis id sem hendrerit tempus sit amet a purus.';
 const P5 = 'Nullam eget vehicula turpis, aliquam mattis metus. Mauris sit amet interdum massa, efficitur tincidunt elit. Integer id eros ac justo fringilla imperdiet et vitae mi. Mauris hendrerit commodo purus, eu viverra elit molestie quis. Nulla tempus nulla ante, quis gravida ligula ultrices ut.';
 
-const listings = [
-  { date: 'November 30, 2025', location: 'Ushuaia, Argentina', title: 'Love has no age no limit and no death.' },
-  { date: 'November 17, 2025', location: 'Longyearbyen, Svalbard', title: 'The weight of the whistle: responsibility on the ice.' },
-  { date: 'November 2, 2025', location: 'Ilulissat, Greenland', title: 'What Shackleton got wrong about heroic leadership.' },
-  { date: 'October 21, 2025', location: 'Kirkenes, Norway', title: 'Sea ice dialects and the language of the north.' },
-  { date: 'October 5, 2025', location: 'Punta Arenas, Chile', title: 'Permafrost’s long goodbye and the shifting ground.' },
-  { date: 'September 22, 2025', location: 'Nuuk, Greenland', title: 'The quiet authority of the sweep guide.' },
-  { date: 'September 8, 2025', location: 'Tromsø, Norway', title: 'When all options are bad: deciding on the ice.' },
-];
 const LISTINGS_INITIAL = 5;
 
 // Masonry gallery — column stacks of aspect ratios (width / height), per Figma.
