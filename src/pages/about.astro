@@ -1,0 +1,390 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { fieldNotes } from '../data/field-notes.js';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, ""); // "/beta"
+const latestNotes = fieldNotes.slice(0, 3);
+
+// --- Person schema (see placeholder list in the handover for sameAs socials) ---
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Henry Páll Wulff',
+  jobTitle: 'Polar Expedition Operations, Expedition Leader and Writer',
+  worksFor: { '@type': 'Organization', name: 'PolarQuest' },
+  sameAs: [
+    'https://curiouslypolar.com',
+    // TODO — confirm real profile URLs
+    'https://www.instagram.com/',
+    'https://www.linkedin.com/',
+  ],
+  knowsAbout: [
+    'Cryosphere',
+    'Sea ice',
+    'Polar geopolitics',
+    'Expedition safety',
+    'Guide training',
+  ],
+};
+
+// Section 04 — who I serve
+const serve = [
+  {
+    heading: 'Expedition operators and guides',
+    body: 'You run trips into places that punish shortcuts. I help with ice literacy, safety culture and training design — the parts that never make the brochure but decide the outcome.',
+    label: 'See lectures & training',
+    href: base + '/lectures',
+  },
+  {
+    heading: 'Stages, universities and institutions',
+    body: 'You want someone who has been on the ice, not only read about it, to explain the cryosphere or the politics of the poles to a room that expects to be taken seriously.',
+    label: 'Lectures & briefings',
+    href: base + '/lectures',
+  },
+  {
+    heading: 'Press, policy and researchers',
+    body: 'You need informed comment on IAATO, AECO and PTGA, the Antarctic Treaty System or the Arctic territorial claims — from someone who works inside the industry and says so.',
+    label: 'Press & media',
+    href: base + '/media-and-press',
+  },
+];
+---
+
+<BaseLayout
+  title="About Henry Páll Wulff — Polar Expedition Operations, Expedition Leader and Writer"
+  description="Henry Páll Wulff runs polar expedition operations, leads expeditions in both polar regions, trains the guides who take others onto the ice, and writes about what the ice is doing to the rest of us."
+  overlayHeader
+  overlayDark={true}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
+
+  <!-- ============ 01 · HERO ============ -->
+  <section class="ab-hero" aria-labelledby="ab-hero-name">
+    <div class="ab-hero__bg placeholder" role="img" aria-label="Wide field image: a polar coastline of sea ice and dark water under low light"></div>
+    <div class="ab-hero__scrim"></div>
+    <div class="wrap ab-hero__inner">
+      <div class="ab-hero__portrait placeholder" role="img" aria-label="Portrait of Henry Páll Wulff, face to camera, in polar field clothing"></div>
+      <div class="ab-hero__text">
+        <p class="ab-hero__eyebrow">Polar Expedition Operations, Expedition Leader and Writer</p>
+        <h1 id="ab-hero-name" class="ab-hero__name">Henry Páll Wulff</h1>
+        <p class="ab-hero__standfirst">
+          I run polar expedition operations and lead expeditions in both polar regions.
+          I train the people who take others onto the ice, and I write about what the ice
+          is doing to the rest of us.
+        </p>
+        <div class="ab-hero__actions">
+          <a class="btn btn--solid" href={`${base}/contact`}>Work with me</a>
+          <a class="btn ab-hero__ghost" href={`${base}/dispatches`}>Read my work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 · WHO I AM ============ -->
+  <section class="wrap ab-two" aria-labelledby="ab-who-h">
+    <div class="ab-two__text">
+      <h2 id="ab-who-h" class="ab-h2">Who I am</h2>
+      <p>
+        I came to the poles [HOW HE CAME TO THE POLES — PLACEHOLDER] and never found a
+        reason to leave. Most of the year I am either on the ice or getting other people
+        ready to be. I plan expedition operations — routes, contingencies, the unglamorous
+        logistics that decide whether a season goes well or goes wrong — and in
+        [SEASON COUNT] seasons of leading expeditions in both polar regions I have learned
+        that the work is mostly done before anyone sets foot on snow.
+      </p>
+      <p>
+        Day to day that means briefings, weather windows, ice charts and the slow business
+        of turning a group of strangers into people who can look after themselves and each
+        other. Three things keep me here: the physics of ice, which never stops being
+        strange; the people who choose to work in a place that does not forgive
+        carelessness; and [ONE HUMAN DETAIL — NON-PROFESSIONAL — PLACEHOLDER]. The rest is
+        detail.
+      </p>
+    </div>
+    <div class="ab-two__media placeholder" role="img" aria-label="Henry Páll Wulff briefing a small group on a snow slope, gesturing toward a distant ridge"></div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- 03 · MY WHY  —  ⚑ FLAGGED: Henry to rewrite. Keep the weight.  -->
+  <!-- ============================================================= -->
+  <section class="ab-why" aria-labelledby="ab-why-h">
+    <div class="ab-why__bg placeholder" role="img" aria-label="Full-bleed image of glacier ice, deep blue and fractured, filling the frame"></div>
+    <div class="ab-why__scrim"></div>
+    <div class="wrap ab-why__inner">
+      <blockquote class="ab-why__quote">
+        The ice does not care what we believe about it. That is exactly why it is worth
+        understanding.
+      </blockquote>
+      <div class="ab-why__cols">
+        <h2 id="ab-why-h" class="ab-why__label">My why</h2>
+        <div class="ab-why__body">
+          <p>The poles are not a backdrop. They are a working environment with rules, and the people who go there owe it competence — not enthusiasm, competence.</p>
+          <p>My part is to make that competence transferable. I take what [SEASON COUNT] seasons teach a person and turn it into training other guides can use, briefings an audience can follow and writing a reader can trust.</p>
+          <p>If the work lands, fewer people get hurt, more people understand what the ice is doing, and the industry that profits from these places is a little more honest about them. That is the whole of it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 · WHO I SERVE ============ -->
+  <section class="wrap ab-serve" aria-labelledby="ab-serve-h">
+    <h2 id="ab-serve-h" class="ab-h2">Who I serve</h2>
+    <div class="ab-serve__grid">
+      {serve.map((c) => (
+        <article class="ab-card">
+          <h3 class="ab-card__h">{c.heading}</h3>
+          <p class="ab-card__body">{c.body}</p>
+          <a class="readmore ab-card__more" href={c.href}><b>{c.label}</b></a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============ 05 · THE LONG WAY ROUND ============ -->
+  <section class="wrap ab-track" aria-labelledby="ab-track-h">
+    <h2 id="ab-track-h" class="ab-h2">The long way round</h2>
+    <p class="ab-track__lead">
+      The long way round looks like this. I work with PolarQuest
+      [ROLE AT POLARQUEST — PLACEHOLDER], leading expeditions across [SEASON COUNT] seasons
+      in the Arctic and Antarctic. I co-host Curiously Polar, a podcast now past
+      [EPISODE COUNT — supplied as ~170, confirm] episodes on the science, history and
+      politics of the poles. I am writing two books — <i>On Thin Ice</i>, on what the
+      changing cryosphere means beyond the ice itself, and <i>Ice in Practice</i>, on the
+      craft of working and guiding in polar environments. And I work within the bodies that
+      govern this industry — IAATO, AECO and PTGA — because standards are set by the people
+      who show up to set them.
+    </p>
+
+    <div class="ab-track__photos">
+      <div class="placeholder" role="img" aria-label="Zodiac cruising past a tabular iceberg, guests in survival suits"></div>
+      <div class="placeholder" role="img" aria-label="Recording the Curiously Polar podcast at a field desk, headphones and notes"></div>
+      <div class="placeholder" role="img" aria-label="A guide reading an ice chart on the bridge of an expedition ship"></div>
+    </div>
+
+    <ul class="ab-affil" aria-label="Affiliations">
+      <li>PolarQuest</li>
+      <li>IAATO</li>
+      <li>AECO</li>
+      <li>PTGA</li>
+      <li>Curiously Polar</li>
+    </ul>
+
+    <p class="ab-track__disclosure">
+      A disclosure, plainly: I earn my living in the polar expedition industry I also write
+      about critically. I do not think that disqualifies the criticism — I think it is the
+      reason to take it seriously, and I will always tell you which hat I am wearing.
+    </p>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- 06 · TESTIMONIALS — ⚑ DUMMY / REMOVABLE. Ships only with REAL      -->
+  <!-- quotes supplied. Delete this whole <section> if none are provided. -->
+  <!-- ================================================================= -->
+  <section class="wrap ab-quotes" aria-labelledby="ab-quotes-h" data-dummy="true">
+    <h2 id="ab-quotes-h" class="ab-h2">In other people’s words</h2>
+    <div class="ab-quotes__grid">
+      <figure class="ab-quote">
+        <blockquote>[DUMMY TESTIMONIAL — operator. Do not ship without a real, supplied quote.]</blockquote>
+        <figcaption>[NAME], [ROLE], [ORGANISATION]</figcaption>
+      </figure>
+      <figure class="ab-quote">
+        <blockquote>[DUMMY TESTIMONIAL — lecture host. Do not ship without a real, supplied quote.]</blockquote>
+        <figcaption>[NAME], [ROLE], [ORGANISATION]</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ 07 · WHERE I AM RIGHT NOW (latest Field Notes) ============ -->
+  <section class="wrap ab-now" aria-labelledby="ab-now-h">
+    <h2 id="ab-now-h" class="ab-h2">Where I am right now</h2>
+    <div class="ab-now__items">
+      {latestNotes.map((n) => (
+        <article class="fni">
+          <p class="fni__meta"><span class="fni__date">{n.date}</span><span class="fni__bar">|</span><em class="fni__loc">{n.location}</em></p>
+          <div class="fni__row">
+            <h3 class="fni__title">{n.title}</h3>
+            <a class="readmore fni__more" href={`${base}/field-notes`}><b>Read</b> More</a>
+          </div>
+          <span class="fni__rule"></span>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============ 08 · PRIMARY CALL TO ACTION ============ -->
+  <section class="wrap ab-cta-wrap" aria-labelledby="ab-cta-h">
+    <div class="ab-cta">
+      <h2 id="ab-cta-h" class="ab-cta__h">Working together</h2>
+      <p class="ab-cta__line">I am booked for three things: lectures, guide training, and advisory or media comment.</p>
+      <div class="ab-cta__actions">
+        <a class="btn btn--solid ab-cta__primary" href={`${base}/contact?subject=Working%20together`}>Enquire about working together</a>
+        <a class="btn" href={`${base}/contact`}>Contact</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 09 · FOOTER BAND (author card + quiet Journal) ============ -->
+  <section class="wrap ab-band" aria-labelledby="ab-band-h">
+    <h2 id="ab-band-h" class="sr-only">More from Henry Páll Wulff</h2>
+    <div class="ab-author">
+      <div class="ab-author__portrait placeholder" role="img" aria-label="Portrait of Henry Páll Wulff in the field"></div>
+      <div class="ab-author__text">
+        <p class="ab-author__name">Henry Páll Wulff</p>
+        <p class="ab-author__bio">Polar expedition operations, expedition leader and writer. Both polar regions, most of the year.</p>
+        <div class="ab-author__socials">
+          <a href="https://facebook.com" class="ab-icon" aria-label="Facebook" rel="me"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.5-1.5h1.6V3.6c-.28-.04-1.24-.12-2.36-.12-2.33 0-3.94 1.42-3.94 4.04V9.9H7.9V13h2.4v8h3.2z"/></svg></a>
+          <a href="https://instagram.com" class="ab-icon" aria-label="Instagram" rel="me"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://linkedin.com" class="ab-icon" aria-label="LinkedIn" rel="me"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M6.94 8.5V19H3.9V8.5h3.04zM5.42 3.9a1.76 1.76 0 110 3.52 1.76 1.76 0 010-3.52zM20.1 19h-3.03v-5.6c0-1.34-.03-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V19H9.98V8.5h2.92v1.43h.04c.4-.77 1.4-1.58 2.88-1.58 3.08 0 3.65 2.03 3.65 4.66V19z"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiet Journal signup — one line, one field, one button (Campaign Monitor: My Journal) -->
+    <form class="ab-journal js-cm-form" id="cmAboutJournal" action="https://www.createsend.com/t/subscribeerror?description=" method="post" data-id="92D4C54F0FEC16E5ADC2B1904DE9ED1AFB013783227276130AEAF1216C1AB2B1C2AD29C8D0E847B8DF7308490E51B226230EF136DCD984D58F7C1AACA25E127D">
+      <label class="ab-journal__label" for="abJournalEmail">The Journal — occasional letters from the ice.</label>
+      <div class="ab-journal__row">
+        <input id="abJournalEmail" class="js-cm-email-input" type="email" name="cm-thuuot-thuuot" placeholder="Your email address" aria-label="Your email address" required />
+        <button class="btn btn--solid" type="submit">Subscribe</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Campaign Monitor subscribe logic (validation, reCAPTCHA + AJAX submit) -->
+  <script is:inline src="https://js.createsend1.com/javascript/copypastesubscribeformlogic.js"></script>
+</BaseLayout>
+
+<style>
+  .wrap { position: relative; width: min(1104px, calc(100% - 2.5rem)); margin-inline: auto; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+  /* shared section heading (reuses the listing-intro heading scale) */
+  .ab-h2 {
+    margin: 0 0 1.4rem; font-size: clamp(1.6rem, 3.2vw, 34px); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.01em; line-height: 1.15; color: var(--navy);
+  }
+  /* body prose — same values already used by .listing-intro__text */
+  .ab-two__text p, .ab-track__lead {
+    margin: 0 0 1.1rem; max-width: 66ch;
+    font-size: 15px; font-weight: 300; line-height: 1.75; color: #3a4245;
+  }
+  .ab-track__lead i { font-style: italic; }
+  .readmore { font-size: 0.85rem; color: var(--navy); border-left: 2px solid currentColor; padding-left: 8px; white-space: nowrap; }
+  .readmore b { font-weight: 600; }
+
+  /* ---------- 01 HERO (full-bleed field image; portrait left, text right) ---------- */
+  .ab-hero { position: relative; min-height: 88vh; display: flex; align-items: center; color: #fff; overflow: hidden; }
+  .ab-hero__bg { position: absolute; inset: 0; background: var(--placeholder); background-size: cover; background-position: center; z-index: 0; }
+  .ab-hero__scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(17,41,46,0.72) 0%, rgba(17,41,46,0.5) 55%, rgba(17,41,46,0.35) 100%); }
+  .ab-hero__inner { position: relative; z-index: 2; display: flex; align-items: center; gap: clamp(1.5rem, 4vw, 3.5rem); padding: 8rem 0 4rem; }
+  /* portrait must never crop the face — anchor to top */
+  .ab-hero__portrait { flex: 0 0 40%; max-width: 360px; aspect-ratio: 4 / 5; background: var(--placeholder); background-size: cover; background-position: top center; }
+  .ab-hero__text { flex: 1 1 auto; }
+  .ab-hero__eyebrow { margin: 0 0 0.6rem; text-transform: uppercase; letter-spacing: 0.14em; font-size: 12px; font-weight: 400; color: #dfe6e8; }
+  .ab-hero__name { margin: 0; font-size: clamp(2.4rem, 6vw, 68px); font-weight: 600; text-transform: uppercase; line-height: 1.02; color: #fff; }
+  .ab-hero__standfirst { margin: 1.3rem 0 2rem; max-width: 46ch; font-size: clamp(1rem, 1.7vw, 18px); font-weight: 300; line-height: 1.6; color: #eef2f3; }
+  .ab-hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+  /* theme the shared buttons for the dark hero (white/navy only — no new colours) */
+  .ab-hero .btn--solid { background: #fff; color: var(--navy); border-color: #fff; }
+  .ab-hero .btn--solid:hover { background: #e7ecee; }
+  .ab-hero__ghost { border-color: #fff; color: #fff; background: transparent; }
+  .ab-hero__ghost:hover { background: #fff; color: var(--navy); }
+
+  /* ---------- 02 WHO I AM ---------- */
+  .ab-two { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; padding-top: 5rem; }
+  .ab-two__media { aspect-ratio: 4 / 3; background: var(--placeholder); }
+
+  /* ---------- 03 MY WHY (most typographic weight) ---------- */
+  .ab-why { position: relative; margin-top: 5.5rem; color: #fff; overflow: hidden; }
+  .ab-why__bg { position: absolute; inset: 0; background: var(--placeholder); background-size: cover; background-position: center; z-index: 0; }
+  .ab-why__scrim { position: absolute; inset: 0; z-index: 1; background: rgba(17,41,46,0.68); }
+  .ab-why__inner { position: relative; z-index: 2; padding: clamp(3.5rem, 8vw, 7rem) 0; }
+  .ab-why__quote {
+    margin: 0 0 2.5rem; max-width: 20ch;
+    font-family: 'Port Lligat Slab', Georgia, serif; font-style: italic;
+    font-size: clamp(2rem, 5vw, 54px); line-height: 1.14; color: #fff;
+  }
+  .ab-why__cols { display: grid; grid-template-columns: 200px 1fr; gap: 2rem; max-width: 900px; }
+  .ab-why__label { margin: 0; text-transform: uppercase; letter-spacing: 0.14em; font-size: 12px; font-weight: 600; color: #cbd6da; }
+  .ab-why__body p { margin: 0 0 1.1rem; font-size: clamp(1rem, 1.6vw, 18px); font-weight: 300; line-height: 1.6; color: #eef2f3; }
+  .ab-why__body p:last-child { margin-bottom: 0; }
+
+  /* ---------- 04 WHO I SERVE ---------- */
+  .ab-serve { padding-top: 5rem; }
+  .ab-serve__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .ab-card { display: flex; flex-direction: column; border: 1px solid rgba(17,41,46,0.18); padding: 1.8rem 1.6rem; }
+  .ab-card__h { margin: 0 0 0.9rem; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; line-height: 1.25; color: var(--navy); }
+  .ab-card__body { margin: 0 0 1.6rem; font-size: 14px; font-weight: 300; line-height: 1.65; color: #3a4245; }
+  .ab-card__more { margin-top: auto; }
+
+  /* ---------- 05 THE LONG WAY ROUND ---------- */
+  .ab-track { padding-top: 5.5rem; }
+  .ab-track__photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 2.2rem 0; }
+  .ab-track__photos > div { aspect-ratio: 3 / 2; background: var(--placeholder); }
+  .ab-affil { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; align-items: center; list-style: none; margin: 0 0 1.8rem; padding: 1rem 0; border-top: 1px solid rgba(17,41,46,0.18); border-bottom: 1px solid rgba(17,41,46,0.18); }
+  .ab-affil li { text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; font-weight: 500; color: var(--navy); }
+  .ab-affil li + li::before { content: '·'; margin-right: 1.4rem; margin-left: -1rem; color: rgba(17,41,46,0.4); }
+  .ab-track__disclosure { margin: 0; max-width: 70ch; font-size: 14px; font-style: italic; font-weight: 300; line-height: 1.7; color: #4a5458; }
+
+  /* ---------- 06 TESTIMONIALS (dummy) ---------- */
+  .ab-quotes { padding-top: 5.5rem; }
+  .ab-quotes__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .ab-quote { margin: 0; padding: 1.8rem; background: var(--paper-2); }
+  .ab-quote blockquote { margin: 0 0 1rem; font-size: 1.05rem; font-weight: 300; line-height: 1.6; color: #26343a; }
+  .ab-quote figcaption { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--navy); }
+
+  /* ---------- 07 FIELD NOTES (reuses .fni) ---------- */
+  .ab-now { padding-top: 5.5rem; }
+  .ab-now__items { max-width: 902px; }
+  .fni { padding-bottom: 2rem; }
+  .fni__meta { margin: 0 0 0.35rem; color: #111; }
+  .fni__date { font-size: 12px; font-weight: 300; }
+  .fni__bar { font-size: 12px; font-weight: 300; margin: 0 0.5rem; }
+  .fni__loc { font-style: italic; font-size: 10px; font-weight: 300; }
+  .fni__row { display: flex; align-items: baseline; gap: 1.4rem; }
+  .fni__title { margin: 0; font-size: 18px; font-weight: 500; text-transform: uppercase; line-height: 1.3; color: #111; }
+  .fni__more { display: inline-block; }
+  .fni__rule { display: block; width: 98px; height: 2px; background: var(--navy); margin-top: 1rem; }
+
+  /* ---------- 08 PRIMARY CTA (the single dominant block) ---------- */
+  .ab-cta-wrap { padding-top: 6rem; }
+  .ab-cta { border: 1.5px solid var(--navy); padding: clamp(2.2rem, 5vw, 3.5rem); text-align: center; }
+  .ab-cta__h { margin: 0 0 0.6rem; font-size: clamp(1.8rem, 4vw, 40px); font-weight: 600; text-transform: uppercase; color: var(--navy); }
+  .ab-cta__line { margin: 0 auto 2rem; max-width: 52ch; font-size: 15px; font-weight: 300; line-height: 1.6; color: #3a4245; }
+  .ab-cta__actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+  .ab-cta__primary { font-size: 0.95rem; padding: 0.9rem 2rem; }
+
+  /* ---------- 09 FOOTER BAND (author card + quiet journal) ---------- */
+  .ab-band { padding-top: 5rem; padding-bottom: 4rem; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+  .ab-author { display: flex; align-items: center; gap: 1.2rem; }
+  .ab-author__portrait { flex: 0 0 84px; width: 84px; height: 84px; background: var(--placeholder); background-size: cover; background-position: top center; }
+  .ab-author__name { margin: 0 0 0.25rem; font-size: 1rem; font-weight: 600; text-transform: uppercase; color: var(--navy); }
+  .ab-author__bio { margin: 0 0 0.6rem; font-size: 13px; font-weight: 300; line-height: 1.55; color: #3a4245; max-width: 42ch; }
+  .ab-author__socials { display: flex; gap: 10px; }
+  .ab-icon { display: inline-grid; place-items: center; width: 22px; height: 22px; color: var(--navy); }
+  .ab-icon:hover { opacity: 0.6; }
+  .ab-journal__label { display: block; margin-bottom: 0.7rem; font-size: 13px; font-weight: 300; color: #3a4245; }
+  .ab-journal__row { display: flex; gap: 10px; }
+  .ab-journal input { flex: 1 1 auto; min-width: 0; height: 44px; padding: 0 1rem; border: 1px solid rgba(17,41,46,0.25); border-radius: 0; font-family: inherit; font-size: 0.9rem; background: #fff; color: var(--navy); }
+  .ab-journal input::placeholder { color: rgba(17,41,46,0.45); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .ab-hero__inner { flex-direction: column; align-items: flex-start; padding-top: 7rem; }
+    .ab-hero__portrait { flex-basis: auto; width: 62%; max-width: 300px; }
+    .ab-hero__scrim { background: rgba(17,41,46,0.62); }
+    .ab-two { grid-template-columns: 1fr; }
+    .ab-two__media { order: -1; }
+    .ab-why__cols { grid-template-columns: 1fr; gap: 1rem; }
+    .ab-serve__grid { grid-template-columns: 1fr; }
+    .ab-track__photos { grid-template-columns: 1fr 1fr; }
+    .ab-quotes__grid { grid-template-columns: 1fr; }
+    .ab-band { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .ab-hero__portrait { width: 78%; }
+    .ab-track__photos { grid-template-columns: 1fr; }
+    .fni__row { flex-direction: column; gap: 0.3rem; }
+    .ab-journal__row { flex-direction: column; }
+    .ab-journal__row .btn { width: 100%; }
+  }
+</style>
